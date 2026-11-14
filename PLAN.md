@@ -7,7 +7,8 @@
 
 ## 1. Data (by Sat 12:00)
 - [x] Verify table 10 definitions, denominators and NaN meaning (docs/definitions.md)
-- [ ] Wilson 95% CIs per county and treatment type
+- [x] Wilson 95% CIs per county and treatment type (src/add_ci.py)
+- [ ] Chart: curative vs no-treatment-record share (src/plot_scatter.py)
 - [ ] Extract county data behind charts (Kuva 6, 7, stage coverage)
 - [ ] Blind-spot table: pathway stage x data available / source / not measured
 - [ ] Choose gap metric and demo county (sync 12:00)
