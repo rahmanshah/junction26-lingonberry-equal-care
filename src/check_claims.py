@@ -7,9 +7,14 @@
    source_doc at EVERY location the ledger gives. This re-reads the source; it does not trust
    the loader.
 5. Every claim with a value has a unit.
+6. Every quote has an explicit language (quote_lang "fi" or "en"); unknown language fails.
+7. English quotes are quotes of Hellu's brief and must belong to a brief claim (not a loose q: claim).
+8. The scanned docs contain no unmarked straight "…" quotes: source quotes must be <q lang="…">.
+9. Every superseded claim names, in its notes, existing claims that supersede it.
 
 Prints claims per status and per method.
 """
+import re
 import sqlite3
 import sys
 from collections import Counter
@@ -17,6 +22,21 @@ from pathlib import Path
 
 import ledger
 import sources
+
+SCANNED_DOCS = ("docs/source_verification.md", "docs/recommendations.md", "docs/blind_spots.md")
+BRIEF = "docs/pathway_brief.md"
+
+
+def unmarked_quotes(path: str) -> list[str]:
+    """Lines with a straight double quote outside <q lang="…"> tags and `code` spans."""
+    problems = []
+    for i, line in enumerate(Path(path).read_text(encoding="utf-8").splitlines(), start=1):
+        bare = re.sub(r'<q lang="[a-z]{2}">', "", line)
+        bare = re.sub(r"`[^`]*`", "", bare)
+        if '"' in bare:
+            problems.append(f"{path}:{i}: unmarked straight quote (use <q lang=\"fi\"> or <q lang=\"en\">): "
+                            f"{line.strip()[:100]}")
+    return problems
 
 
 def main() -> int:
@@ -32,6 +52,10 @@ def main() -> int:
 
     def fail(c: dict, why: str) -> None:
         failures.append(f"{c['id']}: {why}")
+
+    known = {c["id"] for c in claims}
+    for doc in SCANNED_DOCS:
+        failures.extend(unmarked_quotes(doc))
 
     for c in claims:
         if not (c["claim_text"] or "").strip():
@@ -49,6 +73,16 @@ def main() -> int:
         src = c["source_doc"] or ""
         if src.startswith(("data/", "docs/")) and not Path(src).exists():
             fail(c, f"source_doc not found: {src}")
+
+        if c["quote"] and c["quote_lang"] not in ledger.QUOTE_LANGS:
+            fail(c, f"quote language unknown ({c['quote_lang']!r}); mark it <q lang=\"fi\"> or <q lang=\"en\">: "
+                    f"{c['quote'][:80]!r}")
+        if c["quote_lang"] == "en" and (src != BRIEF or c["id"].startswith("q:")):
+            fail(c, f"English quote not attached to a claim in BRIEF_CLAIMS (src/load_claims.py): {c['quote'][:80]!r}")
+        if c["status"] == "superseded":
+            ids = re.findall(r"\bq:[0-9a-f]{10}\b", c["notes"] or "")
+            if not ids or not all(i in known for i in ids):
+                fail(c, "superseded claim must name existing superseding claims (q:… ids) in notes")
 
         if c["quote"] and c["location"]:
             if src not in sources.SOURCES:

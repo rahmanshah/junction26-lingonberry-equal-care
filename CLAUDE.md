@@ -57,7 +57,13 @@ Build checklist: PLAN.md (tick tasks when done).
   any commit that touches docs or data). Quotes are located automatically in the local sources
   (src/sources.py: whitespace/hyphen-insensitive; PDF pages, columns and table cells). Quotes in
   docs must be verbatim, including inflection and case. Methods: computed / digitised / quoted /
-  mentor / assessed; statuses: verified locally / verified by Hellu / preliminary / mentor insight / draft.
+  mentor / assessed; statuses: verified locally / verified by Hellu / preliminary / mentor insight /
+  draft / superseded (contradicted by verification; notes name the replacing claims).
+- Quote convention in docs/source_verification.md, docs/recommendations.md, docs/blind_spots.md
+  (and src/build_blind_spots.py via fi()/en()): a source quote is <q lang="fi">…</q> or
+  <q lang="en">…</q>. English quotes are quotes of Hellu's brief and must match a BRIEF_CLAIMS entry
+  in src/load_claims.py. Straight "…" quotes are not allowed in these docs (check fails); use ‘…’
+  for prose. Briefs may cite only: verified locally, verified by Hellu, preliminary, mentor insight.
 - docs/:
   - definitions.md: report table 11 definitions, denominators, overlap, suppression (quotes)
   - chart_data.md: what data sits behind each report figure (PNG vs Plotly JSON)

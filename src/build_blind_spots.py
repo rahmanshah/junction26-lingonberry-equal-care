@@ -35,14 +35,24 @@ MOT = {
 MOT_TOTAL = {"Finland": 155, "Sweden": 107, "Denmark": 67}
 assert sum(d for _, d in MOT.values()) == MOT_TOTAL["Finland"], "MOT intervals must sum to 155"
 
+def fi(text: str) -> str:
+    """A verbatim Finnish source quote (checked by src/check_claims.py)."""
+    return f'<q lang="fi">{text}</q>'
+
+
+def en(text: str) -> str:
+    """A verbatim English quote, from Hellu's brief (checked by src/check_claims.py)."""
+    return f'<q lang="en">{text}</q>'
+
+
 ACCESS_TARGETS = ("Roadmap 3.1.2 (pp.56–57): national pathways with target access times for five "
-                  "(unnamed) cancers by 2026–2028, Nordic model; strategy p.5 indicator 'Potilaat "
-                  "pääsevät hoitoon tavoiteaikojen puitteissa' tied to THL Ohjaus 21/2016.")
+                  "(unnamed) cancers by 2026–2028, Nordic model; strategy p.5 indicator "
+                  + fi("Potilaat pääsevät hoitoon tavoiteaikojen puitteissa") + " tied to THL Ohjaus 21/2016.")
 FILHA_DIAGNOSTICS = ("Filha programme (pp.3, 16, 24; printed pages): a national lung cancer diagnostics "
-                     "recommendation with primary-care referral criteria ('lähetekriteerit "
-                     "perusterveydenhuollolle') and recommended time limits for the diagnostic pathway "
-                     "stages in specialist care ('suositellut aikarajat'), due before the 2030 mid-term "
-                     "evaluation.")
+                     "recommendation with primary-care referral criteria ("
+                     + fi("lähetekriteerit perusterveydenhuollolle") + ") and recommended time limits for "
+                     "the diagnostic pathway stages in specialist care (" + fi("suositellut aikarajat")
+                     + "), due before the 2030 mid-term evaluation.")
 
 ROWS = [
     {
@@ -53,8 +63,8 @@ ROWS = [
         "note": "Nothing in the report on symptoms, symptom onset or time from symptoms to care.",
         "mot": "patient",
         "regional": "",
-        "policy": ("Roadmap 2.5.2 (pp.52–53): symptom-based models ('oirelähtöiset toimintamallit') in "
-                   "national pathways of at least the five most common cancers by 2026–2028."),
+        "policy": ("Roadmap 2.5.2 (pp.52–53): symptom-based models (" + fi("oirelähtöiset toimintamallit")
+                   + ") in national pathways of at least the five most common cancers by 2026–2028."),
         "mentor": "",
     },
     {
@@ -62,8 +72,9 @@ ROWS = [
         "measured": "no",
         "by_county": "no",
         "source": "§3.3",
-        "note": ("Primary care visits are excluded from the data: \"Avoterveydenhuollon käyntejä ei ole "
-                 "mukana aineistossa.\" Occupational health is not mentioned."),
+        "note": ("Primary care visits are excluded from the data: "
+                 + fi("Avoterveydenhuollon käyntejä ei ole mukana aineistossa.")
+                 + " Occupational health is not mentioned."),
         "mot": "primary",
         "regional": ("Only KYS tells primary care what to do when the X-ray is normal but symptoms continue "
                      "(refer anyway). OYS and Keski-Suomi name occupational health as a referral source."),
@@ -75,11 +86,11 @@ ROWS = [
         "measured": "partly",
         "by_county": "partly (Kuva 7, PNG only)",
         "source": "§4.1.1, Taulukko 2, Kuva 5–7",
-        "note": ("Only indirectly, as the basis of diagnosis: \"pelkkään kliiniseen tutkimukseen, kuten "
-                 "kuvantamiseen, noin 20 %:ssa\". No imaging procedures, dates or waits: the code list "
-                 "(Taulukko 13) has no imaging codes."),
+        "note": ("Only indirectly, as the basis of diagnosis: "
+                 + fi("pelkkään kliiniseen tutkimukseen, kuten kuvantamiseen, noin 20 %:ssa")
+                 + ". No imaging procedures, dates or waits: the code list (Taulukko 13) has no imaging codes."),
         "mot": "primary",
-        "regional": "Pirha: CT \"most often within a week\". Other regions state no imaging times.",
+        "regional": "Pirha: CT " + en("most often within a week") + ". Other regions state no imaging times.",
         "policy": "",
         "mentor": "",
     },
@@ -91,11 +102,11 @@ ROWS = [
         "note": "No referral data or referral dates in the report.",
         "mot": "primary",
         "regional": ("Only KYS lists what a referral must contain and provides a template; urgency R1 with "
-                     "no time. Pirha handles referrals \"usually within 1–2 working days\"; Keski-Suomi "
-                     "\"as quickly as possible\"."),
-        "policy": ("Roadmap 2.5.2 (pp.52–53): standardised referral criteria ('standardoidut "
-                   "lähetekriteerit') by 2026–2028. Strategy p.33: no national system for pathways. "
-                   + FILHA_DIAGNOSTICS),
+                     "no time. Pirha handles referrals " + en("usually within 1–2 working days")
+                     + "; Keski-Suomi " + en("as quickly as possible") + "."),
+        "policy": ("Roadmap 2.5.2 (pp.52–53): standardised referral criteria ("
+                   + fi("standardoidut lähetekriteerit") + ") by 2026–2028. Strategy p.33: no national "
+                   "system for pathways. " + FILHA_DIAGNOSTICS),
         "mentor": ("Referral quality affects triage: a weak referral gets a lower urgency rating "
                    "(mentor insight, Kaisa)."),
     },
@@ -121,7 +132,7 @@ ROWS = [
         "by_county": "yes (Kuva 7, 10, 13: PNG only)",
         "source": "§4.1, Taulukko 2–4, Kuva 5–13",
         "note": ("Registry diagnosis date, diagnosis basis, histology. Stage is a blind spot within it: "
-                 "\"levinneisyys toteamishetkellä puuttuu lähes puolelta uusia potilaita\" (§4.1.3, ~48%), "
+                 + fi("levinneisyys toteamishetkellä puuttuu lähes puolelta uusia potilaita") + " (§4.1.3, ~48%), "
                  "so curative shares cannot be stage-adjusted."),
         "mot": "specialist",
         "regional": ("Keski-Suomi: tissue results in ~1–2 weeks. Pirha: bronchoscopy results usually in 3–5 "
@@ -136,13 +147,14 @@ ROWS = [
         "by_county": "yes (Taulukko 11)",
         "source": "§3.3, §4.2, Taulukko 5, 10, 11, 13",
         "note": ("Codes WZC15/WZC20 only; 6.0% nationally, 21.6–37.4% in Sisä-Suomi counties, 0 records in "
-                 "4 counties. \"Erikoissairaanhoidon toimenpiteet viedään HILMO:on vain suorista "
-                 "potilaskontakteista, joten saatu tieto ei kuvaa kattavasti moniammatillisen käsittelyn "
-                 "laajuutta.\" Measures recording practice, not care."),
+                 "4 counties. "
+                 + fi("Erikoissairaanhoidon toimenpiteet viedään HILMO:on vain suorista potilaskontakteista, "
+                      "joten saatu tieto ei kuvaa kattavasti moniammatillisen käsittelyn laajuutta.")
+                 + " Measures recording practice, not care."),
         "mot": "specialist",
-        "regional": "KYS: every patient in a weekly MDT. Keski-Suomi: every new case. HUS: \"when needed\".",
-        "policy": ("Roadmap 3.1.2 (p.56): pathways will define recording and coding practices "
-                   "('kirjaamis- ja koodistokäytännöistä')."),
+        "regional": "KYS: every patient in a weekly MDT. Keski-Suomi: every new case. HUS: " + en("when needed") + ".",
+        "policy": ("Roadmap 3.1.2 (p.56): pathways will define recording and coding practices ("
+                   + fi("kirjaamis- ja koodistokäytännöistä") + ")."),
         "mentor": "",
     },
     {
@@ -204,10 +216,10 @@ lines = [
     "",
     "| Layer | Source | Status |",
     "|---|---|---|",
-    f"| Measured? | \"Keuhkosyöpä Suomessa 2019–2023\" (Finnish Cancer Registry) | {ST_REPORT} |",
+    f"| Measured? | ‘Keuhkosyöpä Suomessa 2019–2023’ (Finnish Cancer Registry) | {ST_REPORT} |",
     f"| Policy | National Cancer Strategy 2026–2035, Roadmap 2026–2031 (STM); Filha National Lung Cancer Programme 2026–2035 | {ST_POLICY}; quotes in `docs/source_verification.md` |",
     f"| Regional pathways | Hellu's review: 5 regional pathways (Keski-Suomi, Pirha, KYS, HUS, OYS), Satakunta clinic page, 1 regional study (`docs/pathway_brief.md` §6) | {ST_HELLU} |",
-    f"| Delays | MOT \"Hitaasti syöpähoitoon\" (Yle 2025) | {ST_MOT} |",
+    f"| Delays | MOT ‘Hitaasti syöpähoitoon’ (Yle 2025) | {ST_MOT} |",
     "| Mentor insight | Kaisa, Hanna | mentor insight |",
     "",
     "## Where the time goes (MOT, preliminary)",
@@ -247,7 +259,7 @@ lines += [
     "  *whether* and *which* treatment was recorded, never *when*.",
     "- Regions describe the same steps but different times; none says whether it meets them. National",
     "  target times arrive only with roadmap 3.1.2 (2026–2028, five unnamed cancers).",
-    "- MDT and \"no treatment record\" mostly measure recording practice. Treat county differences there as",
+    "- MDT and ‘no treatment record’ mostly measure recording practice. Treat county differences there as",
     "  data-quality signals, not care-quality findings.",
     "- Missing stage for ~half of patients means no curative-share comparison can be stage-adjusted.",
     "",

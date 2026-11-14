@@ -8,7 +8,12 @@ Every number or statement used in the brief gets a row: what is claimed, where i
           quoted     verbatim text from a source; `quote` must be found in source_doc at location
           mentor     expert input without a written source
           assessed   our judgement from reading a source (e.g. "stage X is not measured")
-  status: verified locally | verified by Hellu | preliminary | mentor insight | draft
+  status: verified locally | verified by Hellu | preliminary | mentor insight | draft | superseded
+          (superseded = contradicted by a verified source; notes name the claim that replaces it)
+  quote_lang: language of `quote`, "fi" or "en". Required whenever there is a quote; it comes from
+          an explicit marker (<q lang="..."> in docs, or the lang field in code), never guessed.
+  quote_en: English translation of a Finnish quote (src/translate_quotes.py). Stored next to the
+          quote; the quote itself is never replaced.
 
 Run directly to (re)create an empty ledger. src/load_claims.py fills it.
 """
@@ -17,7 +22,10 @@ from pathlib import Path
 
 DB = Path("data/ledger.sqlite")
 METHODS = ("computed", "digitised", "quoted", "mentor", "assessed")
-STATUSES = ("verified locally", "verified by Hellu", "preliminary", "mentor insight", "draft")
+STATUSES = ("verified locally", "verified by Hellu", "preliminary", "mentor insight", "draft", "superseded")
+QUOTE_LANGS = ("fi", "en")
+# Statuses a brief may cite.
+CITABLE = ("verified locally", "verified by Hellu", "preliminary", "mentor insight")
 
 SCHEMA = f"""
 CREATE TABLE claims (
@@ -30,13 +38,15 @@ CREATE TABLE claims (
     source_doc  TEXT,
     location    TEXT,
     quote       TEXT,
+    quote_lang  TEXT,
+    quote_en    TEXT,
     method      TEXT NOT NULL CHECK (method IN ({", ".join(repr(m) for m in METHODS)})),
     status      TEXT NOT NULL CHECK (status IN ({", ".join(repr(s) for s in STATUSES)})),
     notes       TEXT
 );
 """
 COLUMNS = ("id", "claim_text", "value", "unit", "county", "metric", "source_doc", "location",
-           "quote", "method", "status", "notes")
+           "quote", "quote_lang", "quote_en", "method", "status", "notes")
 
 
 def create(path: Path = DB) -> sqlite3.Connection:

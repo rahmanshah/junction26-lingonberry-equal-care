@@ -5,13 +5,24 @@ Sources loaded:
      + national shares from Taulukko 5/6                                       (computed)
   2. data/processed/kuva16_curative_digitised.csv  age-adjusted curative        (digitised)
   3. data/processed/blind_spots.csv          coverage per pathway stage         (assessed)
-     + Finnish quotes in its report_note and policy columns                     (quoted)
-  4. docs/source_verification.md, docs/recommendations.md: every Finnish quote (quoted)
-  5. docs/pathway_brief.md: MOT delays, regional pathways, law, mentor input, each with a verbatim
-     quote from the brief and Hellu's status (BRIEF_CLAIMS below)
+     + the <q> quotes in its report_note, regional and policy columns
+  4. docs/source_verification.md, docs/recommendations.md: every <q> quote
+  5. docs/pathway_brief.md: BRIEF_CLAIMS below (MOT delays, regional pathways, law, mentor input,
+     superseded statements), each with a verbatim English quote from the brief
+
+Quote language is never guessed. In docs, a source quote is written <q lang="fi">…</q> or
+<q lang="en">…</q>; in code, the lang is given explicitly. A <q> without a valid lang is loaded with
+quote_lang = NULL and src/check_claims.py fails on it. Straight "…" quotes are not allowed in the
+scanned docs at all (check_claims.py fails on them), so nothing is skipped silently.
+
+English <q> quotes in docs refer to Hellu's brief. Each must be contained in a BRIEF_CLAIMS quote;
+it is then attached to that claim (and takes its status). An unmatched English quote becomes a
+'draft' claim that check_claims.py rejects.
 
 Quote locations are not typed by hand: each quote is searched in the local source texts
 (src/sources.py) and its location is every page/section where it is found.
+Translations of Finnish quotes come from data/processed/quote_translations.csv
+(src/translate_quotes.py) and are stored in quote_en, next to the quote.
 Run src/check_claims.py afterwards.
 """
 import hashlib
@@ -32,6 +43,8 @@ FILHA = "data/raw/filha_lung_programme_2026_fi.pdf"
 BRIEF = "docs/pathway_brief.md"
 T5 = Path("data/processed/factsheet/table_04.csv")  # report Taulukko 5
 T6 = Path("data/processed/factsheet/table_05.csv")  # report Taulukko 6
+TRANSLATIONS = Path("data/processed/quote_translations.csv")
+QUOTE_DOCS = ("docs/source_verification.md", "docs/recommendations.md")
 
 TREATMENT = {  # Finnish category -> (metric slug, English label)
     "Parantava": ("curative", "curative treatment"),
@@ -40,30 +53,37 @@ TREATMENT = {  # Finnish category -> (metric slug, English label)
     "Ei hoitotietoa": ("no_treatment_record", "no treatment record within 12 months"),
     "MDT-käsittely": ("mdt_recorded", "MDT meeting recorded"),
 }
-FINNISH = re.compile(r"[äöåÄÖÅ]")
-# A quoted string counts as English (not a source quote) if it has one of these words.
-# Finnish "on" and "a" are deliberately absent.
-ENGLISH = {"the", "and", "of", "to", "is", "in", "for", "with", "not", "by", "as", "what", "how", "but",
-           "does", "are", "was", "be", "it", "an", "at", "pack", "referral", "organisation",
-           "timestamps", "published", "verified", "no", "treatment", "record"}
-
-
-def is_finnish(q: str) -> bool:
-    words = re.findall(r"[^\W\d_]+", q.lower())
-    return bool(FINNISH.search(q)) or (len(words) >= 2 and not ENGLISH.intersection(words))
+# <q lang="xx">body</q>; any other attribute form leaves lang = None (and fails the check).
+Q_TAG = re.compile(r'<q(?P<attrs>[^>]*)>(?P<body>.*?)</q>', re.S)
+LANG_ATTR = re.compile(r'^\s+lang="(?P<lang>[a-z]{2})"\s*$')
 
 
 def short(county: str) -> str:
     return re.sub(r"\W+", "_", county).strip("_")
 
 
+def quote_key(quote: str) -> str:
+    """Stable key for a quote's text ("…ole." and "…ole" are the same quote)."""
+    return hashlib.sha1(sources.normalise(quote).rstrip(".,;:").encode("utf-8")).hexdigest()[:10]
+
+
 def qid(src: str, quote: str) -> str:
-    key = sources.normalise(quote).rstrip(".,;:")  # "…ole." and "…ole" are the same quote
-    return "q:" + hashlib.sha1((src + key).encode("utf-8")).hexdigest()[:10]
+    return "q:" + hashlib.sha1((src + sources.normalise(quote).rstrip(".,;:")).encode("utf-8")).hexdigest()[:10]
 
 
 def strip_md(text: str) -> str:
+    text = Q_TAG.sub(lambda m: f"“{m.group('body')}”", text)
     return re.sub(r"[*`]", "", text).strip()
+
+
+def clean_quote(body: str) -> str:
+    """Quote text without Markdown blockquote markers and line breaks."""
+    return re.sub(r"\s*\n\s*>?\s*", " ", body).strip()
+
+
+def tag_lang(attrs: str) -> str | None:
+    m = LANG_ATTR.match(attrs)
+    return m.group("lang") if m and m.group("lang") in ledger.QUOTE_LANGS else None
 
 
 # ---------------------------------------------------------------- 1. county shares (computed)
@@ -139,21 +159,7 @@ def kuva16_claims() -> list[dict]:
     return rows
 
 
-# ---------------------------------------------------------------- quotes (shared helper)
-def quote_claim(quote: str, claim_text: str, prefer: list[str], cited_in: str) -> dict:
-    """A quoted claim. The source and location are found by searching the local texts."""
-    quote = quote.strip().strip('"').strip()
-    src, labels = sources.find_anywhere(quote, prefer)
-    return {
-        "id": qid(src or (prefer[0] if prefer else "?"), quote), "claim_text": claim_text,
-        "value": None, "unit": None, "county": None, "metric": None,
-        "source_doc": src or (prefer[0] if prefer else None),
-        "location": "; ".join(labels) if labels else None,
-        "quote": quote, "method": "quoted", "status": "verified locally",
-        "notes": f"cited in {cited_in}" + ("" if src else "; NOT FOUND in any local source"),
-    }
-
-
+# ---------------------------------------------------------------- quotes (shared helpers)
 DOC_KEYS = (("report", REPORT), ("taulukko", REPORT), ("strategy", STRATEGY),
             ("roadmap", ROADMAP), ("filha", FILHA))
 
@@ -174,17 +180,34 @@ def prefer_from(text: str, before: int | None = None) -> list[str]:
     return out
 
 
-def inline_quotes(text: str, single: bool = False) -> list[tuple[str, str, int]]:
-    """Finnish quotes in running text: "…" (and '…' if single=True), at least two words.
-    Returns (quote, translation-if-given, position)."""
-    out = []
-    pattern = r'"([^"]{6,})"|\'([^\']{6,})\'' if single else r'"([^"]{6,})"()'
-    for m in re.finditer(pattern, text):
-        q = m.group(1) or m.group(2)
-        if is_finnish(q):
-            tr = re.match(r"\s*\(\*([^*]+)\*\)", text[m.end():])
-            out.append((q, tr.group(1).strip() if tr else "", m.start()))
-    return out
+def quote_claim(quote: str, lang: str | None, claim_text: str, prefer: list[str], cited_in: str) -> dict:
+    """A quoted claim from a document. Source and location are found by searching the local texts.
+    English quotes are searched in Hellu's brief only (that is what they quote)."""
+    order = [BRIEF] if lang == "en" else prefer + [s for s in sources.SOURCES if s not in prefer and s != BRIEF]
+    src, labels = None, []
+    for s in order:
+        if Path(s).exists():
+            labels = sources.find(s, quote)
+            if labels:
+                src = s
+                break
+    src_or_hint = src or (order[0] if order else None)
+    return {
+        "id": qid(src_or_hint or "?", quote), "claim_text": claim_text,
+        "value": None, "unit": None, "county": None, "metric": None,
+        "source_doc": src_or_hint, "location": "; ".join(labels) if labels else None,
+        "quote": quote, "quote_lang": lang, "method": "quoted",
+        # English quotes take their status from the brief claim they belong to (see attach_english)
+        "status": "verified locally" if lang == "fi" else "draft",
+        "notes": f"cited in {cited_in}" + ("" if src else "; NOT FOUND in any local source")
+                 + ("" if lang else "; quote language missing: use <q lang=\"fi\"> or <q lang=\"en\">"),
+    }
+
+
+def q_tags_in(text: str) -> list[tuple[str, str | None, int, int]]:
+    """(clean quote, lang, start, end) for every <q> tag in a text."""
+    return [(clean_quote(m.group("body")), tag_lang(m.group("attrs")), m.start(), m.end())
+            for m in Q_TAG.finditer(text)]
 
 
 # ---------------------------------------------------------------- 3. blind spots
@@ -199,72 +222,53 @@ def blind_spot_claims() -> list[dict]:
                           f"(by county: {r.by_county})",
             "value": None, "unit": None, "county": None, "metric": "public_data_coverage",
             "source_doc": REPORT, "location": loc, "method": "assessed", "status": "verified locally",
-            "notes": r.report_note,
+            "notes": strip_md(r.report_note),
         })
-        for q, _, _ in inline_quotes(r.report_note):
-            rows.append(quote_claim(q, f"Report evidence for blind spot '{r.stage}'", [REPORT],
-                                    "data/processed/blind_spots.csv (report_note)"))
-        for q, _, pos in inline_quotes(r.policy, single=True):
-            rows.append(quote_claim(q, f"Policy evidence for pathway stage '{r.stage}'",
-                                    prefer_from(r.policy, before=pos),
-                                    "data/processed/blind_spots.csv (policy)"))
+        for column, what in (("report_note", "Report evidence"), ("regional_pathways", "Regional evidence"),
+                             ("policy", "Policy evidence")):
+            text = getattr(r, column)
+            for q, lang, start, _ in q_tags_in(text):
+                prefer = [REPORT] if column == "report_note" else prefer_from(text, before=start)
+                rows.append(quote_claim(q, lang, f"{what} for pathway stage '{r.stage}'", prefer,
+                                        f"data/processed/blind_spots.csv ({column})"))
     return rows
 
 
 # ---------------------------------------------------------------- 4. quotes in the docs
 def doc_quote_claims(path: str) -> list[dict]:
-    lines = Path(path).read_text(encoding="utf-8").splitlines()
-    rows, heading = [], ""
-    blocks, buf = [], []
-    for line in lines + [""]:  # split into blocks; every table row is its own block
-        s = line.strip()
-        if s.startswith("#"):
-            if buf:
-                blocks.append(("text", buf, heading))
-                buf = []
-            heading = s.lstrip("#").strip()
-        elif s.startswith("|"):
-            if buf:
-                blocks.append(("text", buf, heading))
-                buf = []
-            blocks.append(("row", [s], heading))
-        elif not s:
-            if buf:
-                blocks.append(("text", buf, heading))
-                buf = []
-        else:
-            buf.append(s)
+    text = Path(path).read_text(encoding="utf-8")
+    rows = []
+    for q, lang, start, end in q_tags_in(text):
+        line_start = text.rfind("\n", 0, start) + 1
+        line_end = text.find("\n", end)
+        line = text[line_start:line_end if line_end != -1 else None]
+        para_start = text.rfind("\n\n", 0, start) + 2 if text.rfind("\n\n", 0, start) != -1 else 0
+        para_end = text.find("\n\n", end)
+        para = text[para_start:para_end if para_end != -1 else None]
+        headings = re.findall(r"^#+\s*(.+)$", text[:start], re.M)
+        heading = headings[-1] if headings else ""
 
-    for i, (kind, blines, head) in enumerate(blocks):
-        if kind == "row":
-            cells = [c.strip() for c in blines[0].strip("|").split("|")]
-            point = strip_md(cells[0])
-            prefer = prefer_from(cells[1] if len(cells) > 1 else "") or prefer_from(head)
-            for q, _, _ in inline_quotes(cells[0]):
-                rows.append(quote_claim(q, point, prefer, path))
-            continue
-        if all(l.startswith(">") for l in blines):  # blockquote
-            body = " ".join(l.lstrip("> ").strip() for l in blines)
-            quotes = [q for q in (re.findall(r'"([^"]+)"', body) or [body]) if is_finnish(q)]
-            nxt = blocks[i + 1] if i + 1 < len(blocks) else None
-            nxt_text = " ".join(nxt[1]) if nxt and nxt[0] == "text" else ""
-            translation = nxt_text.split("*")[1] if nxt_text.startswith("*") else ""
-            prev = " ".join(blocks[i - 1][1]) if i and blocks[i - 1][0] == "text" else ""
-            prefer = prefer_from(prev, before=len(prev)) + prefer_from(head)
-            for q in quotes:
-                rows.append(quote_claim(q, translation or f"Quote under: {head}", prefer, path))
-            continue
-        text = " ".join(blines)
-        # blockquotes indented inside a list item: "- bullet ... > quote"
-        text = re.sub(r"\s>\s", " ", text)
-        for q, tr, pos in inline_quotes(text):
-            prefer = prefer_from(text, before=pos) + prefer_from(head)
-            rows.append(quote_claim(q, tr or strip_md(text)[:300], prefer, path))
+        if line.lstrip().startswith("|"):  # table row: first cell = point, second = source
+            cells = [c.strip() for c in line.strip().strip("|").split("|")]
+            claim_text = strip_md(cells[0])
+            prefer = prefer_from(cells[1] if len(cells) > 1 else "") or prefer_from(heading)
+        elif para.lstrip().startswith(">"):  # blockquote: translation is the next italic paragraph
+            nxt = text[para_end + 2:].split("\n\n", 1)[0].strip() if para_end != -1 else ""
+            claim_text = re.sub(r"\s+", " ", nxt.split("*")[1]) if nxt.startswith("*") else f"Quote under: {heading}"
+            prev_end = para_start - 2
+            prev = text[text.rfind("\n\n", 0, prev_end) + 2:prev_end] if prev_end > 0 else ""
+            prefer = prefer_from(prev, before=len(prev)) + prefer_from(heading)
+        else:  # running text: translation may follow as (*...*)
+            tr = re.match(r"\s*\(\*([^*]+)\*\)", text[end:])
+            claim_text = re.sub(r"\s+", " ", tr.group(1)) if tr else re.sub(r"\s+", " ", strip_md(para))[:300]
+            prefer = prefer_from(para, before=start - para_start) + prefer_from(heading)
+        rows.append(quote_claim(q, lang, claim_text, prefer, path))
     return rows
 
 
 # ---------------------------------------------------------------- 5. Hellu's brief
 # (id, claim_text, value, unit, metric, verbatim quote from the brief, method, status, notes)
+# All quotes here are English (the brief is in English).
 BRIEF_CLAIMS = [
     ("mot:total_fi", "Symptoms to first treatment, Finland: 155 days on average", 155, "days",
      "delay_symptoms_to_treatment",
@@ -309,6 +313,9 @@ BRIEF_CLAIMS = [
      None, None, "regional_pathway",
      'Referral handled "usually within 1–2 working days"; invitation "usually within 3–4 working days"',
      "quoted", "verified by Hellu", "stages: Referral, First specialist visit"),
+    ("reg:ks_referral", "Keski-Suomi: referral handled as quickly as possible (no time stated)",
+     None, None, "regional_pathway", 'Referral handled "as quickly as possible"', "quoted",
+     "verified by Hellu", "stage: Referral"),
     ("reg:ks_target", "Keski-Suomi: lung clinic appointment within 2–3 weeks, at the latest about 1 month",
      None, None, "regional_pathway",
      "target: lung clinic appointment within 2–3 weeks, at the latest about 1 month after the referral arrives",
@@ -346,6 +353,11 @@ BRIEF_CLAIMS = [
      "hospital discharge register (Hilmo) diagnoses matched the Cancer Registry for about 90% of most "
      "cancer types", "quoted", "verified by Hellu",
      "Ryynänen et al., Lääkärilehti 2019; reliability of referral/first-procedure data still to be confirmed"),
+    ("filha:registry", "No lung cancer or other cancer quality registry; Cancer Registry, THL and FICAN are "
+     "assessing one, starting with lung cancer", None, None, "quality_registry",
+     "Finland has no lung cancer or other cancer quality registry. The Cancer Registry, THL and FICAN are "
+     "assessing what registry is needed, starting with lung cancer.", "quoted", "verified locally",
+     "Hellu's summary of the Filha programme; confirmed against Filha p.21 (see the Filha p.21 quote claims)"),
     ("alert:returned_7d", "Draft alert: referral returned and no new referral within 7 days", 7, "days",
      "alert_threshold", "No new referral within 7 days → alert", "quoted", "draft",
      "Hellu's draft rule; threshold to confirm with Kaisa"),
@@ -358,55 +370,121 @@ BRIEF_CLAIMS = [
     ("mentor:hanna_occupational", "Occupational health gets patients to specialist care faster", None, None,
      "mentor_insight", "Occupational health gets patients to specialist care faster (mentor: Hanna).",
      "mentor", "mentor insight", "Hanna; no written source"),
+    ("mentor:one_third", "Mentor mention 'One-third split' (meaning and source not yet known)", None, None,
+     "mentor_insight", '"One-third split"', "mentor", "draft",
+     "listed in the brief as mentor insight, source to confirm with Kaisa; content unknown, so not citable"),
+    # Statements in the brief that our verification contradicts (status superseded).
+    ("brief:no_lung_guideline", "Lung cancer has no national guideline apart from the 2026 programme "
+     "(brief §4, diabetes comparison)", None, None, "national_guideline",
+     "National programme since 2026, but no pathway or time targets yet", "quoted", "superseded",
+     "SUPERSEDED: Filha p.4 says common diagnostic guidelines exist and Filha cites the Käypä hoito "
+     "'Keuhkosyöpä' guideline (2017, ref. 8, p.27); what is missing is national timing guidance. "
+     "Superseded by: {Keuhkosyöpien diagnostiikkaan on Suomessa yhteiset ohjeet} {Keuhkosyöpä. Käypä hoito -suositus}"),
+    ("brief:referral_organisation", "The Filha programme reports regional variation in diagnostic speed, "
+     "referral organisation and surgery volumes", None, None, "regional_variation",
+     "It reports large regional variation in diagnostic speed, referral organisation and surgery volumes.",
+     "quoted", "superseded",
+     "SUPERSEDED: Filha p.4 says 'hoitovastuun järjestämisessä', i.e. organisation of care responsibility, "
+     "not referral organisation. Superseded by: {alueellinen vaihtelu diagnoosin nopeudessa}"),
 ]
 
 
 def brief_claims() -> list[dict]:
     rows = []
     for cid, text, value, unit, metric, quote, method, status, notes in BRIEF_CLAIMS:
+        quote = quote.strip('"') if quote.startswith('"') and quote.endswith('"') else quote
         labels = sources.find(BRIEF, quote)
         rows.append({
             "id": cid, "claim_text": text, "value": value, "unit": unit, "county": None, "metric": metric,
             "source_doc": BRIEF, "location": "; ".join(labels) if labels else None, "quote": quote,
-            "method": method, "status": status, "notes": notes,
+            "quote_lang": "en", "method": method, "status": status, "notes": notes,
         })
     return rows
 
 
-# ---------------------------------------------------------------- main
+# ---------------------------------------------------------------- assembly
 def merge_quotes(rows: list[dict]) -> list[dict]:
     """The same quote cited in several places becomes one claim; keep the first claim text."""
     out: dict[str, dict] = {}
     for r in rows:
+        if r["id"] in out and r.get("quote_lang") != out[r["id"]].get("quote_lang"):
+            # Same text, different (or missing) language marker: never merge it away silently.
+            r["id"] += f":lang-{r.get('quote_lang') or 'missing'}"
         if r["id"] in out and r["id"].startswith("q:"):
             cited = r["notes"].split("cited in ", 1)[1].split(";")[0]
             if cited not in out[r["id"]]["notes"]:
-                out[r["id"]]["notes"] = out[r["id"]]["notes"].replace(
-                    "cited in ", f"cited in {cited}, ", 1)
+                out[r["id"]]["notes"] = out[r["id"]]["notes"].replace("cited in ", f"cited in {cited}, ", 1)
         else:
             out[r["id"]] = r
     return list(out.values())
 
 
+def attach_english(rows: list[dict]) -> list[dict]:
+    """English doc quotes belong to a brief claim: attach them to it instead of keeping a separate
+    claim. Unmatched ones stay as 'draft' claims, which check_claims.py rejects."""
+    brief = [r for r in rows if r["source_doc"] == BRIEF and not r["id"].startswith("q:")]
+    out = []
+    for r in rows:
+        if r["id"].startswith("q:") and r.get("quote_lang") == "en":
+            key = sources.normalise(r["quote"])
+            owner = next((b for b in brief if key and key in sources.normalise(b["quote"])), None)
+            if owner:
+                cited = r["notes"].split("cited in ", 1)[1].split(";")[0]
+                owner["notes"] += f"; quoted in {cited}"
+                continue
+            r["notes"] += "; ENGLISH QUOTE NOT LINKED to a brief claim (add it to BRIEF_CLAIMS)"
+        out.append(r)
+    return out
+
+
+def resolve_superseded(rows: list[dict]) -> None:
+    """Replace {quote prefix} placeholders in superseded notes with the ids of the verified claims."""
+    for r in rows:
+        if r["status"] != "superseded":
+            continue
+        def sub(m: re.Match) -> str:
+            prefix = sources.normalise(m.group(1))
+            hit = [x["id"] for x in rows if x.get("quote") and x["status"] == "verified locally"
+                   and x["source_doc"] != BRIEF and sources.normalise(x["quote"]).startswith(prefix)]
+            assert hit, f"{r['id']}: no verified claim starts with {m.group(1)!r}"
+            return hit[0]
+        r["notes"] = re.sub(r"\{([^}]+)\}", sub, r["notes"])
+
+
+def add_translations(rows: list[dict]) -> int:
+    if not TRANSLATIONS.exists():
+        return 0
+    tr = pd.read_csv(TRANSLATIONS, dtype=str).fillna("")
+    by_key = dict(zip(tr["quote_key"], tr["quote_en"]))
+    n = 0
+    for r in rows:
+        if r.get("quote_lang") == "fi" and by_key.get(quote_key(r["quote"])):
+            r["quote_en"] = by_key[quote_key(r["quote"])]
+            n += 1
+    return n
+
+
 def main() -> int:
-    rows = (county_claims() + national_claims() + kuva16_claims() + blind_spot_claims()
-            + doc_quote_claims("docs/source_verification.md") + doc_quote_claims("docs/recommendations.md")
-            + brief_claims())
-    rows = merge_quotes(rows)
+    rows = (county_claims() + national_claims() + kuva16_claims() + brief_claims()
+            + blind_spot_claims() + [r for d in QUOTE_DOCS for r in doc_quote_claims(d)])
+    rows = attach_english(merge_quotes(rows))
+    resolve_superseded(rows)
+    n_tr = add_translations(rows)
     con = ledger.create()
     ledger.insert(con, rows)
     con.close()
 
-    print(f"Loaded {len(rows)} claims into {ledger.DB}")
-    for field in ("status", "method"):
+    print(f"Loaded {len(rows)} claims into {ledger.DB} ({n_tr} Finnish quotes with an English translation)")
+    for field in ("status", "method", "quote_lang"):
         print(f"\nClaims per {field}:")
-        for k, n in Counter(r[field] for r in rows).most_common():
-            print(f"  {k:<18} {n}")
-    missing = [r for r in rows if r["method"] in ("quoted", "mentor") and not r["location"]]
-    if missing:
-        print(f"\n{len(missing)} quotes NOT FOUND in their sources (src/check_claims.py will fail):")
-        for r in missing:
-            print(f"  {r['id']}  [{r['source_doc']}]  {r['quote'][:110]!r}")
+        for k, n in Counter(r.get(field) for r in rows).most_common():
+            print(f"  {str(k):<18} {n}")
+    bad = [r for r in rows if r.get("quote") and (not r["location"] or not r.get("quote_lang")
+                                                  or "NOT LINKED" in r["notes"])]
+    if bad:
+        print(f"\n{len(bad)} quote problems (src/check_claims.py will fail):")
+        for r in bad:
+            print(f"  {r['id']}  [{r['source_doc']}] lang={r.get('quote_lang')}  {r['quote'][:100]!r}")
     return 0
 
 
