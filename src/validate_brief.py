@@ -1,8 +1,9 @@
 """Validate a county brief against the claim ledger.
 
-A brief has three sections (where_we_lag, how_sure_are_we, what_to_do_first); each is a list of
-sentences {text, claim_ids}. Problems reported:
-  - a section is empty, or a sentence has no claim ID
+A brief has three sections (where_we_lag, how_sure_are_we, what_to_do_first); each is
+{headline: sentence, details: [sentence, ...]} and a sentence is {text, claim_ids}. Problems reported:
+  - a section has no headline or no details; a headline is longer than HEADLINE_MAX_WORDS
+  - a sentence has no claim ID
   - a claim ID does not exist in data/ledger.sqlite
   - a claim ID has a status a brief may not cite (draft, superseded)
   - a claim ID was not among the claims given to the model for this county
@@ -24,6 +25,17 @@ from pathlib import Path
 import ledger
 
 SECTIONS = ("where_we_lag", "how_sure_are_we", "what_to_do_first")
+HEADLINE_MAX_WORDS = 35
+
+
+def iter_sentences(brief: dict):
+    """(location, sentence) for every sentence: each section's headline, then its details."""
+    for section in SECTIONS:
+        sec = brief.get(section) or {}
+        if sec.get("headline"):
+            yield f"{section}.headline", sec["headline"]
+        for i, s in enumerate(sec.get("details") or []):
+            yield f"{section}.details[{i}]", s
 # Study period 2019–2023, 95% confidence level, 12-month follow-up window.
 FRAME_NUMBERS = {2019.0, 2023.0, 95.0, 12.0}
 NUM = re.compile(r"(?<![\w.,])(\d{1,3}(?:,\d{3})+(?![\d])|\d+(?:[.,]\d+)?)(?!\w)")
@@ -67,38 +79,41 @@ def validate(brief: dict, allowed_ids: set[str] | None = None, claims: dict[str,
     claims = claims if claims is not None else load_claims()
     problems = []
     for section in SECTIONS:
-        sentences = brief.get(section) or []
-        if not sentences:
-            problems.append(f"{section}: section is empty")
-        for i, s in enumerate(sentences):
-            where = f"{section}[{i}]"
-            text, ids = s.get("text", ""), s.get("claim_ids") or []
-            if not ids:
-                problems.append(f"{where}: no claim ID: {text!r}")
+        sec = brief.get(section) or {}
+        if not sec.get("headline"):
+            problems.append(f"{section}: no headline")
+        elif len(sec["headline"].get("text", "").split()) > HEADLINE_MAX_WORDS:
+            problems.append(f"{section}.headline: longer than {HEADLINE_MAX_WORDS} words")
+        if not sec.get("details"):
+            problems.append(f"{section}: no detail sentences")
+    for where, s in iter_sentences(brief):
+        text, ids = s.get("text", ""), s.get("claim_ids") or []
+        if not ids:
+            problems.append(f"{where}: no claim ID: {text!r}")
+            continue
+        cited = []
+        for cid in ids:
+            c = claims.get(cid)
+            if c is None:
+                problems.append(f"{where}: claim ID {cid!r} does not exist")
+            elif c["status"] not in ledger.CITABLE:
+                problems.append(f"{where}: claim {cid!r} has status {c['status']!r}, which may not be cited")
+            elif allowed_ids is not None and cid not in allowed_ids:
+                problems.append(f"{where}: claim {cid!r} was not provided for this county")
+            else:
+                cited.append(c)
+        if not cited:
+            continue
+        pool = set().union(*(claim_numbers(c) for c in cited))
+        for x, d in numbers(text):
+            if x in FRAME_NUMBERS or matches(x, d, pool):
                 continue
-            cited = []
-            for cid in ids:
-                c = claims.get(cid)
-                if c is None:
-                    problems.append(f"{where}: claim ID {cid!r} does not exist")
-                elif c["status"] not in ledger.CITABLE:
-                    problems.append(f"{where}: claim {cid!r} has status {c['status']!r}, which may not be cited")
-                elif allowed_ids is not None and cid not in allowed_ids:
-                    problems.append(f"{where}: claim {cid!r} was not provided for this county")
-                else:
-                    cited.append(c)
-            if not cited:
-                continue
-            pool = set().union(*(claim_numbers(c) for c in cited))
-            for x, d in numbers(text):
-                if x in FRAME_NUMBERS or matches(x, d, pool):
-                    continue
-                problems.append(f"{where}: number {x:g} is not in its cited claims {ids}: {text!r}")
-            statuses = {c["status"] for c in cited}
-            if "preliminary" in statuses and "preliminary" not in text.lower():
-                problems.append(f"{where}: cites a preliminary claim but does not say 'preliminary': {text!r}")
-            if "mentor insight" in statuses and "mentor" not in text.lower():
-                problems.append(f"{where}: cites a mentor insight but does not say 'mentor': {text!r}")
+            problems.append(f"{where}: number {x:g} is not in its cited claims {ids}: {text!r}")
+        statuses = {c["status"] for c in cited}
+        if "preliminary" in statuses and "preliminary" not in text.lower():
+            problems.append(f"{where}: cites a preliminary claim but does not say 'preliminary': {text!r}")
+        if "mentor insight" in statuses and "mentor" not in text.lower():
+            problems.append(f"{where}: cites a mentor insight but does not say 'mentor': {text!r}")
     return problems
 
 

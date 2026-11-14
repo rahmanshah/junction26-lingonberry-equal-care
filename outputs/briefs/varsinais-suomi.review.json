@@ -1,0 +1,10 @@
+{
+ "county": "Varsinais-Suomi",
+ "brief_generated_at": "2026-11-14T11:31:07+00:00",
+ "reviewed_at": "2026-11-14T11:33:35+00:00",
+ "note": "Flags are for human review only; they never change the brief's status or approve it.",
+ "rule_problems": [],
+ "model": "gemini-4-hydrogen",
+ "raw_response": "data/processed/gemini_raw/review_varsinais-suomi_20261114T113301Z.json",
+ "flags": []
+}

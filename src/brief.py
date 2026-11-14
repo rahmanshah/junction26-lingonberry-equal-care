@@ -29,7 +29,8 @@ from pydantic import BaseModel, Field
 import counties
 import gemini
 import ledger
-from validate_brief import SECTIONS, validate
+from review_brief import review, rule_problems
+from validate_brief import SECTIONS, iter_sentences, validate
 
 OUT = Path("outputs/briefs")
 RECS = Path("docs/recommendations.md")
@@ -41,10 +42,15 @@ class Sentence(BaseModel):
     claim_ids: list[str] = Field(description="IDs of the claims this sentence relies on (at least one).")
 
 
+class Section(BaseModel):
+    headline: Sentence = Field(description="The main point in one sentence (at most 30 words), with claim IDs.")
+    details: list[Sentence] = Field(description="2–4 supporting sentences, each with claim IDs.")
+
+
 class Brief(BaseModel):
-    where_we_lag: list[Sentence]
-    how_sure_are_we: list[Sentence]
-    what_to_do_first: list[Sentence]
+    where_we_lag: Section
+    how_sure_are_we: Section
+    what_to_do_first: Section
 
 
 SYSTEM = """You write a short evidence brief on the lung cancer care pathway for one Finnish wellbeing \
@@ -65,20 +71,34 @@ digitised, and pass on any caveat in the claim's notes (e.g. a confidence interv
 4. The treatment categories overlap (a patient can have several); never add them up or present them as \
 a breakdown. "No treatment record within 12 months" mixes untreated patients and treatment that was not \
 recorded; never call it "untreated" or "missing data". MDT records measure recording practice, not care.
-5. Read the no-treatment-record share as a data-quality signal. If it is at or below the national value, \
-recording looks relatively complete, so a low curative share is less likely to be a recording artefact; \
-do not cite a low no-record share as a reason to fix recording. If it is above national, a low share of \
-a treatment type may partly reflect unrecorded treatment.
+5. Read the no-treatment-record share as a data-quality signal, and present that reading as an \
+inference, not a finding. If it is at or below the national value, this is consistent with relatively \
+complete treatment recording (it is not direct evidence of it), so a low curative share is less likely \
+to be only a recording artefact; do not cite a low no-record share as a reason to fix recording. If it \
+is above national, a low share of a treatment type may partly reflect unrecorded treatment.
 6. Label status in the sentence itself: a sentence citing a claim with status "preliminary" must say \
 "preliminary" (e.g. "preliminary, unpublished figures"); one citing "mentor insight" must say \
 "mentor insight". Claims "verified by Hellu" were read in full by a teammate in documents we do not \
 hold locally (regional pathway documents, the Health Care Act, THL guidance, a journal article); \
 describe them by what they are, not as regional documents unless they are.
-7. "where_we_lag": where this county's pathway lags national values (3–5 sentences). \
-"how_sure_are_we": what is well supported, what is uncertain and what public data cannot show \
-(3–5 sentences). "what_to_do_first": the first steps, drawn from the team's draft recommendations and \
-suited to this county's data, each backed by evidence claims (2–4 sentences).
-8. Plain, direct English. No claims about other counties. No headings or numbering inside sentences."""
+7. Respect each claim's scope ("scope: …" in its notes). Never use a claim for something outside its \
+scope: e.g. the HILMO ~90% claim concerns diagnosis concordance only and says nothing about treatment \
+recording; a regional finding describes only the named region's document; national averages are not \
+county figures.
+8. Describe planned national measures as plans, with the plan's own verb and date, in the present \
+tense: e.g. "the roadmap plans national pathways with target access times for five cancers by \
+2026–2028"; "the Filha programme's diagnostics recommendation is due to be completed before the 2030 \
+mid-term evaluation". A recommendation being completed is not the same as it being implemented. Never \
+write "will" about national measures. Never use the words certain, proves, guarantees or definitely.
+9. Each section has a headline (the main point, one sentence of at most 30 words, with claim IDs) and \
+2–4 detail sentences. "where_we_lag": where this county's pathway lags national values. \
+"how_sure_are_we": what is well supported, what is uncertain and what public data cannot show. \
+"what_to_do_first": the first steps, drawn from the team's draft recommendations and suited to this \
+county's data, each backed by evidence claims.
+10. Plain, direct English. No claims about other counties. No headings or numbering inside sentences. \
+Apply these rules and the claim notes by writing accurately; do not restate them in the brief (do not \
+write things like "completing is not the same as implementing" or "this describes only its own \
+document"), and keep each sentence under about 60 words."""
 
 
 def load(statuses=ledger.CITABLE) -> list[dict]:
@@ -167,12 +187,12 @@ def run(name: str) -> dict:
             brief = None
             continue
         brief = parsed.model_dump()
-        problems = validate(brief, allowed, by_id)
+        problems = validate(brief, allowed, by_id) + rule_problems(brief, by_id)
         if not problems:
             break
 
     status = "validated" if brief is not None and not problems else "DRAFT"
-    cited = sorted({cid for s in SECTIONS for x in (brief or {}).get(s, []) for cid in x["claim_ids"]})
+    cited = sorted({cid for _, s in iter_sentences(brief or {}) for cid in s["claim_ids"]})
     doc = {
         "county": short, "county_full": full, "status": status,
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
@@ -183,23 +203,37 @@ def run(name: str) -> dict:
                          for cid in cited if cid in by_id},
     }
     OUT.mkdir(parents=True, exist_ok=True)
+    # Model review: flags for human review only, saved next to the brief; never changes `status`.
+    rev = review(doc, slug, OUT, by_id)
+    doc["review"] = {"file": f"outputs/briefs/{slug}.review.json", "flags": len(rev["flags"]),
+                     "note": rev["note"]}
     (OUT / f"{slug}.json").write_text(json.dumps(doc, ensure_ascii=False, indent=1), encoding="utf-8")
-    (OUT / f"{slug}.md").write_text(to_markdown(doc), encoding="utf-8")
+    (OUT / f"{slug}.md").write_text(to_markdown(doc, rev), encoding="utf-8")
     return doc
 
 
-def to_markdown(doc: dict) -> str:
-    titles = {"where_we_lag": "Where we lag", "how_sure_are_we": "How sure are we",
-              "what_to_do_first": "What to do first"}
+TITLES = {"where_we_lag": "Where do we lag?", "how_sure_are_we": "How sure are we?",
+          "what_to_do_first": "What should we do first?"}
+
+
+def to_markdown(doc: dict, rev: dict | None = None) -> str:
     lines = [f"# {doc['county']}: lung cancer pathway brief", "",
              f"Status: **{doc['status']}** · {doc['model']} (thinking {doc['thinking_level']}) · "
              f"{doc['generated_at']} · attempts: {doc['attempts']}", ""]
     if doc["problems"]:
         lines += ["**Validation problems:**", ""] + [f"- {p}" for p in doc["problems"]] + [""]
     for s in SECTIONS:
-        lines += [f"## {titles[s]}", ""]
-        for x in (doc["brief"] or {}).get(s, []):
+        sec = (doc["brief"] or {}).get(s) or {}
+        lines += [f"## {TITLES[s]}", ""]
+        if sec.get("headline"):
+            h = sec["headline"]
+            lines += [f"**{h['text']}** `{', '.join(h['claim_ids'])}`", ""]
+        for x in sec.get("details") or []:
             lines.append(f"- {x['text']} `{', '.join(x['claim_ids'])}`")
+        lines.append("")
+    if rev is not None:
+        lines += ["## Review flags (for human review only)", "", f"_{rev['note']}_", ""]
+        lines += [f"- [{f['severity']}] `{f['location']}`: {f['problem']}" for f in rev["flags"]] or ["- none"]
         lines.append("")
     lines += ["## Claims cited", ""]
     for cid, c in doc["cited_claims"].items():

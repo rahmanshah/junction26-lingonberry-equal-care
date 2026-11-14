@@ -153,7 +153,8 @@ def kuva16_claims() -> list[dict]:
             "value": r.value, "unit": "%", "county": None if national else r.county,
             "metric": f"age_adjusted_share_curative_{r.sex}", "source_doc": REPORT, "location": "Kuva 16",
             "method": "digitised", "status": "verified locally",
-            "notes": "; ".join(x for x in (f"precision ±{r.precision_pp} pp", "src/digitise_kuva16.py",
+            "notes": "; ".join(x for x in ("scope: curative treatment only, by sex; read off a figure",
+                                           f"precision ±{r.precision_pp} pp", "src/digitise_kuva16.py",
                                            r.note if isinstance(r.note, str) else "") if x),
         })
     return rows
@@ -389,9 +390,27 @@ BRIEF_CLAIMS = [
 ]
 
 
+# Scope notes: what a claim does NOT cover. Passed to the brief model so evidence is not stretched.
+SCOPE = {
+    "lit:hilmo_90": "diagnoses only: HILMO vs Cancer Registry diagnosis concordance; says nothing about how "
+                    "completely treatment, referral or MDT is recorded",
+    "thl:21_2016": "definitions only; says nothing about whether counties use or report them",
+    "mot:": "national averages from a preliminary study; not county-specific",
+    "reg:": "the named region's own document only; not evidence about any other county",
+    "mentor:": "general expert view; not county-specific and not from a written source",
+    "law:": "national law; applies to every county",
+}
+
+
+def scope_for(cid: str) -> str | None:
+    return next((s for key, s in SCOPE.items() if cid == key or (key.endswith(":") and cid.startswith(key))), None)
+
+
 def brief_claims() -> list[dict]:
     rows = []
     for cid, text, value, unit, metric, quote, method, status, notes in BRIEF_CLAIMS:
+        if scope_for(cid):
+            notes = f"scope: {scope_for(cid)}; {notes}"
         quote = quote.strip('"') if quote.startswith('"') and quote.endswith('"') else quote
         labels = sources.find(BRIEF, quote)
         rows.append({
