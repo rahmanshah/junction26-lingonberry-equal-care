@@ -5,11 +5,13 @@ data/processed/gemini_raw/<tag>_<UTC time>.json. The API key is read from .env a
 """
 import json
 import os
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
 from dotenv import load_dotenv
 from google import genai
+from google.genai import errors as genai_errors
 from google.genai import types
 from pydantic import BaseModel
 
@@ -38,24 +40,38 @@ def client() -> genai.Client:
     return _CLIENT
 
 
+TRANSIENT = {429, 500, 502, 503, 504}
+
+
 def structured_call(model: str, system: str, prompt: str, schema: type[BaseModel], tag: str,
-                    thinking_level: str | None = None) -> tuple[BaseModel | None, str, Path]:
-    """Call `model` with JSON output matching `schema`. Returns (parsed, raw text, raw file path)."""
+                    thinking_level: str | None = None, temperature: float = 0.2,
+                    seed: int | None = None, retries: int = 4) -> tuple[BaseModel | None, str, Path]:
+    """Call `model` with JSON output matching `schema`. Returns (parsed, raw text, raw file path).
+    Transient API errors (rate limit, overload) are retried with exponential backoff."""
+    settings = {"temperature": temperature, "seed": seed, "thinking_level": thinking_level,
+                "response_schema": schema.__name__}
     config = types.GenerateContentConfig(
         system_instruction=system,
         response_mime_type="application/json",
         response_schema=schema,
-        temperature=0.2,
+        temperature=temperature,
+        seed=seed,
         thinking_config=types.ThinkingConfig(thinking_level=thinking_level) if thinking_level else None,
     )
     started = datetime.now(timezone.utc)
-    response = client().models.generate_content(model=model, contents=prompt, config=config)
+    for attempt in range(retries + 1):
+        try:
+            response = client().models.generate_content(model=model, contents=prompt, config=config)
+            break
+        except genai_errors.APIError as e:
+            if getattr(e, "code", None) not in TRANSIENT or attempt == retries:
+                raise
+            time.sleep(15 * 2 ** attempt)
     RAW_DIR.mkdir(parents=True, exist_ok=True)
-    path = RAW_DIR / f"{tag}_{started.strftime('%Y%m%dT%H%M%SZ')}.json"
+    path = RAW_DIR / f"{tag}_{started.strftime('%Y%m%dT%H%M%S%fZ')}.json"
     record = {
         "tag": tag, "model": model, "requested_at": started.isoformat(),
-        "config": {"thinking_level": thinking_level, "temperature": 0.2,
-                   "response_schema": schema.__name__},
+        "model_version": getattr(response, "model_version", None), "config": settings,
         "system_instruction": system, "prompt": prompt,
         "response": response.model_dump(mode="json", exclude_none=True),
     }

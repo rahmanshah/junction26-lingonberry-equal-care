@@ -69,6 +69,13 @@ Build checklist: PLAN.md (tick tasks when done).
   -> src/validate_brief.py (hard) + src/review_brief.py code rules (hard: overclaiming words, future
   tense about plans) -> one retry -> DRAFT if still failing; then MODEL_EXTRACT review flags (soft,
   human review only) in outputs/briefs/<county>.review.json. Briefs: outputs/briefs/<county>.json/.md.
+- Validation also requires: "crude" in any sentence citing a cty: share; "recommend…" in any sentence
+  citing our recommendations (rec:1–3, status "recommendation (ours)", method "proposed", sourced to
+  docs/recommendations.md). Code rule: never "occupational health … excluded" (the report does not
+  mention it). Review settings: temperature 0, fixed seed, model default thinking (MINIMAL is not
+  supported; LOW was not more repeatable). Review output is repeatable in which sentences are flagged,
+  not in severity/wording.
+- All counties: `uv run python src/generate_all.py` -> outputs/briefs/summary.{json,md}.
 - App: `uv run streamlit run src/app.py` (serves saved briefs; "Regenerate with Gemini" runs the
   pipeline live). Smoke test: streamlit.testing.v1.AppTest on src/app.py.
 - docs/:

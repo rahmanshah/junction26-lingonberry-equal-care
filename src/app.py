@@ -42,6 +42,7 @@ STATUS_STYLE = {  # (badge colour, icon) — icon + label, never colour alone
     "verified by Hellu": ("blue", ":material/person_check:"),
     "preliminary": ("orange", ":material/hourglass_top:"),
     "mentor insight": ("violet", ":material/forum:"),
+    ledger.RECOMMENDATION: ("primary", ":material/lightbulb:"),
     "draft": ("gray", ":material/edit_note:"),
     "superseded": ("red", ":material/block:"),
 }
@@ -119,6 +120,9 @@ def claim_card(cid: str) -> None:
             return
         st.markdown(f"**{c['claim_text']}**")
         status_badge(c["status"])
+        if c["status"] == ledger.RECOMMENDATION:
+            st.markdown(":primary[:material/lightbulb: **Our recommendation** · the team's own draft proposal, "
+                        "not evidence. Its evidence is cited separately in the same sentence.]")
         st.caption(f"`{cid}` · method: {c['method']} · source: {source_name(c)} · location: {c['location']}")
         if c.get("quote"):
             lang = {"fi": "Finnish original", "en": "Quoted from the team brief"}.get(c["quote_lang"], "Quote")
@@ -225,6 +229,8 @@ with tab_brief:
                 "national, not county-specific.\n"
                 "- **Mentor insight:** expert views without a written source.\n"
                 "- **Regional pathways:** five regions' documents, read by a teammate.\n"
+                "- **Our recommendations** (:material/lightbulb:) are the team's own drafts, not yet reviewed "
+                "by mentors; each is cited together with its evidence.\n"
                 "- Public aggregate data only; no patient-level data.")
         if review_doc:
             with st.container(border=True):

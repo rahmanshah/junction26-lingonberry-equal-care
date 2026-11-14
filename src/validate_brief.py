@@ -11,6 +11,10 @@ A brief has three sections (where_we_lag, how_sure_are_we, what_to_do_first); ea
     quote, translation, location), allowing rounding to the precision printed in the sentence
   - a sentence citing a preliminary claim does not say "preliminary", or one citing a mentor
     insight does not say "mentor"
+  - a sentence citing a county share (cty: claim, crude) does not say so: "crude", "unadjusted",
+    "not adjusted" (or Finnish "vakioimaton")
+  - a sentence citing one of our recommendations (status "recommendation (ours)") does not say it is
+    a recommendation ("recommend…")
 
 Numbers that describe the study frame, not a finding, are always allowed: FRAME_NUMBERS.
 
@@ -38,6 +42,7 @@ def iter_sentences(brief: dict):
             yield f"{section}.details[{i}]", s
 # Study period 2019–2023, 95% confidence level, 12-month follow-up window.
 FRAME_NUMBERS = {2019.0, 2023.0, 95.0, 12.0}
+CRUDE = re.compile(r"\bcrude\b|\bunadjusted\b|\bnot adjusted\b|vakioimato", re.I)
 NUM = re.compile(r"(?<![\w.,])(\d{1,3}(?:,\d{3})+(?![\d])|\d+(?:[.,]\d+)?)(?!\w)")
 
 
@@ -114,6 +119,10 @@ def validate(brief: dict, allowed_ids: set[str] | None = None, claims: dict[str,
             problems.append(f"{where}: cites a preliminary claim but does not say 'preliminary': {text!r}")
         if "mentor insight" in statuses and "mentor" not in text.lower():
             problems.append(f"{where}: cites a mentor insight but does not say 'mentor': {text!r}")
+        if any(c["id"].startswith("cty:") for c in cited) and not CRUDE.search(text):
+            problems.append(f"{where}: cites a crude county share but does not say 'crude': {text!r}")
+        if ledger.RECOMMENDATION in statuses and "recommend" not in text.lower():
+            problems.append(f"{where}: cites our recommendation but does not say it is a recommendation: {text!r}")
     return problems
 
 

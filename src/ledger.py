@@ -8,8 +8,11 @@ Every number or statement used in the brief gets a row: what is claimed, where i
           quoted     verbatim text from a source; `quote` must be found in source_doc at location
           mentor     expert input without a written source
           assessed   our judgement from reading a source (e.g. "stage X is not measured")
+          proposed   our own recommendation (docs/recommendations.md), not evidence
   status: verified locally | verified by Hellu | preliminary | mentor insight | draft | superseded
-          (superseded = contradicted by a verified source; notes name the claim that replaces it)
+          | recommendation (ours)
+          (superseded = contradicted by a verified source; notes name the claim that replaces it;
+           recommendation (ours) = the team's draft recommendation; a brief citing it must say so)
   quote_lang: language of `quote`, "fi" or "en". Required whenever there is a quote; it comes from
           an explicit marker (<q lang="..."> in docs, or the lang field in code), never guessed.
   quote_en: English translation of a Finnish quote (src/translate_quotes.py). Stored next to the
@@ -21,11 +24,13 @@ import sqlite3
 from pathlib import Path
 
 DB = Path("data/ledger.sqlite")
-METHODS = ("computed", "digitised", "quoted", "mentor", "assessed")
-STATUSES = ("verified locally", "verified by Hellu", "preliminary", "mentor insight", "draft", "superseded")
+METHODS = ("computed", "digitised", "quoted", "mentor", "assessed", "proposed")
+RECOMMENDATION = "recommendation (ours)"
+STATUSES = ("verified locally", "verified by Hellu", "preliminary", "mentor insight", RECOMMENDATION,
+            "draft", "superseded")
 QUOTE_LANGS = ("fi", "en")
 # Statuses a brief may cite.
-CITABLE = ("verified locally", "verified by Hellu", "preliminary", "mentor insight")
+CITABLE = ("verified locally", "verified by Hellu", "preliminary", "mentor insight", RECOMMENDATION)
 
 SCHEMA = f"""
 CREATE TABLE claims (

@@ -72,9 +72,9 @@ ROWS = [
         "measured": "no",
         "by_county": "no",
         "source": "§3.3",
-        "note": ("Primary care visits are excluded from the data: "
+        "note": ("Primary care visits are not included in the report's data: "
                  + fi("Avoterveydenhuollon käyntejä ei ole mukana aineistossa.")
-                 + " Occupational health is not mentioned."),
+                 + " Occupational health is not mentioned in the report at all."),
         "mot": "primary",
         "regional": ("Only KYS tells primary care what to do when the X-ray is normal but symptoms continue "
                      "(refer anyway). OYS and Keski-Suomi name occupational health as a referral source."),

@@ -33,7 +33,6 @@ from review_brief import review, rule_problems
 from validate_brief import SECTIONS, iter_sentences, validate
 
 OUT = Path("outputs/briefs")
-RECS = Path("docs/recommendations.md")
 THINKING = "HIGH"
 
 
@@ -80,7 +79,11 @@ is above national, a low share of a treatment type may partly reflect unrecorded
 "preliminary" (e.g. "preliminary, unpublished figures"); one citing "mentor insight" must say \
 "mentor insight". Claims "verified by Hellu" were read in full by a teammate in documents we do not \
 hold locally (regional pathway documents, the Health Care Act, THL guidance, a journal article); \
-describe them by what they are, not as regional documents unless they are.
+describe them by what they are, not as regional documents unless they are. Every sentence that cites a \
+county share (a claim whose ID starts with "cty:") must say the share is crude (the word "crude"). A \
+sentence citing a claim with status "recommendation (ours)" must say it is the team's recommendation \
+(e.g. "the team recommends"). In what_to_do_first, cite the relevant team recommendation (rec:1, rec:2 \
+or rec:3) together with the evidence claims that support it; do not add steps that are in neither.
 7. Respect each claim's scope ("scope: …" in its notes). Never use a claim for something outside its \
 scope: e.g. the HILMO ~90% claim concerns diagnosis concordance only and says nothing about treatment \
 recording; a regional finding describes only the named region's document; national averages are not \
@@ -118,17 +121,6 @@ def select_claims(full_name: str) -> list[dict]:
     return county + national + evidence
 
 
-def recommendations() -> str:
-    text = RECS.read_text(encoding="utf-8")
-    text = re.sub(r'<q lang="[a-z]{2}">(.*?)</q>', r"“\1”", text, flags=re.S)
-    parts = []
-    for m in re.finditer(r"^## (\d\..+?)\n(.*?)(?=^## |\Z)", text, re.M | re.S):
-        what = re.search(r"\*\*What:\*\*(.*?)(?=\n\*\*|\Z)", m.group(2), re.S)
-        parts.append(f"{m.group(1).strip()}\n{re.sub(r'\s+', ' ', what.group(1)).strip() if what else ''}")
-    assert len(parts) == 3, f"Expected 3 recommendations in {RECS}, found {len(parts)}"
-    return "\n\n".join(parts)
-
-
 def render_claim(c: dict) -> str:
     line = f"[{c['id']}] status={c['status']} | {c['claim_text']}"
     if c.get("quote"):
@@ -147,15 +139,15 @@ def build_prompt(short: str, full: str, claims: list[dict]) -> str:
     groups = [
         ("COUNTY CLAIMS", [c for c in claims if c["county"] == full]),
         ("NATIONAL CLAIMS", [c for c in claims if c["county"] is None and c["id"].startswith(("nat:", "k16:"))]),
-        ("EVIDENCE FOR THE RECOMMENDATIONS (pathway, policy, regional pathways, delays)",
-         [c for c in claims if c["county"] is None and not c["id"].startswith(("nat:", "k16:"))]),
+        ("THE TEAM'S OWN DRAFT RECOMMENDATIONS (status 'recommendation (ours)'; citable, but they are "
+         "proposals, not evidence)", [c for c in claims if c["id"].startswith("rec:")]),
+        ("EVIDENCE (pathway coverage, policy, regional pathways, delays, mentor input)",
+         [c for c in claims if c["county"] is None and not c["id"].startswith(("nat:", "k16:", "rec:"))]),
     ]
     body = [f"County: {short} ({full}). Data: new lung cancer patients 2019–2023, 12-month follow-up "
             "(Finnish Cancer Registry, Keuhkosyöpä Suomessa 2019–2023)."]
     for title, rows in groups:
         body.append(f"\n## {title}\n" + "\n".join(render_claim(c) for c in rows))
-    body.append("\n## THE TEAM'S DRAFT RECOMMENDATIONS (context only; cite the evidence claims, not these)\n"
-                + recommendations())
     return "\n".join(body)
 
 

@@ -1,25 +1,70 @@
 # junction26-lingonberry-equal-care
 Junction 2026, Team Lingonberry: a cancer care pathway gap brief for each Finnish wellbeing services county, built on public data with every claim traced to its source. Work in progress.
 
-## Run the app
+## Run it
+
+Requires Python 3.12 and [uv](https://docs.astral.sh/uv/).
 
 ```
 uv sync
 uv run streamlit run src/app.py
 ```
 
-The app shows the saved, validated briefs in `outputs/briefs/` and every claim behind them
-(`data/ledger.sqlite`). It needs no API key for this. **Regenerate with Gemini** runs the live
-pipeline and needs `GEMINI_API_KEY`, `MODEL_REASON` and `MODEL_EXTRACT` in `.env`.
+The app opens in your browser. It serves the saved briefs in `outputs/briefs/` and the claim ledger
+`data/ledger.sqlite`, both in the repo, so **viewing needs no API key**.
 
-Pipeline, from the repo root:
+To regenerate briefs (the app's **Regenerate with Gemini** button, or the commands below), create a `.env`
+file in the repo root. It is gitignored; never commit it.
 
 ```
-uv run python src/load_claims.py          # rebuild the claim ledger
-uv run python src/check_claims.py         # every claim sourced, every quote re-found verbatim
+GEMINI_API_KEY=your-key
+MODEL_REASON=gemini-4-argon      # writes the briefs
+MODEL_EXTRACT=gemini-4-hydrogen  # translates quotes and reviews briefs
+```
+
+Pipeline commands, from the repo root:
+
+```
+uv run python src/load_claims.py          # rebuild the claim ledger from data and docs
+uv run python src/check_claims.py         # verify the ledger (must pass)
 uv run python src/translate_quotes.py     # English translations of Finnish quotes (Gemini)
-uv run python src/brief.py Kymenlaakso    # brief + validation + review (Gemini)
+uv run python src/brief.py Kymenlaakso    # one county: brief + validation + review (Gemini)
+uv run python src/generate_all.py         # all 22 counties, with a summary in outputs/briefs/summary.md
 ```
+
+The raw files in `data/raw/` are not in the repo; see [Data](#data) for where to download them. They are
+needed to rebuild the ledger and to check quotes, but not to run the app.
+
+## How verification works
+
+Every number and quote in a brief is a row in the **claim ledger** (`data/ledger.sqlite`). Each row has
+its source document, location (table, figure, page or section), method and status.
+
+- **Numbers are computed in our code, never by a model.** County shares come from the Cancer Registry
+  report's tables, with Wilson 95% confidence intervals from the published counts. Age-adjusted values
+  are read off a report figure by code (about ±0.5 percentage points).
+- **Quotes are checked verbatim.** `check_claims.py` re-finds every quote in its source PDF or page at the
+  stated location, ignoring only line breaks and hyphenation. Quotes in the docs must carry an explicit
+  language (`<q lang="fi">`). An unmarked quote, a quote with no language, or a quote that can't be found
+  fails the check.
+- **Every claim has a status:** verified locally, verified by a teammate, preliminary, mentor insight, our
+  recommendation, draft, or superseded (contradicted by a verified source, with a pointer to the
+  replacement). Briefs may not cite draft or superseded claims.
+- **The model writes, code checks.** Gemini writes each brief only from the claims it is given, and every
+  sentence lists the claim IDs it relies on. `validate_brief.py` rejects a sentence with:
+  - no claim ID, or an ID that does not exist or may not be cited;
+  - a number that is not in its cited claims;
+  - a county share not called crude;
+  - preliminary figures, mentor views or our recommendations not labelled as such.
+
+  `review_brief.py` rejects overclaiming words and future tense about planned measures. A failing brief
+  gets one retry with the list of problems; if it still fails, it is saved as **DRAFT**.
+- **A second model reviews; people decide.** Gemini Hydrogen reads each sentence against its cited claims
+  and flags possible overreach or missing caveats. Flags are for human review only and never approve or
+  change a brief.
+- **Everything is on disk.** Every raw model request and response is in `data/processed/gemini_raw/`.
+
+Public aggregate data only. No patient-level data is used anywhere.
 
 ## Data
 

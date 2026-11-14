@@ -223,7 +223,8 @@ def blind_spot_claims() -> list[dict]:
                           f"(by county: {r.by_county})",
             "value": None, "unit": None, "county": None, "metric": "public_data_coverage",
             "source_doc": REPORT, "location": loc, "method": "assessed", "status": "verified locally",
-            "notes": strip_md(r.report_note),
+            "notes": (f"scope: {scope_for(f'bs:coverage:{short(r.stage)}')}; "
+                      if scope_for(f"bs:coverage:{short(r.stage)}") else "") + strip_md(r.report_note),
         })
         for column, what in (("report_note", "Report evidence"), ("regional_pathways", "Regional evidence"),
                              ("policy", "Policy evidence")):
@@ -264,6 +265,33 @@ def doc_quote_claims(path: str) -> list[dict]:
             claim_text = re.sub(r"\s+", " ", tr.group(1)) if tr else re.sub(r"\s+", " ", strip_md(para))[:300]
             prefer = prefer_from(para, before=start - para_start) + prefer_from(heading)
         rows.append(quote_claim(q, lang, claim_text, prefer, path))
+    return rows
+
+
+# ---------------------------------------------------------------- 6. our recommendations
+RECS = "docs/recommendations.md"
+
+
+def recommendation_claims() -> list[dict]:
+    """The team's three draft recommendations: title + the **What:** text (not the draft alert
+    thresholds, which are 'draft' claims of their own). Status 'recommendation (ours)'."""
+    text = Path(RECS).read_text(encoding="utf-8")
+    rows = []
+    for m in re.finditer(r"^## (\d)\. (.+?)\n(.*?)(?=^## |\Z)", text, re.M | re.S):
+        n, title, body = m.group(1), m.group(2).strip(), m.group(3)
+        what = re.search(r"\*\*What:\*\*(.*?)(?=\n\*\*|\Z)", body, re.S)
+        assert what, f"Recommendation {n} has no **What:** paragraph"
+        what_text = re.sub(r"\s+", " ", strip_md(what.group(1).replace("\n- ", " • "))).strip().lstrip("• ")
+        what_text = what_text[:1].upper() + what_text[1:]
+        rows.append({
+            "id": f"rec:{n}", "claim_text": f"Team recommendation {n}: {title}. {what_text}",
+            "value": None, "unit": None, "county": None, "metric": "recommendation",
+            "source_doc": RECS, "location": f"§{n}. {title}", "method": "proposed",
+            "status": ledger.RECOMMENDATION,
+            "notes": "the team's own DRAFT recommendation, not yet reviewed by mentors; not evidence. Its "
+                     "evidence is listed under it in docs/recommendations.md and must be cited separately",
+        })
+    assert len(rows) == 3, f"Expected 3 recommendations in {RECS}, found {len(rows)}"
     return rows
 
 
@@ -399,6 +427,9 @@ SCOPE = {
     "reg:": "the named region's own document only; not evidence about any other county",
     "mentor:": "general expert view; not county-specific and not from a written source",
     "law:": "national law; applies to every county",
+    "bs:coverage:Primary_care_occupational_health":
+        "primary care visits are not included in the report's data; occupational health is not mentioned "
+        "in the report at all. Say 'not included in the report's data', never 'excluded'",
 }
 
 
@@ -484,7 +515,7 @@ def add_translations(rows: list[dict]) -> int:
 
 
 def main() -> int:
-    rows = (county_claims() + national_claims() + kuva16_claims() + brief_claims()
+    rows = (county_claims() + national_claims() + kuva16_claims() + brief_claims() + recommendation_claims()
             + blind_spot_claims() + [r for d in QUOTE_DOCS for r in doc_quote_claims(d)])
     rows = attach_english(merge_quotes(rows))
     resolve_superseded(rows)

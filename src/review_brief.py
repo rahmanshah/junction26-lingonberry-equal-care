@@ -5,6 +5,8 @@
       - overclaiming words: certain, proves, guarantees, definitely, will be implemented, ...
       - future tense about planned measures: "will" / "going to" in a sentence that cites the national
         strategy, the roadmap or the Filha programme. Plans must be described as plans.
+      - occupational health described as "excluded": the report does not mention it at all; say
+        "not included in the report's data".
 (b) model_flags(): MODEL_EXTRACT reads each sentence with its cited claims and returns flags
     {location, sentence, problem, severity}. Flags are for HUMAN REVIEW ONLY: they never change the
     brief's status and never approve anything.
@@ -29,6 +31,8 @@ OVERCLAIM = re.compile(r"\b(certain(ly)?|proves?|proven|guarantees?|guaranteed|d
 FUTURE = re.compile(r"\b(will|shall|going to)\b|\w'll\b", re.I)
 PLAN_SOURCES = ("strategy_2026_2035_fi.pdf", "roadmap_2026_2031_fi.pdf", "filha_lung_programme_2026_fi.pdf")
 NOTE = "Flags are for human review only; they never change the brief's status or approve it."
+# As repeatable as the API allows: greedy decoding and a fixed seed. Recorded in every review file.
+REVIEW_SETTINGS = {"temperature": 0.0, "seed": 20261114}
 SOURCE_NAMES = {
     "keuhkosyoparaportti_2019_2023.html": "Finnish Cancer Registry report Keuhkosyöpä Suomessa 2019–2023",
     "strategy_2026_2035_fi.pdf": "National Cancer Strategy 2026–2035 (STM)",
@@ -51,6 +55,9 @@ def rule_problems(brief: dict, claims: dict[str, dict] | None = None) -> list[st
             for m in FUTURE.finditer(text):
                 problems.append(f"{where}: future tense ({m.group(0)!r}) about a planned measure; describe "
                                 f"the plan as a plan (e.g. 'the roadmap plans … by 2026–2028'): {text!r}")
+        if re.search(r"occupational", text, re.I) and re.search(r"\bexclud", text, re.I):
+            problems.append(f"{where}: says occupational health is excluded; the report does not mention it "
+                            f"(say 'not included in the report's data'): {text!r}")
     return problems
 
 
@@ -100,7 +107,7 @@ def model_flags(brief: dict, claims: dict[str, dict], tag: str) -> tuple[list[di
             cited.append(line)
         blocks.append(f"### {where}\nSentence: {s.get('text')}\nCited claims:\n" + "\n".join(cited))
     model = gemini.model_name("MODEL_EXTRACT")
-    parsed, _, raw = gemini.structured_call(model, SYSTEM, "\n\n".join(blocks), Review, tag)
+    parsed, _, raw = gemini.structured_call(model, SYSTEM, "\n\n".join(blocks), Review, tag, **REVIEW_SETTINGS)
     flags = [f.model_dump() for f in parsed.flags] if parsed else [
         {"location": "-", "sentence": "-", "problem": "review model returned no valid JSON", "severity": "high"}]
     return flags, model, str(raw).replace("\\", "/")
@@ -114,7 +121,8 @@ def review(doc: dict, slug: str, out_dir: Path, claims: dict[str, dict] | None =
     result = {
         "county": doc.get("county"), "brief_generated_at": doc.get("generated_at"),
         "reviewed_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "note": NOTE,
-        "rule_problems": rule_problems(brief, claims), "model": model, "raw_response": raw, "flags": flags,
+        "rule_problems": rule_problems(brief, claims), "model": model,
+        "settings": {**REVIEW_SETTINGS, "thinking_level": "model default"}, "raw_response": raw, "flags": flags,
     }
     (out_dir / f"{slug}.review.json").write_text(json.dumps(result, ensure_ascii=False, indent=1), encoding="utf-8")
     return result
