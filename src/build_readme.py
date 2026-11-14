@@ -11,6 +11,8 @@ bibliography sections (SKIP_SECTIONS); inline code and link targets are ignored:
   x.y.z, p./pp. page numbers) must appear in the cited claims' location or notes. The claims must exist and
   be citable.
 - A line without a marker may use only FRAME numbers and the numbers inside EXEMPT phrases.
+- Terminology, on every line: the 22 rows of the report's county table are "regions" (21 wellbeing
+  services counties and the City of Helsinki); "county" is kept for named counties (generic_county).
 
 Usage: uv run python src/build_readme.py           # rewrite the block, then check
        uv run python src/build_readme.py --check   # write nothing; fail if the block is stale or a check fails
@@ -37,9 +39,24 @@ MARKER = re.compile(r"<!--\s*claims:\s*([^>]*?)\s*-->")
 
 # Sections that hold commands, versions, file names and document titles, not findings.
 SKIP_SECTIONS = {"Run it", "Deploy on Streamlit Community Cloud", "Data sources"}
-# Numbers that describe the study frame: report years, CI level, follow-up months, and the number of
-# counties in the report's county table (counties.FULL).
-FRAME = set(FRAME_NUMBERS) | {float(len(counties.FULL))}
+# Regions in the report's county table (Taulukko 11, counties.FULL): the wellbeing services counties
+# ("… hyvinvointialue") plus the City of Helsinki ("Helsingin kaupunki").
+N_REGIONS = len(counties.FULL)
+N_WELLBEING_COUNTIES = sum(v.endswith("hyvinvointialue") for v in counties.FULL.values())
+assert N_REGIONS == N_WELLBEING_COUNTIES + 1 and "Helsingin kaupunki" in counties.FULL.values()
+# Numbers that describe the study frame: report years, CI level, follow-up months, and the region counts
+# ("all 22 regions: the 21 wellbeing services counties and the City of Helsinki").
+FRAME = set(FRAME_NUMBERS) | {float(N_REGIONS), float(N_WELLBEING_COUNTIES)}
+# Terminology: "county" only for named counties ("Kymenlaakso county") and in the definition "wellbeing
+# services counties"; all 22 together are "regions".
+COUNTY_WORD = re.compile(r"\bcount(?:y|ies)\b", re.I)
+COUNTY_OK_BEFORE = re.compile(
+    r"(?:wellbeing services|" + "|".join(re.escape(k) for k in counties.FULL) + r")\s+$", re.I)
+
+
+def generic_county(line: str) -> list[str]:
+    """Generic uses of 'county'/'counties' in a line (not after a county name or 'wellbeing services')."""
+    return [m.group(0) for m in COUNTY_WORD.finditer(line) if not COUNTY_OK_BEFORE.search(line[:m.start()])]
 # Numbers that are not findings, each with the reason it is allowed.
 EXEMPT = {
     "Junction 2026": "event name",
@@ -99,7 +116,7 @@ def generated_block(claims: dict[str, dict]) -> str:
 | **Total** | **{sum(status.values())}** ({citable} citable in a brief) |
 
 - **{quotes}** claims carry a source quote that `check_claims.py` re-finds in its source document.
-- **{valid}/{total}** saved county briefs pass `validate_brief.py` against the committed ledger.
+- **{valid}/{total}** saved regional briefs pass `validate_brief.py` against the committed ledger.
 - **{sum(sev.values())}** sentences flagged by the Hydrogen review for human reading ({flags}).
 - Last full local verification, with all sources present: **{when}**, commit `{snap['commit'][:7]}`,
   `check_claims.py` {'passed' if snap['check_claims']['passed'] else 'FAILED'}
@@ -111,6 +128,14 @@ def generated_block(claims: dict[str, dict]) -> str:
 def check(text: str, claims: dict[str, dict]) -> list[str]:
     problems, section, fenced, in_gen = [], "", False, False
     for no, line in enumerate(text.splitlines(), 1):
+        for word in generic_county(MARKER.sub("", line)):           # every line, code and tables too
+            problems.append(f"line {no}: generic {word!r}: say 'region(s)'; 'county' only for named counties")
+        for n in re.findall(r"(\d+)\s+wellbeing services counties", line):
+            if int(n) != N_WELLBEING_COUNTIES:
+                problems.append(f"line {no}: {n} wellbeing services counties (the report has {N_WELLBEING_COUNTIES})")
+        for n in re.findall(r"(\d+)\s+regions\b", line):
+            if int(n) != N_REGIONS:
+                problems.append(f"line {no}: {n} regions (the report has {N_REGIONS})")
         if line.startswith("```"):
             fenced = not fenced
             continue
