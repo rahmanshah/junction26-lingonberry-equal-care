@@ -27,14 +27,39 @@ Build checklist: PLAN.md (tick tasks when done).
   https://syoparekisteri.fi/assets/themes/ssy3/factsheets/keuhkosyoparaportti.html
   Saved copy: data/raw/keuhkosyoparaportti_2019_2023.html (live site returns 403 to scripts).
   Cite as the live URL, "retrieved 14 Nov 2026".
-- Backup source: Malila et al. 2024, "Keuhkosyöpä Suomessa" (2018–2022), data/raw/lung_report_2024.pdf
-- Policy PDFs (data/raw/): strategy_2026_2035_fi.pdf (64 pp), roadmap_2026_2031_fi.pdf (111 pp),
-  source_list_fi.pdf. Printed page = PDF page index in both. WARNING: strategy_2026_2035_en.pdf and
-  background_pack_fi.pdf are byte-identical copies of the Finnish strategy; re-download them.
-  Verified quotes and page numbers: docs/source_verification.md.
-- Background brief (Hellu): docs/pathway_brief.md. Claim statuses: "verified locally",
-  "verified by Hellu, read 14 Nov", "preliminary" (MOT delays), "mentor insight (name)".
-- docs/blind_spots.md (from src/build_blind_spots.py), docs/recommendations.md (DRAFT).
+- data/raw/ (gitignored; source URLs in README.md; all MD5s unique, checked 14 Nov):
+  - keuhkosyoparaportti_2019_2023.html (+ _files folders): main report, saved copy
+  - lung_report_2024.pdf: Malila et al. 2024, "Keuhkosyöpä Suomessa" (2018–2022), backup source
+  - strategy_2026_2035_fi.pdf (64 pp): Kansallinen syöpästrategia 2026–2035; printed p. = PDF p.
+  - roadmap_2026_2031_fi.pdf (111 pp): Toimeenpanon tiekartta 2026–2031; printed p. = PDF p.
+  - filha_lung_programme_2026_fi.pdf (38 pp): Valtakunnallinen keuhkosyöpäohjelma 2026–2035
+    (Filha ry, 18.5.2026 preprint). Printed p. = PDF p. − 9 (PDF pp.1–9 unnumbered). Cite printed pages.
+  - source_list_fi.pdf: challenge link list
+  - No English strategy (optional, not downloaded). No background pack exists: the challenge's
+    "background pack" link is the Finnish strategy.
+- Policy citations (verified, quotes in docs/source_verification.md):
+  - Strategy p.33: no national system for cancer recommendations/pathways or their monitoring.
+  - Strategy p.5: indicator "Potilaat pääsevät hoitoon tavoiteaikojen puitteissa", footnote
+    THL Ohjaus 21/2016 (the roadmap does not cite 21/2016).
+  - Roadmap 3.1.2 pp.56–57: national pathways, Nordic model (p.56); five (unnamed) cancers with
+    access times by 2026–2028 (p.57).
+  - Roadmap 1.2.3 p.32: named-worker care coordination model (care phase not specified).
+  - Roadmap 2.5.2 pp.52–53: standardised referral criteria, symptom-based models by 2026–2028.
+  - Roadmap 3.2.1 pp.59–60: national cancer quality registry (indicator incl. stage, 90% coverage).
+  - Filha p.1 action plan, not a treatment recommendation; p.4 no national timing guidance
+    (common diagnostic guidelines exist); pp.16, 24 diagnostics recommendation with primary-care
+    referral criteria and recommended time limits, before the 2030 mid-term evaluation; p.21 no
+    cancer quality registry; p.18 Table 2 lists "Hoitoonpääsy" as an (undefined) indicator.
+- Claim statuses: "verified locally", "verified by Hellu, read 14 Nov", "preliminary"
+  (MOT delays), "mentor insight (name)".
+- docs/:
+  - definitions.md: report table 11 definitions, denominators, overlap, suppression (quotes)
+  - chart_data.md: what data sits behind each report figure (PNG vs Plotly JSON)
+  - source_verification.md: strategy, roadmap and Filha quotes with page numbers
+  - pathway_brief.md: Hellu's background brief (regional pathways, MOT delays, law)
+  - blind_spots.md: pathway stage x measured / MOT / regions / policy (built by
+    src/build_blind_spots.py; edit the script, not the .md)
+  - recommendations.md: three draft recommendations with evidence status (DRAFT)
 - src/read_factsheet.py: all HTML tables -> data/processed/factsheet/table_XX.csv
 - src/clean_county.py: table 10 (treatment type by county) -> data/processed/county_treatment.csv
   - level = county (22 counties incl. Helsingin kaupunki), area (5 collaborative-area
@@ -46,7 +71,6 @@ Build checklist: PLAN.md (tick tasks when done).
     (MDT meeting coded).
 - CSV numbering is 0-based, the report's is 1-based: table_10.csv = Taulukko 11 (county),
   table_05.csv = Taulukko 6, table_04.csv = Taulukko 5. Cite the report's numbers.
-- Definitions, denominators, overlap, suppression: docs/definitions.md (verified, with quotes).
 - src/add_ci.py: adds MDT n = 0 rows ("0 records reported") and Wilson 95% CIs (ci_low,
   ci_high), national_share, ci_contains_national, vs_national (below / above / not distinguishable).
 - src/plot_scatter.py -> outputs/curative_vs_missing.png.

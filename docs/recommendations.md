@@ -31,6 +31,9 @@ hoidossa* (Ohjaus 21/2016). Until national target times exist, flag stalled hand
 | The strategy's indicator "Potilaat pääsevät hoitoon tavoiteaikojen puitteissa" is footnoted to THL Ohjaus 21/2016 | Strategy p.5 | verified locally |
 | National pathways with "syöpäkohtaiset hoitoonpääsyajat" for five (unnamed) cancers in 2026–2028, Nordic model | Roadmap 3.1.2, pp.56–57 | verified locally |
 | The public report publishes no referral, first-visit or time-to-treatment data; specialist-phase timing is a blind spot | Report §3.1, §4.2; `docs/blind_spots.md` | verified locally |
+| "Valtakunnallisesti ei ole ollut tarkkaa yhtenäistä ohjeistusta siitä, millä aikataululla diagnostiikan eri osa-alueet tulisi olla tehtyinä"; regional variation in diagnostic speed is large. The programme itself sets no day-based targets | Filha programme p.4 | verified locally |
+| The upcoming national diagnostics recommendation will include "suositellut aikarajat erikoissairaanhoitoon eri diagnostiikan polun vaiheille" (recommended time limits in specialist care), due before the 2030 mid-term evaluation | Filha programme pp.16, 24 | verified locally |
+| The programme lists "Hoitoonpääsy" (access to care) as an indicator but does not define how it is measured; the monitoring it describes uses registry data, hospital surveys and studies | Filha programme pp.18 (Table 2), 22–23 | verified locally |
 | THL 21/2016 defines access-time recording for 16 cancers, in force since 1 Jan 2017 | THL Ohjaus 21/2016 | verified by Hellu, read 14 Nov |
 | No published cancer-specific access-time report found | Hellu's search | to confirm with mentors |
 | HILMO diagnoses match the Cancer Registry for ~90% of most cancers; reliability of referral and first-procedure data still to be confirmed | Ryynänen et al., Lääkärilehti 2019 | verified by Hellu, read 14 Nov |
@@ -39,7 +42,9 @@ hoidossa* (Ohjaus 21/2016). Until national target times exist, flag stalled hand
 | Symptoms to treatment: 155 days in Finland vs 107 in Sweden and 67 in Denmark; specialist care is the longest interval (58 days) | Yle MOT 2025 | preliminary |
 
 **Why first:** it uses definitions that already exist (2016) and the indicator the strategy already
-names. It also covers the longest and least visible stage.
+names. It also covers the longest and least visible stage. It also gives the Filha programme's
+undefined "Hoitoonpääsy" indicator a concrete measurement, ready for when its recommended time limits
+arrive (before 2030).
 
 **Caveat:** this depends on whether referral and first-visit timestamps are reliable enough (Lääkärilehti
 2019). A pilot county should check that first.
@@ -60,6 +65,8 @@ names. It also covers the longest and least visible stage.
 |---|---|---|
 | Standardised referral criteria and symptom-based models ("standardoidut lähetekriteerit", "oirelähtöiset toimintamallit") for at least the five most common cancers by 2026–2028 | Roadmap 2.5.2, pp.52–53 | verified locally |
 | Guidance on a named worker coordinating cancer care by 2026–2028, adopted by counties by 2029–2031; the care phase is left open ("missä hoidon vaiheessa … olisi tärkeintä kohdentaa") | Roadmap 1.2.3, p.32 | verified locally |
+| Lung cancer referral criteria for primary care ("lähetekriteerit perusterveydenhuollolle") will come in the national diagnostics recommendation, before the 2030 mid-term evaluation; work has started | Filha programme pp.3, 16, 20, 24 | verified locally |
+| Today, "potilas lähetetään jatkotutkimuksiin erikoissairaanhoidon yksikköön omien paikallisten ohjeistusten mukaisesti" (referral follows local instructions); suspicion typically arises in primary care, occupational health or private care | Filha programme p.15 | verified locally |
 | Only KYS lists required referral content (history, medications, pack-years, asbestos, functional capacity, what the patient was told) and provides a template | KYS care chain v1.1 (2021) | verified by Hellu, read 14 Nov |
 | Only KYS addresses a normal X-ray with continuing symptoms (refer even if the X-ray is clear) | KYS care chain | verified by Hellu, read 14 Nov |
 | No region names a contact person for the diagnostic phase; HUS assigns a nurse at the first visit | Regional pathways | verified by Hellu, read 14 Nov |
@@ -68,8 +75,9 @@ names. It also covers the longest and least visible stage.
 | Primary care interval: 41 days | Yle MOT 2025 | preliminary |
 
 **Why:** it acts on the handovers where the patient is most likely to be dropped, before diagnosis, a
-stage public data cannot see at all. It is also already in the roadmap (2.5.2, 1.2.3); this
-recommendation proposes doing it now, with an existing regional model.
+stage public data cannot see at all. It is also already in the roadmap (2.5.2, 1.2.3) and the Filha
+programme (diagnostics recommendation before 2030). This recommendation proposes doing it now, with an
+existing regional model, as a bridge until the national criteria arrive.
 
 **Caveat:** KYS's document is for professionals and the others are for patients, so they are not fully
 comparable. Five regions out of 22 were reviewed.
@@ -91,6 +99,8 @@ county "gaps" in these fields as data-quality signals first.
 | MDT coding: 21.6–37.4% in Sisä-Suomi counties, 0 records in 4 counties. "…ei kuvaa kattavasti moniammatillisen käsittelyn laajuutta" | Report §3.3, Taulukko 11 | verified locally |
 | National pathways will define "kirjaamis- ja koodistokäytännöt" (recording and coding practices) | Roadmap 3.1.2, p.56 | verified locally |
 | A national quality registry is planned; indicator: data incl. stage ("ml. levinneisyystieto") at 90% coverage | Roadmap 3.2.1, pp.59–60 | verified locally |
+| "Keuhkosyövästä tai muistakaan syövistä ei laaturekisteriä Suomessa ole"; a study run by the Cancer Registry, THL and FICAN is assessing a cancer quality registry, starting with lung cancer | Filha programme p.21 | verified locally |
+| "Tällä hetkellä keuhkosyöpään liittyvien tietojen raportointi, kerääminen ja tallentaminen on puutteellista"; nationally uniform recording instructions ("yhtenäiset kirjaamisohjeet") must be ensured | Filha programme p.21 | verified locally |
 | Strategy target: ≥70% of cancers diagnosed at stage I–II. This cannot be measured while stage is missing for half of patients | Strategy p.5; report §4.1.3 | verified locally |
 | KYS reviews every patient in a weekly MDT, Keski-Suomi every new case, HUS only "when needed". MDT practice differs, as well as its coding | Regional pathways | verified by Hellu, read 14 Nov |
 
@@ -103,5 +113,14 @@ in the brief.
 ## Not used (yet)
 
 - "One-third split": mentor insight; source to confirm with Kaisa (pathway_brief §9).
-- National Lung Cancer Programme (Filha 2026): verified by Hellu, but not in the repo. Add its PDF before
-  citing page numbers.
+
+## Corrections to the background brief (from the Filha check)
+
+- The regional variation the programme names is in diagnostic speed, **organisation of care
+  responsibility** ("hoitovastuun järjestäminen") and surgery volumes, not "referral organisation" (p.4).
+- Common lung cancer diagnostic guidelines **do** exist (p.4; Käypä hoito "Keuhkosyöpä" 2017, cited as
+  ref. 8). What is missing is national guidance on timing.
+- The programme **does** list access to care as an indicator (Table 2, p.18), but leaves it undefined.
+
+Page numbers for the Filha programme are printed pages; PDF page = printed + 9. Quotes are in
+`docs/source_verification.md`.
