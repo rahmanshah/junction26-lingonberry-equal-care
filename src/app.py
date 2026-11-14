@@ -26,6 +26,12 @@ LOGO = ROOT / "assets" / "logo.svg"
 # the favicon (checked in the test harness), so no PNG is needed. The logo is shown only next to the
 # sidebar title, not with st.logo.
 st.set_page_config(page_title="Lingonberry", page_icon=str(LOGO), layout="wide")
+# Claim pills (st.pills) sit in a single no-wrap row with horizontal scroll, so long claim IDs ran past the
+# edge of narrow columns. Let every pill row wrap onto the next line instead.
+st.markdown(
+    '<style>div[data-testid="stButtonGroup"] div:has(> button) '
+    "{flex-wrap: wrap !important; overflow-x: visible !important; row-gap: 0.4rem;}</style>",
+    unsafe_allow_html=True)
 
 import base64  # noqa: E402
 import hashlib  # noqa: E402
