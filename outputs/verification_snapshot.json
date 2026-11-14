@@ -1,0 +1,171 @@
+{
+ "written_at": "2026-11-14T14:10:29+00:00",
+ "commit": "f3d01528d244b30fc40a1052005dbc20b9892c55",
+ "commit_dirty": false,
+ "ledger_md5": "1d91338cacf26ec5e0f4d10f11250035",
+ "check_claims": {
+  "exit_code": 0,
+  "passed": true,
+  "output": "Checked 261 claims (101 with quotes re-verified against their sources)\n\nClaims per status:\n  verified locally   227\n  verified by Hellu  17\n  preliminary        6\n  draft              4\n  recommendation (ours) 3\n  superseded         2\n  mentor insight     2\n\nClaims per method:\n  computed           140\n  quoted             98\n  assessed           9\n  digitised          8\n  mentor             3\n  proposed           3\n\nAll checks passed."
+ },
+ "validate_brief": {
+  "Etelä-Karjala": {
+   "file": "outputs/briefs/etela-karjala.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:33:34+00:00"
+  },
+  "Helsinki": {
+   "file": "outputs/briefs/helsinki.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:34:29+00:00"
+  },
+  "Itä-Uusimaa": {
+   "file": "outputs/briefs/ita-uusimaa.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:30:31+00:00"
+  },
+  "Keski-Uusimaa": {
+   "file": "outputs/briefs/keski-uusimaa.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:30:50+00:00"
+  },
+  "Kymenlaakso": {
+   "file": "outputs/briefs/kymenlaakso.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:36:57+00:00"
+  },
+  "Länsi-Uusimaa": {
+   "file": "outputs/briefs/lansi-uusimaa.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:36:48+00:00"
+  },
+  "Päijät-Häme": {
+   "file": "outputs/briefs/paijat-hame.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:38:12+00:00"
+  },
+  "Vantaa ja Kerava": {
+   "file": "outputs/briefs/vantaa-ja-kerava.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:38:26+00:00"
+  },
+  "Etelä-Savo": {
+   "file": "outputs/briefs/etela-savo.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:40:39+00:00"
+  },
+  "Keski-Suomi": {
+   "file": "outputs/briefs/keski-suomi.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:41:26+00:00"
+  },
+  "Pohjois-Karjala": {
+   "file": "outputs/briefs/pohjois-karjala.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:43:44+00:00"
+  },
+  "Pohjois-Savo": {
+   "file": "outputs/briefs/pohjois-savo.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T14:03:04+00:00"
+  },
+  "Pohjanmaa": {
+   "file": "outputs/briefs/pohjanmaa.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:46:42+00:00"
+  },
+  "Satakunta": {
+   "file": "outputs/briefs/satakunta.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:46:31+00:00"
+  },
+  "Varsinais-Suomi": {
+   "file": "outputs/briefs/varsinais-suomi.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:48:08+00:00"
+  },
+  "Kainuu": {
+   "file": "outputs/briefs/kainuu.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:51:10+00:00"
+  },
+  "Keski-Pohjanmaa": {
+   "file": "outputs/briefs/keski-pohjanmaa.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:51:46+00:00"
+  },
+  "Lappi": {
+   "file": "outputs/briefs/lappi.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:51:49+00:00"
+  },
+  "Pohjois-Pohjanmaa": {
+   "file": "outputs/briefs/pohjois-pohjanmaa.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:53:24+00:00"
+  },
+  "Etelä-Pohjanmaa": {
+   "file": "outputs/briefs/etela-pohjanmaa.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:57:35+00:00"
+  },
+  "Kanta-Häme": {
+   "file": "outputs/briefs/kanta-hame.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:57:01+00:00"
+  },
+  "Pirkanmaa": {
+   "file": "outputs/briefs/pirkanmaa.json",
+   "valid": true,
+   "problems": [],
+   "status_at_generation": "validated",
+   "generated_at": "2026-11-14T13:56:51+00:00"
+  }
+ },
+ "totals": {
+  "briefs": 22,
+  "valid": 22
+ }
+}
