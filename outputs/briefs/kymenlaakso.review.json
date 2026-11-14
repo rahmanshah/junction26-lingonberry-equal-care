@@ -1,40 +1,27 @@
 {
  "county": "Kymenlaakso",
- "brief_generated_at": "2026-11-14T11:27:43+00:00",
- "reviewed_at": "2026-11-14T11:33:00+00:00",
+ "brief_generated_at": "2026-11-14T12:03:53+00:00",
+ "reviewed_at": "2026-11-14T12:04:26+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
- "raw_response": "data/processed/gemini_raw/review_kymenlaakso_20261114T113212Z.json",
+ "settings": {
+  "temperature": 0.0,
+  "seed": 20261114,
+  "thinking_level": "model default"
+ },
+ "raw_response": "data/processed/gemini_raw/review_kymenlaakso_20261114T120353405820Z.json",
  "flags": [
   {
-   "location": "where_we_lag.details[3]",
-   "sentence": "An MDT meeting was recorded for 0.5% (95% CI 0.2–1.5; n=3/591) of patients versus 6.0% (893/14873) nationally, with the 95% confidence interval excluding the national value, though HILMO captures procedures only from direct patient contacts so this measures recording practice rather than care.",
-   "problem": "Missing caveat: cty:mdt_recorded:Kymenlaakson_hyvinvointialue notes that the 0.5% share is crude (not age- or stage-adjusted), which is omitted here.",
-   "severity": "medium"
-  },
-  {
-   "location": "how_sure_are_we.details[2]",
-   "sentence": "Public registry data do not measure symptom onset, exclude outpatient primary care and occupational health visits, omit referral dates, capture imaging only when it is the sole basis of diagnosis (in about 20% of cases nationally), and show whether specialist visits or treatments occurred within 12 months but not when they started.",
-   "problem": "Minor overreach/imprecision: bs:coverage:Primary_care_occupational_health notes that primary care visits are excluded while occupational health is not mentioned in the report (rather than explicitly stated as excluded), and bs:coverage:Imaging / q:5eb155decc state that clinical examination alone (such as imaging) is the basis of diagnosis in about 20% of cases, not exclusively imaging alone.",
+   "location": "how_sure_are_we.headline",
+   "sentence": "A crude 16.4% (95% CI 13.7–19.6) share with no treatment record versus 27.5% nationally suggests Kymenlaakso's curative gap is not only a recording artefact, though stage is unmeasured.",
+   "problem": "Claim [bs:coverage:Diagnosis] states that stage at diagnosis is missing for nearly half (~48%) of new patients, preventing stage adjustment, rather than being completely unmeasured.",
    "severity": "low"
   },
   {
-   "location": "what_to_do_first.headline",
-   "sentence": "Kymenlaakso can track pathway access times using THL 21/2016 definitions, standardise primary care referrals and diagnostic coordination, and audit MDT and stage recording completeness.",
-   "problem": "Unsupported detail: none of the claims cited for this sentence mention diagnostic coordination.",
-   "severity": "medium"
-  },
-  {
-   "location": "what_to_do_first.details[0]",
-   "sentence": "Because the Health Care Act sets no maximum wait for a cancer suspicion and Finland lacks uniform diagnostic timetables, Kymenlaakso can track access times using THL Ohjaus 21/2016 guidance (covering 16 cancers) with handover alerts while the roadmap plans national target times by 2026–2028 and Filha's diagnostics guideline is due before the 2030 evaluation.",
-   "problem": "Unsupported detail: none of the cited claims mention handover alerts.",
-   "severity": "medium"
-  },
-  {
-   "location": "what_to_do_first.details[3]",
-   "sentence": "Kymenlaakso can also audit and report how completely it records stage at diagnosis and MDT meetings—currently logged in HILMO for 0.5% (95% CI 0.2–1.5; n=3/591) of patients versus 6.0% (893/14873) nationally—aligning with national plans for uniform recording instructions and a cancer quality registry targeting 90% coverage including stage.",
-   "problem": "Missing caveat: cty:mdt_recorded:Kymenlaakson_hyvinvointialue notes that the 0.5% share is crude (not age- or stage-adjusted), which is omitted here.",
+   "location": "what_to_do_first.details[2]",
+   "sentence": "Given Kymenlaakso's 0.5% (95% CI 0.2–1.5; n=3/591) crude MDT recording share versus 6.0% (893/14873) nationally and incomplete national lung cancer data storage, the team recommends publishing county recording completeness for stage, drug treatment, and MDT coding while the roadmap plans a national quality registry targeting 90% data coverage including stage alongside uniform recording instructions.",
+   "problem": "The sentence attributes uniform recording instructions to what the Cancer strategy implementation roadmap plans, whereas [q:82d365cd2c] is from the Filha National Lung Cancer Programme 2026–2035 and states that uniform recording instructions must be ensured.",
    "severity": "medium"
   }
  ]

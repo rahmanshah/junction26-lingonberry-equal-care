@@ -79,17 +79,23 @@ def main() -> int:
             print(f"  {r['county']:<18} {r['status']:<9} attempts={r['attempts']} problems={len(r['problems'])} "
                   f"flags={r['flags_by_severity']} {r['seconds']}s" + (f" ERROR {r['error']}" if r["error"] else ""),
                   flush=True)
-    rows = [results[n] for n in names]  # every requested county, in order; none skipped
-    assert len(rows) == len(names)
+    assert set(results) == set(names), "a county went missing"
+    # Merge with the previous summary so a partial re-run updates only the counties it ran.
+    prev_path = OUT / "summary.json"
+    prev = {r["county"]: r for r in json.loads(prev_path.read_text(encoding="utf-8"))["counties"]} \
+        if prev_path.exists() else {}
+    merged = {**prev, **results}
+    rows = [merged.get(n) or {"county": n, "status": "NOT RUN", "attempts": None, "problems": [],
+                              "rule_problems": [], "flags": [], "flags_by_severity": {}, "seconds": None,
+                              "error": "not run yet"} for n in counties.FULL]
     totals = dict(Counter(r["status"] for r in rows))
     summary = {"finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                "totals": totals, "counties": rows}
     OUT.mkdir(parents=True, exist_ok=True)
-    if len(names) == len(counties.FULL):
-        (OUT / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=1), encoding="utf-8")
-        (OUT / "summary.md").write_text(to_markdown(summary), encoding="utf-8")
-    print(f"\nTotals: {totals}")
-    return 0 if "ERROR" not in totals else 1
+    prev_path.write_text(json.dumps(summary, ensure_ascii=False, indent=1), encoding="utf-8")
+    (OUT / "summary.md").write_text(to_markdown(summary), encoding="utf-8")
+    print(f"\nTotals (all 22 counties): {totals}")
+    return 0 if not ({"ERROR", "NOT RUN"} & set(totals)) else 1
 
 
 if __name__ == "__main__":

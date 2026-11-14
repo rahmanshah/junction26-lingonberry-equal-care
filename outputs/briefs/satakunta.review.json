@@ -1,0 +1,28 @@
+{
+ "county": "Satakunta",
+ "brief_generated_at": "2026-11-14T12:12:59+00:00",
+ "reviewed_at": "2026-11-14T12:13:43+00:00",
+ "note": "Flags are for human review only; they never change the brief's status or approve it.",
+ "rule_problems": [],
+ "model": "gemini-4-hydrogen",
+ "settings": {
+  "temperature": 0.0,
+  "seed": 20261114,
+  "thinking_level": "model default"
+ },
+ "raw_response": "data/processed/gemini_raw/review_satakunta_20261114T121259373197Z.json",
+ "flags": [
+  {
+   "location": "how_sure_are_we.details[3]",
+   "sentence": "In the public report, primary care visits are not included in the report's data and occupational health is not mentioned, symptoms and referrals are not measured, and imaging (approximately 20% of diagnoses), first specialist visits (93.6% within 12 months), and treatment records lack pathway dates or waiting times.",
+   "problem": "Attaches 'approximately 20% of diagnoses' to imaging in general, whereas bs:coverage:Imaging and q:5eb155decc state that approximately 20% of diagnoses are based on clinical examination alone, such as imaging.",
+   "severity": "medium"
+  },
+  {
+   "location": "what_to_do_first.details[1]",
+   "sentence": "Because referrals follow local instructions and a mentor insight notes weak referrals receive lower urgency ratings, the team recommends adopting a standard referral template and referring persistent symptoms after a normal X-ray (modelled on the KYS regional pathway document), while the Filha programme's diagnostics recommendation is due to be completed before the 2030 mid-term evaluation.",
+   "problem": "Uses the wrong verb ('completed') for the Filha programme's recommendation: q:614febebf2 states that the sub-area recommendations will be implemented ('toteutetaan') before the 2030 interim evaluation, and q:432c0e51d6 only says the upcoming recommendation is due before the 2030 mid-term evaluation.",
+   "severity": "medium"
+  }
+ ]
+}

@@ -1,0 +1,15 @@
+{
+ "county": "Etelä-Savo",
+ "brief_generated_at": "2026-11-14T12:07:56+00:00",
+ "reviewed_at": "2026-11-14T12:08:19+00:00",
+ "note": "Flags are for human review only; they never change the brief's status or approve it.",
+ "rule_problems": [],
+ "model": "gemini-4-hydrogen",
+ "settings": {
+  "temperature": 0.0,
+  "seed": 20261114,
+  "thinking_level": "model default"
+ },
+ "raw_response": "data/processed/gemini_raw/review_etela-savo_20261114T120756414112Z.json",
+ "flags": []
+}

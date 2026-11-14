@@ -1,0 +1,28 @@
+{
+ "county": "Länsi-Uusimaa",
+ "brief_generated_at": "2026-11-14T12:02:04+00:00",
+ "reviewed_at": "2026-11-14T12:02:46+00:00",
+ "note": "Flags are for human review only; they never change the brief's status or approve it.",
+ "rule_problems": [],
+ "model": "gemini-4-hydrogen",
+ "settings": {
+  "temperature": 0.0,
+  "seed": 20261114,
+  "thinking_level": "model default"
+ },
+ "raw_response": "data/processed/gemini_raw/review_lansi-uusimaa_20261114T120204947346Z.json",
+ "flags": [
+  {
+   "location": "how_sure_are_we.details[0]",
+   "sentence": "County treatment shares in the public report are crude (not adjusted for age or stage) because stage at diagnosis is missing for ~48% of new patients nationally, and age-adjusted figures digitised from Kuva 16 (precision ±0.5 percentage points) provide national reference lines here only for curative treatment (26.7% for men; 26.9% for women).",
+   "problem": "The cited claims state that missing stage at diagnosis (~48%) prevents stage adjustment of curative shares, not that it is the reason county treatment shares are not age-adjusted.",
+   "severity": "low"
+  },
+  {
+   "location": "how_sure_are_we.details[2]",
+   "sentence": "Public report data do not measure symptom onset or referrals, do not include outpatient primary care visits or mention occupational health, capture imaging only indirectly as the diagnostic basis in approximately 20% of cases, and show whether a specialist visit (93.6%) or treatment occurred within 12 months without start dates.",
+   "problem": "According to the cited quote q:5eb155decc, approximately 20% refers to clinical examination alone (such as imaging), rather than imaging specifically.",
+   "severity": "low"
+  }
+ ]
+}

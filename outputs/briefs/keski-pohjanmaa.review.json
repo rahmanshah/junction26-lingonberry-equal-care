@@ -1,0 +1,40 @@
+{
+ "county": "Keski-Pohjanmaa",
+ "brief_generated_at": "2026-11-14T12:15:26+00:00",
+ "reviewed_at": "2026-11-14T12:16:17+00:00",
+ "note": "Flags are for human review only; they never change the brief's status or approve it.",
+ "rule_problems": [],
+ "model": "gemini-4-hydrogen",
+ "settings": {
+  "temperature": 0.0,
+  "seed": 20261114,
+  "thinking_level": "model default"
+ },
+ "raw_response": "data/processed/gemini_raw/review_keski-pohjanmaa_20261114T121526497656Z.json",
+ "flags": [
+  {
+   "location": "how_sure_are_we.headline",
+   "sentence": "Diagnosis concordance is about 90% in a journal article, and a crude 25.0% no-treatment-record share suggests relatively complete recording, but wide confidence intervals and unmeasured stages limit conclusions.",
+   "problem": "Overreach and missing caveat: the cited claim cty:no_treatment_record:Keski_Pohjanmaan_hyvinvointialue only states that 25.0% of patients had no treatment record within 12 months (not distinguishable from the uncited 27.5% national share). It does not support inferring relatively complete recording, and the sentence omits that a no-treatment-record share mixes untreated patients and unrecorded treatment.",
+   "severity": "medium"
+  },
+  {
+   "location": "how_sure_are_we.details[0]",
+   "sentence": "The crude share with no treatment record within 12 months—mixing untreated patients and unrecorded treatment—is 25.0% (95% CI 18.7–32.5; n=37/148) versus 27.5% (4089/14873) nationally; while the 95% confidence interval includes 27.5%, we infer as a data-quality signal that this is consistent with relatively complete treatment recording, making the crude 22.3% versus 27.0% curative share less likely to be only a recording artefact.",
+   "problem": "Overreach: even when framed as an inference, having a 25.0% no-treatment-record share indistinguishable from the 27.5% national figure (both mixing untreated patients and unrecorded treatment per bs:coverage:Treatment_start) does not support that treatment recording is relatively complete or that the 22.3% versus 27.0% curative share is less likely to be a recording artefact.",
+   "severity": "medium"
+  },
+  {
+   "location": "how_sure_are_we.details[2]",
+   "sentence": "Public report data do not measure symptoms or referrals, primary care visits are not included in the report's data, occupational health is not mentioned, imaging appears only indirectly as the diagnosis basis in approximately 20% of cases, and HILMO records whether an initial specialist visit (93.6% within 12 months) or treatment occurred but not when treatment started.",
+   "problem": "Minor imprecision: bs:coverage:Treatment_start specifies that public data show which treatment type is recorded within 12 months (with 27.5% having no treatment record, mixing untreated patients and unrecorded treatment), rather than whether treatment actually occurred; additionally, q:5eb155decc attributes the approximately 20% figure to clinical examination alone (such as imaging) rather than imaging alone.",
+   "severity": "low"
+  },
+  {
+   "location": "what_to_do_first.headline",
+   "sentence": "The team recommends reporting THL 21/2016 access times with handover alerts, adopting KYS-style referral templates and diagnostic contacts, and auditing stage, drug, and crude 1.4% MDT recording completeness.",
+   "problem": "Minor imprecision: 1.4% in cty:mdt_recorded:Keski_Pohjanmaan_hyvinvointialue is the crude share of patients with an MDT meeting recorded (n=2/148), not the completeness rate of MDT recording, and rec:3 recommends publishing recording completeness rather than auditing it.",
+   "severity": "low"
+  }
+ ]
+}

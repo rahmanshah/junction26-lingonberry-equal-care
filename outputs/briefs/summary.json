@@ -1,0 +1,551 @@
+{
+ "finished_at": "2026-11-14T12:27:00+00:00",
+ "totals": {
+  "validated": 22
+ },
+ "counties": [
+  {
+   "county": "Etelä-Karjala",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [
+    {
+     "location": "how_sure_are_we.details[1]",
+     "sentence": "The county shares are crude (not adjusted for age or stage) because stage at diagnosis is missing for ~48% of new patients nationally, a journal article's finding of about 90% HILMO-to-Cancer Registry concordance concerns diagnoses only rather than treatment recording, and HILMO MDT entries reflect recording practice from direct patient contacts rather than care.",
+     "problem": "None of the cited claims state that the county shares are crude or not age-adjusted, and missing stage data (~48% nationally) only explains why shares cannot be stage-adjusted, not why they are unadjusted for age.",
+     "severity": "medium"
+    },
+    {
+     "location": "what_to_do_first.headline",
+     "sentence": "Given Etelä-Karjala's high crude no-treatment-record share, the team recommends prioritising recording-completeness reporting, alongside reporting THL Ohjaus 21/2016 guidance access times with handover alerts and standardising referrals and coordination.",
+     "problem": "The cited recommendation claims (rec:3, rec:1, rec:2) do not state that recording-completeness reporting should be prioritised over the other two recommendations; rec:3 only advises reading county gaps in those fields as data-quality signals first.",
+     "severity": "medium"
+    },
+    {
+     "location": "what_to_do_first.details[2]",
+     "sentence": "Because referrals follow local instructions, mentor insight notes weak referrals receive lower urgency, and roadmap plans for referral criteria (2026–2028) and care-coordinator guidance (2026–2028; county adoption 2029–2031) leave the care phase open, the team recommends a referral template and persistent-symptoms rule after a normal X-ray modelled on the KYS regional pathway document, plus a named diagnostic-phase contact.",
+     "problem": "According to the cited claims, only the care-coordinator guidance leaves the care phase open (q:050ee09ebe), whereas the standardised referral criteria plans (q:9a1cd194f5, q:c61439b30f) specifically concern transfer to specialist care and diagnostic tests; grouping both under 'leave the care phase open' is imprecise.",
+     "severity": "low"
+    }
+   ],
+   "flags_by_severity": {
+    "medium": 2,
+    "low": 1
+   },
+   "seconds": 288,
+   "error": null
+  },
+  {
+   "county": "Helsinki",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [
+    {
+     "location": "how_sure_are_we.headline",
+     "sentence": "Diagnosis counts are well supported, but crude county treatment shares lack age or stage adjustment, and public registry data do not capture pathway dates or pre-specialist care.",
+     "problem": "Overreaches and partly contradicts the cited claims: bs:coverage:Diagnosis explicitly states that the registry records the diagnosis date ('Registry diagnosis date'), so saying public registry data do not capture 'pathway dates' is inaccurate; additionally, bs:coverage:Primary_care_occupational_health states that primary care visits are not included in the report's data and occupational health is not mentioned in the report (rather than claiming that no public registry data capture pre-specialist care).",
+     "severity": "medium"
+    },
+    {
+     "location": "how_sure_are_we.details[1]",
+     "sentence": "County treatment shares are crude and not adjusted for age or stage: stage at diagnosis is missing for ~48% of new patients, and while Kuva 16 provides digitised national age-adjusted curative shares of 26.7% for men and 26.9% for women (read off a figure, precision ±0.5 percentage points), no age-adjusted county value is provided.",
+     "problem": "None of the cited claims support the statement that 'no age-adjusted county value is provided'; k16:curative:men:national and k16:curative:women:national only report the digitised national reference lines from Kuva 16 and say nothing about whether age-adjusted county values are provided.",
+     "severity": "medium"
+    }
+   ],
+   "flags_by_severity": {
+    "medium": 2
+   },
+   "seconds": 262,
+   "error": null
+  },
+  {
+   "county": "Itä-Uusimaa",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [
+    {
+     "location": "how_sure_are_we.headline",
+     "sentence": "Diagnosis records match well nationally, but Itä-Uusimaa's crude treatment shares lack age or stage adjustment, and public data omit primary care, referrals, and treatment start dates.",
+     "problem": "Claim [bs:coverage:Primary_care_occupational_health] specifies that primary care visits are 'not included in the report's data' (and explicitly warns never to say 'excluded'), rather than being omitted from public data generally.",
+     "severity": "low"
+    },
+    {
+     "location": "how_sure_are_we.details[0]",
+     "sentence": "A journal article found HILMO diagnoses match the Cancer Registry for about 90% of most cancer types (diagnosis concordance only), whereas reading Itä-Uusimaa's above-national crude 31.6% (95% CI 26.4–37.4; n=86/272) no-treatment-record share versus 27.5% (4089/14873) nationally as a data-quality signal suggests—as an inference, not a finding—that lower recorded treatment shares may partly reflect unrecorded treatment.",
+     "problem": "Claim [cty:no_treatment_record:Itä_Uudenmaan_hyvinvointialue] states that Itä-Uusimaa's 31.6% (95% CI 26.4–37.4) no-treatment-record share is 'not distinguishable vs national 27.5%'. Calling it 'above-national' without noting that its confidence interval includes the national benchmark overstates the comparison.",
+     "severity": "medium"
+    },
+    {
+     "location": "what_to_do_first.details[1]",
+     "sentence": "Next, because Health Care Act §52 sets no legal maximum time for a cancer suspicion and Finland lacks a unified national pathway monitoring system, the team recommends reporting referral-to-treatment access times using THL Ohjaus 21/2016 guidance definitions (for 16 cancers) and flagging stalled handovers while the roadmap plans national pathways and target access times by 2026–2028.",
+     "problem": "Claims [q:def306014c] and [q:b326e35410] specify that the 2026–2028 roadmap target covers national care pathway descriptions and access-to-care times for five unnamed cancers, not cancer pathways in general or lung cancer specifically.",
+     "severity": "medium"
+    }
+   ],
+   "flags_by_severity": {
+    "low": 1,
+    "medium": 2
+   },
+   "seconds": 216,
+   "error": null
+  },
+  {
+   "county": "Keski-Uusimaa",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [
+    {
+     "location": "how_sure_are_we.headline",
+     "sentence": "Keski-Uusimaa's crude 26.4% (95% CI 22.7–30.5) no-treatment-record share versus 27.5% nationally suggests relatively complete treatment recording, but county shares lack age and stage adjustment and pathway timestamps.",
+     "problem": "Overreach: the cited claim [cty:no_treatment_record:Keski_Uudenmaan_hyvinvointialue] states that 26.4% (95% CI 22.7–30.5) is not distinguishable from the national 27.5%, and [bs:coverage:Treatment_start] notes that the 27.5% share mixes untreated patients with unrecorded treatment; neither claim supports the conclusion that 26.4% versus 27.5% suggests relatively complete treatment recording.",
+     "severity": "medium"
+    },
+    {
+     "location": "how_sure_are_we.details[0]",
+     "sentence": "The crude share with no treatment record within 12 months is 26.4% (95% CI 22.7–30.5; n=127/481) versus 27.5% (4089/14873) nationally, with the 95% confidence interval including 27.5%; this mixes untreated patients and treatment that was not recorded, and as an inference, a data-quality signal below 27.5% is consistent with relatively complete treatment recording, not direct evidence.",
+     "problem": "Overreach: even framed as an inference, the cited claims do not support treating the county figure as a signal below 27.5% or consistent with relatively complete treatment recording, since [cty:no_treatment_record:Keski_Uudenmaan_hyvinvointialue] states it is not distinguishable from 27.5% and [bs:coverage:Treatment_start] notes that the 27.5% rate mixes untreated patients and unrecorded treatment.",
+     "severity": "medium"
+    },
+    {
+     "location": "how_sure_are_we.details[3]",
+     "sentence": "Public report data do not measure symptom onset or referrals, primary care visits are not included in the report's data and occupational health is not mentioned, imaging appears only indirectly as the diagnostic basis in approximately 20% of cases nationally, and specialist visits and treatments lack county waiting-time timestamps.",
+     "problem": "Minor imprecision in measure: [bs:coverage:Imaging] and [q:5eb155decc] state that approximately 20% is the share based on clinical examination alone, such as imaging, rather than imaging alone.",
+     "severity": "low"
+    },
+    {
+     "location": "what_to_do_first.details[1]",
+     "sentence": "Because the Health Care Act sets no legal maximum time for a cancer suspicion, the team recommends reporting access times using THL guidance Ohjaus 21/2016 definitions for 16 cancers and flagging stalled handovers, while the roadmap plans national target access times in 2026–2028 and the Filha programme's diagnostics guideline is due before the 2030 interim evaluation.",
+     "problem": "Plan presented with certainty: stating that the Filha programme's diagnostics guideline \"is due\" before the 2030 interim evaluation frames a future programme plan from [q:8f358a9de6] and [q:614febebf2] as a fixed deadline rather than something the programme plans or intends.",
+     "severity": "low"
+    }
+   ],
+   "flags_by_severity": {
+    "medium": 2,
+    "low": 2
+   },
+   "seconds": 242,
+   "error": null
+  },
+  {
+   "county": "Kymenlaakso",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [
+    {
+     "location": "how_sure_are_we.headline",
+     "sentence": "A crude 16.4% (95% CI 13.7–19.6) share with no treatment record versus 27.5% nationally suggests Kymenlaakso's curative gap is not only a recording artefact, though stage is unmeasured.",
+     "problem": "Claim [bs:coverage:Diagnosis] states that stage at diagnosis is missing for nearly half (~48%) of new patients, preventing stage adjustment, rather than being completely unmeasured.",
+     "severity": "low"
+    },
+    {
+     "location": "what_to_do_first.details[2]",
+     "sentence": "Given Kymenlaakso's 0.5% (95% CI 0.2–1.5; n=3/591) crude MDT recording share versus 6.0% (893/14873) nationally and incomplete national lung cancer data storage, the team recommends publishing county recording completeness for stage, drug treatment, and MDT coding while the roadmap plans a national quality registry targeting 90% data coverage including stage alongside uniform recording instructions.",
+     "problem": "The sentence attributes uniform recording instructions to what the Cancer strategy implementation roadmap plans, whereas [q:82d365cd2c] is from the Filha National Lung Cancer Programme 2026–2035 and states that uniform recording instructions must be ensured.",
+     "severity": "medium"
+    }
+   ],
+   "flags_by_severity": {
+    "low": 1,
+    "medium": 1
+   },
+   "seconds": 318,
+   "error": null
+  },
+  {
+   "county": "Länsi-Uusimaa",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [
+    {
+     "location": "how_sure_are_we.details[0]",
+     "sentence": "County treatment shares in the public report are crude (not adjusted for age or stage) because stage at diagnosis is missing for ~48% of new patients nationally, and age-adjusted figures digitised from Kuva 16 (precision ±0.5 percentage points) provide national reference lines here only for curative treatment (26.7% for men; 26.9% for women).",
+     "problem": "The cited claims state that missing stage at diagnosis (~48%) prevents stage adjustment of curative shares, not that it is the reason county treatment shares are not age-adjusted.",
+     "severity": "low"
+    },
+    {
+     "location": "how_sure_are_we.details[2]",
+     "sentence": "Public report data do not measure symptom onset or referrals, do not include outpatient primary care visits or mention occupational health, capture imaging only indirectly as the diagnostic basis in approximately 20% of cases, and show whether a specialist visit (93.6%) or treatment occurred within 12 months without start dates.",
+     "problem": "According to the cited quote q:5eb155decc, approximately 20% refers to clinical examination alone (such as imaging), rather than imaging specifically.",
+     "severity": "low"
+    }
+   ],
+   "flags_by_severity": {
+    "low": 2
+   },
+   "seconds": 218,
+   "error": null
+  },
+  {
+   "county": "Päijät-Häme",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [
+    {
+     "location": "where_we_lag.details[1]",
+     "sentence": "The county's crude curative treatment share is 29.6% (95% CI 26.2–33.2; n=195/659), with a 95% confidence interval that includes the national 27.0% (4009/14873), while crude life-prolonging treatment at 44.5% (95% CI 40.7–48.3; n=293/659) and symptomatic treatment at 50.8% (95% CI 47.0–54.6; n=335/659) have 95% confidence intervals that exclude the national 30.4% (4522/14873) and 39.5% (5871/14873).",
+     "problem": "Missing required caveat from the cited county claims: the three treatment categories overlap (they sum to 124.9%), and the sentence does not note that categories overlap (or that the shares are not age- or stage-adjusted).",
+     "severity": "medium"
+    },
+    {
+     "location": "how_sure_are_we.details[1]",
+     "sentence": "While the 95% confidence intervals for Päijät-Häme's crude shares exclude national values for life-prolonging (44.5% vs 30.4%), symptomatic (50.8% vs 39.5%), no-treatment-record (17.8% vs 27.5%) and MDT-recorded (0.3% vs 6.0%) categories, only national age-adjusted curative reference lines of 26.7% for men and 26.9% for women (digitised from a figure, ±0.5 percentage points) are available here.",
+     "problem": "Missing required caveat from the cited county claims: the listed categories overlap (life-prolonging, symptomatic, no-treatment-record, and MDT-recorded are not mutually exclusive), which is omitted from the sentence.",
+     "severity": "medium"
+    }
+   ],
+   "flags_by_severity": {
+    "medium": 2
+   },
+   "seconds": 209,
+   "error": null
+  },
+  {
+   "county": "Vantaa ja Kerava",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [
+    {
+     "location": "how_sure_are_we.details[0]",
+     "sentence": "All county treatment shares are crude—unadjusted for age or stage because stage at diagnosis is missing for ~48% of new patients—and treatment categories overlap, while Kuva 16 provides only digitised national age-adjusted curative reference lines of 26.7% for men and 26.9% for women (±0.5 percentage points).",
+     "problem": "Missing stage (~48%) explains why shares cannot be stage-adjusted, not why they are unadjusted for age; also, Kuva 16 is a figure from which the national reference lines were digitised rather than Kuva 16 providing only national reference lines.",
+     "severity": "low"
+    },
+    {
+     "location": "what_to_do_first.details[2]",
+     "sentence": "While the roadmap plans national pathways, referral criteria, and coordinator guidance by 2026–2028 (for county adoption by 2029–2031) and the Filha programme's diagnostics recommendation is due before the 2030 mid-term evaluation, the team recommends a standard referral template, a persistent-symptoms referral rule, and a diagnostic contact person, since mentor insight notes weak referrals get lower urgency ratings.",
+     "problem": "The cited roadmap claims specify 2029–2031 county adoption only for the coordinator guidance (q:abcbb06ae3), not for the national pathways (q:def306014c) or referral criteria (q:c61439b30f), which also specifically apply to five or at least the five most common cancers.",
+     "severity": "low"
+    }
+   ],
+   "flags_by_severity": {
+    "low": 2
+   },
+   "seconds": 230,
+   "error": null
+  },
+  {
+   "county": "Etelä-Savo",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [],
+   "flags_by_severity": {},
+   "seconds": 332,
+   "error": null
+  },
+  {
+   "county": "Keski-Suomi",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [
+    {
+     "location": "how_sure_are_we.details[2]",
+     "sentence": "Public report data do not measure symptom onset, referral dates, or when treatment started; outpatient primary care visits are not included in the report's data and occupational health is not mentioned, imaging appears only indirectly as the diagnostic basis in approximately 20% of cases, and specialist visits (93.6% nationally within 12 months) lack county breakdowns or dates.",
+     "problem": "The cited quote (q:5eb155decc) attributes the approximately 20% share to clinical examination alone, giving imaging as an example ('clinical examination alone, such as imaging, in approximately 20%'), rather than to imaging specifically.",
+     "severity": "low"
+    }
+   ],
+   "flags_by_severity": {
+    "low": 1
+   },
+   "seconds": 229,
+   "error": null
+  },
+  {
+   "county": "Pohjois-Karjala",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [],
+   "flags_by_severity": {},
+   "seconds": 201,
+   "error": null
+  },
+  {
+   "county": "Pohjois-Savo",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [
+    {
+     "location": "how_sure_are_we.headline",
+     "sentence": "Pohjois-Savo's crude 19.3% (95% CI 16.5–22.6; n=124/641) no-treatment-record share is below 27.5% (4089/14873) nationally, suggesting relatively complete treatment recording, though county shares remain unadjusted for age or stage.",
+     "problem": "The cited claims only give the county and national no-treatment-record shares and stage missingness; they do not establish that a lower no-treatment-record share indicates relatively complete treatment recording. Because the indicator mixes untreated patients and unrecorded treatment, presenting this inference as what the data suggest without that caveat is an overreach.",
+     "severity": "medium"
+    }
+   ],
+   "flags_by_severity": {
+    "medium": 1
+   },
+   "seconds": 246,
+   "error": null
+  },
+  {
+   "county": "Pohjanmaa",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [],
+   "flags_by_severity": {},
+   "seconds": 314,
+   "error": null
+  },
+  {
+   "county": "Satakunta",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [
+    {
+     "location": "how_sure_are_we.details[3]",
+     "sentence": "In the public report, primary care visits are not included in the report's data and occupational health is not mentioned, symptoms and referrals are not measured, and imaging (approximately 20% of diagnoses), first specialist visits (93.6% within 12 months), and treatment records lack pathway dates or waiting times.",
+     "problem": "Attaches 'approximately 20% of diagnoses' to imaging in general, whereas bs:coverage:Imaging and q:5eb155decc state that approximately 20% of diagnoses are based on clinical examination alone, such as imaging.",
+     "severity": "medium"
+    },
+    {
+     "location": "what_to_do_first.details[1]",
+     "sentence": "Because referrals follow local instructions and a mentor insight notes weak referrals receive lower urgency ratings, the team recommends adopting a standard referral template and referring persistent symptoms after a normal X-ray (modelled on the KYS regional pathway document), while the Filha programme's diagnostics recommendation is due to be completed before the 2030 mid-term evaluation.",
+     "problem": "Uses the wrong verb ('completed') for the Filha programme's recommendation: q:614febebf2 states that the sub-area recommendations will be implemented ('toteutetaan') before the 2030 interim evaluation, and q:432c0e51d6 only says the upcoming recommendation is due before the 2030 mid-term evaluation.",
+     "severity": "medium"
+    }
+   ],
+   "flags_by_severity": {
+    "medium": 2
+   },
+   "seconds": 356,
+   "error": null
+  },
+  {
+   "county": "Varsinais-Suomi",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [
+    {
+     "location": "where_we_lag.headline",
+     "sentence": "Varsinais-Suomi lags national figures in crude shares of curative, life-prolonging and symptomatic treatment and recorded MDT meetings, while its crude share with no treatment record within 12 months is higher.",
+     "problem": "Missing required caveat from the cited claims: the listed treatment and recording categories overlap (patients can fall into more than one category), and the county shares are not age- or stage-adjusted.",
+     "severity": "medium"
+    },
+    {
+     "location": "where_we_lag.details[2]",
+     "sentence": "The county's crude share is 9.7% (95% CI 8.3–11.4; n=140/1437) versus 30.4% (4522/14873) nationally for life-prolonging treatment and 30.8% (95% CI 28.5–33.3; n=443/1437) versus 39.5% (5871/14873) nationally for symptomatic treatment, with the 95% confidence intervals excluding the national values.",
+     "problem": "Missing required caveat from the cited claims that the treatment categories overlap.",
+     "severity": "medium"
+    },
+    {
+     "location": "where_we_lag.details[3]",
+     "sentence": "The crude share with no treatment record within 12 months is 43.1% (95% CI 40.5–45.6; n=619/1437) versus 27.5% (4089/14873) nationally, and the crude share with an MDT meeting recorded is 1.6% (95% CI 1.1–2.4; n=23/1437) versus 6.0% (893/14873) nationally; the 95% confidence intervals exclude the national values.",
+     "problem": "Missing required caveat from the cited claims that these categories overlap.",
+     "severity": "medium"
+    },
+    {
+     "location": "how_sure_are_we.details[1]",
+     "sentence": "County treatment shares are crude and not adjusted for age or stage because stage at diagnosis is missing for ~48% of new patients, and the 1.6% crude MDT share reflects recording practice rather than care because HILMO captures specialised care procedures only from direct patient contacts.",
+     "problem": "Imprecise causal wording: missing stage data (~48%) explains why the treatment shares cannot be stage-adjusted, not why Taulukko 11 shares are not age-adjusted (Kuva 16 provides age-adjusted curative shares).",
+     "severity": "low"
+    },
+    {
+     "location": "how_sure_are_we.details[2]",
+     "sentence": "In public report data, primary care visits are not included in the report's data, occupational health is not mentioned, symptom onset and referrals are unmeasured, imaging appears only as the diagnostic basis in approximately 20% of cases, and specialist visits (93.6% within 12 months) and treatments lack start dates.",
+     "problem": "Minor imprecision: the cited quote states diagnosis is based on clinical examination alone (such as imaging) in approximately 20% of cases rather than imaging specifically, and the 93.6% specialist visit share is a national figure (no county breakdown) without being labelled as national.",
+     "severity": "low"
+    },
+    {
+     "location": "what_to_do_first.details[0]",
+     "sentence": "Given the 43.1% crude share with no treatment record, 9.7% crude life-prolonging share and 1.6% crude MDT share, the team recommends publishing county recording completeness for stage, drug treatment and MDT coding as data-quality signals first, as data reporting is currently incomplete and the roadmap plans a quality registry with 90% coverage.",
+     "problem": "Missing required caveat from the cited county claims that the listed categories overlap.",
+     "severity": "medium"
+    }
+   ],
+   "flags_by_severity": {
+    "medium": 4,
+    "low": 2
+   },
+   "seconds": 238,
+   "error": null
+  },
+  {
+   "county": "Kainuu",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [],
+   "flags_by_severity": {},
+   "seconds": 300,
+   "error": null
+  },
+  {
+   "county": "Keski-Pohjanmaa",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [
+    {
+     "location": "how_sure_are_we.headline",
+     "sentence": "Diagnosis concordance is about 90% in a journal article, and a crude 25.0% no-treatment-record share suggests relatively complete recording, but wide confidence intervals and unmeasured stages limit conclusions.",
+     "problem": "Overreach and missing caveat: the cited claim cty:no_treatment_record:Keski_Pohjanmaan_hyvinvointialue only states that 25.0% of patients had no treatment record within 12 months (not distinguishable from the uncited 27.5% national share). It does not support inferring relatively complete recording, and the sentence omits that a no-treatment-record share mixes untreated patients and unrecorded treatment.",
+     "severity": "medium"
+    },
+    {
+     "location": "how_sure_are_we.details[0]",
+     "sentence": "The crude share with no treatment record within 12 months—mixing untreated patients and unrecorded treatment—is 25.0% (95% CI 18.7–32.5; n=37/148) versus 27.5% (4089/14873) nationally; while the 95% confidence interval includes 27.5%, we infer as a data-quality signal that this is consistent with relatively complete treatment recording, making the crude 22.3% versus 27.0% curative share less likely to be only a recording artefact.",
+     "problem": "Overreach: even when framed as an inference, having a 25.0% no-treatment-record share indistinguishable from the 27.5% national figure (both mixing untreated patients and unrecorded treatment per bs:coverage:Treatment_start) does not support that treatment recording is relatively complete or that the 22.3% versus 27.0% curative share is less likely to be a recording artefact.",
+     "severity": "medium"
+    },
+    {
+     "location": "how_sure_are_we.details[2]",
+     "sentence": "Public report data do not measure symptoms or referrals, primary care visits are not included in the report's data, occupational health is not mentioned, imaging appears only indirectly as the diagnosis basis in approximately 20% of cases, and HILMO records whether an initial specialist visit (93.6% within 12 months) or treatment occurred but not when treatment started.",
+     "problem": "Minor imprecision: bs:coverage:Treatment_start specifies that public data show which treatment type is recorded within 12 months (with 27.5% having no treatment record, mixing untreated patients and unrecorded treatment), rather than whether treatment actually occurred; additionally, q:5eb155decc attributes the approximately 20% figure to clinical examination alone (such as imaging) rather than imaging alone.",
+     "severity": "low"
+    },
+    {
+     "location": "what_to_do_first.headline",
+     "sentence": "The team recommends reporting THL 21/2016 access times with handover alerts, adopting KYS-style referral templates and diagnostic contacts, and auditing stage, drug, and crude 1.4% MDT recording completeness.",
+     "problem": "Minor imprecision: 1.4% in cty:mdt_recorded:Keski_Pohjanmaan_hyvinvointialue is the crude share of patients with an MDT meeting recorded (n=2/148), not the completeness rate of MDT recording, and rec:3 recommends publishing recording completeness rather than auditing it.",
+     "severity": "low"
+    }
+   ],
+   "flags_by_severity": {
+    "medium": 2,
+    "low": 2
+   },
+   "seconds": 245,
+   "error": null
+  },
+  {
+   "county": "Lappi",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [],
+   "flags_by_severity": {},
+   "seconds": 150,
+   "error": null
+  },
+  {
+   "county": "Pohjois-Pohjanmaa",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [],
+   "flags_by_severity": {},
+   "seconds": 278,
+   "error": null
+  },
+  {
+   "county": "Etelä-Pohjanmaa",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [
+    {
+     "location": "where_we_lag.headline",
+     "sentence": "Etelä-Pohjanmaa lags the national average in its crude symptomatic treatment share at 28.1% (95% CI 24.5–32.1; n=152/540), whose 95% confidence interval excludes the national 39.5% (5871/14873).",
+     "problem": "Overreach and missing caveat: the cited claim only shows the county's symptomatic treatment share is below the national average, not that it 'lags' (a lower share of symptomatic-only care does not indicate worse performance), and the sentence omits the required caveat that treatment categories overlap.",
+     "severity": "medium"
+    },
+    {
+     "location": "how_sure_are_we.details[0]",
+     "sentence": "Because the crude 25.7% (95% CI 22.2–29.6; n=139/540) share with no treatment record within 12 months—which mixes untreated patients and unrecorded care—has a 95% confidence interval including the national 27.5% (4089/14873), we infer treatment recording is relatively complete, making the crude 28.1% (95% CI 24.5–32.1; n=152/540) symptomatic share against 39.5% (5871/14873) nationally unlikely to be only a recording artefact.",
+     "problem": "Overreach: having a no-treatment-record share indistinguishable from the national 27.5% (which mixes untreated patients and unrecorded treatment) does not support inferring that treatment recording is relatively complete or that the symptomatic-treatment difference is unlikely to be a recording artefact.",
+     "severity": "medium"
+    },
+    {
+     "location": "how_sure_are_we.details[2]",
+     "sentence": "Outpatient primary care visits are not included in the report's data and occupational health is not mentioned, imaging appears only indirectly as the basis of diagnosis in approximately 20% of cases without wait times, and HILMO records a specialist visit within 12 months for 93.6% of patients nationally without county figures or timestamps.",
+     "problem": "Minor imprecision: the cited quote states that approximately 20% of diagnoses are based on clinical examination alone, such as imaging, rather than imaging alone.",
+     "severity": "low"
+    },
+    {
+     "location": "what_to_do_first.headline",
+     "sentence": "The team recommends reporting access times using THL guidance 21/2016 with handover alerts, standardising referrals and diagnostic contacts, and publishing county recording completeness for stage, drugs, and MDT.",
+     "problem": "Minor imprecision: recommendation 2 proposes naming a contact person for the diagnostic phase (and adding a persistent-symptoms referral rule), rather than 'standardising ... diagnostic contacts'.",
+     "severity": "low"
+    }
+   ],
+   "flags_by_severity": {
+    "medium": 2,
+    "low": 2
+   },
+   "seconds": 189,
+   "error": null
+  },
+  {
+   "county": "Kanta-Häme",
+   "status": "validated",
+   "attempts": 2,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [
+    {
+     "location": "where_we_lag.details[1]",
+     "sentence": "The county's crude curative treatment share is 23.4% (95% CI 20.1–27.2; n=128/546) compared with 27.0% (4009/14873) nationally, and its crude life-prolonging treatment share is 32.2% (95% CI 28.4–36.3; n=176/546) compared with 30.4% (4522/14873) nationally; each 95% confidence interval includes the national value.",
+     "problem": "Missing required caveat from the cited claims: treatment categories overlap (a patient can receive multiple treatment types, so shares across categories do not sum to 100%).",
+     "severity": "medium"
+    },
+    {
+     "location": "what_to_do_first.details[1]",
+     "sentence": "Since the Health Care Act sets no maximum time for a cancer suspicion, the team recommends reporting access times using THL guidance 21/2016 (defining 16 cancers) with handover alerts while the roadmap plans national pathways and target access times in 2026–2028 and the Filha programme's diagnostics recommendation with specialist care time limits is due before the 2030 mid-term evaluation.",
+     "problem": "Overreach and minor imprecision: the cited roadmap claim (q:b326e35410) specifies national pathways and target access times in 2026–2028 are planned for five unnamed cancers (so it is not known whether lung cancer is included), and THL guidance 21/2016 defines how cancer access times are recorded for 16 cancers rather than 'defining 16 cancers'.",
+     "severity": "medium"
+    }
+   ],
+   "flags_by_severity": {
+    "medium": 2
+   },
+   "seconds": 287,
+   "error": null
+  },
+  {
+   "county": "Pirkanmaa",
+   "status": "validated",
+   "attempts": 1,
+   "problems": [],
+   "rule_problems": [],
+   "flags": [
+    {
+     "location": "where_we_lag.headline",
+     "sentence": "Pirkanmaa's crude treatment shares exceed national values, so its main pathway gaps lie in unmonitored local target times and unmeasured access times from referral to treatment start.",
+     "problem": "Overreach: exceeding national crude (unadjusted, overlapping) treatment-share benchmarks does not establish that Pirkanmaa's main pathway gaps are limited to unmonitored local target times and unmeasured referral-to-treatment access times, nor do the cited claims rank or exhaust Pirkanmaa's pathway gaps.",
+     "severity": "medium"
+    }
+   ],
+   "flags_by_severity": {
+    "medium": 1
+   },
+   "seconds": 258,
+   "error": null
+  }
+ ]
+}

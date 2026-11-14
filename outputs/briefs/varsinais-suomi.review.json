@@ -1,10 +1,52 @@
 {
  "county": "Varsinais-Suomi",
- "brief_generated_at": "2026-11-14T11:31:07+00:00",
- "reviewed_at": "2026-11-14T11:33:35+00:00",
+ "brief_generated_at": "2026-11-14T12:11:25+00:00",
+ "reviewed_at": "2026-11-14T12:12:17+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
- "raw_response": "data/processed/gemini_raw/review_varsinais-suomi_20261114T113301Z.json",
- "flags": []
+ "settings": {
+  "temperature": 0.0,
+  "seed": 20261114,
+  "thinking_level": "model default"
+ },
+ "raw_response": "data/processed/gemini_raw/review_varsinais-suomi_20261114T121125235835Z.json",
+ "flags": [
+  {
+   "location": "where_we_lag.headline",
+   "sentence": "Varsinais-Suomi lags national figures in crude shares of curative, life-prolonging and symptomatic treatment and recorded MDT meetings, while its crude share with no treatment record within 12 months is higher.",
+   "problem": "Missing required caveat from the cited claims: the listed treatment and recording categories overlap (patients can fall into more than one category), and the county shares are not age- or stage-adjusted.",
+   "severity": "medium"
+  },
+  {
+   "location": "where_we_lag.details[2]",
+   "sentence": "The county's crude share is 9.7% (95% CI 8.3–11.4; n=140/1437) versus 30.4% (4522/14873) nationally for life-prolonging treatment and 30.8% (95% CI 28.5–33.3; n=443/1437) versus 39.5% (5871/14873) nationally for symptomatic treatment, with the 95% confidence intervals excluding the national values.",
+   "problem": "Missing required caveat from the cited claims that the treatment categories overlap.",
+   "severity": "medium"
+  },
+  {
+   "location": "where_we_lag.details[3]",
+   "sentence": "The crude share with no treatment record within 12 months is 43.1% (95% CI 40.5–45.6; n=619/1437) versus 27.5% (4089/14873) nationally, and the crude share with an MDT meeting recorded is 1.6% (95% CI 1.1–2.4; n=23/1437) versus 6.0% (893/14873) nationally; the 95% confidence intervals exclude the national values.",
+   "problem": "Missing required caveat from the cited claims that these categories overlap.",
+   "severity": "medium"
+  },
+  {
+   "location": "how_sure_are_we.details[1]",
+   "sentence": "County treatment shares are crude and not adjusted for age or stage because stage at diagnosis is missing for ~48% of new patients, and the 1.6% crude MDT share reflects recording practice rather than care because HILMO captures specialised care procedures only from direct patient contacts.",
+   "problem": "Imprecise causal wording: missing stage data (~48%) explains why the treatment shares cannot be stage-adjusted, not why Taulukko 11 shares are not age-adjusted (Kuva 16 provides age-adjusted curative shares).",
+   "severity": "low"
+  },
+  {
+   "location": "how_sure_are_we.details[2]",
+   "sentence": "In public report data, primary care visits are not included in the report's data, occupational health is not mentioned, symptom onset and referrals are unmeasured, imaging appears only as the diagnostic basis in approximately 20% of cases, and specialist visits (93.6% within 12 months) and treatments lack start dates.",
+   "problem": "Minor imprecision: the cited quote states diagnosis is based on clinical examination alone (such as imaging) in approximately 20% of cases rather than imaging specifically, and the 93.6% specialist visit share is a national figure (no county breakdown) without being labelled as national.",
+   "severity": "low"
+  },
+  {
+   "location": "what_to_do_first.details[0]",
+   "sentence": "Given the 43.1% crude share with no treatment record, 9.7% crude life-prolonging share and 1.6% crude MDT share, the team recommends publishing county recording completeness for stage, drug treatment and MDT coding as data-quality signals first, as data reporting is currently incomplete and the roadmap plans a quality registry with 90% coverage.",
+   "problem": "Missing required caveat from the cited county claims that the listed categories overlap.",
+   "severity": "medium"
+  }
+ ]
 }

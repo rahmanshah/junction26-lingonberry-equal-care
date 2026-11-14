@@ -1,0 +1,28 @@
+{
+ "county": "Helsinki",
+ "brief_generated_at": "2026-11-14T12:25:48+00:00",
+ "reviewed_at": "2026-11-14T12:26:34+00:00",
+ "note": "Flags are for human review only; they never change the brief's status or approve it.",
+ "rule_problems": [],
+ "model": "gemini-4-hydrogen",
+ "settings": {
+  "temperature": 0.0,
+  "seed": 20261114,
+  "thinking_level": "model default"
+ },
+ "raw_response": "data/processed/gemini_raw/review_helsinki_20261114T122548291615Z.json",
+ "flags": [
+  {
+   "location": "how_sure_are_we.headline",
+   "sentence": "Diagnosis counts are well supported, but crude county treatment shares lack age or stage adjustment, and public registry data do not capture pathway dates or pre-specialist care.",
+   "problem": "Overreaches and partly contradicts the cited claims: bs:coverage:Diagnosis explicitly states that the registry records the diagnosis date ('Registry diagnosis date'), so saying public registry data do not capture 'pathway dates' is inaccurate; additionally, bs:coverage:Primary_care_occupational_health states that primary care visits are not included in the report's data and occupational health is not mentioned in the report (rather than claiming that no public registry data capture pre-specialist care).",
+   "severity": "medium"
+  },
+  {
+   "location": "how_sure_are_we.details[1]",
+   "sentence": "County treatment shares are crude and not adjusted for age or stage: stage at diagnosis is missing for ~48% of new patients, and while Kuva 16 provides digitised national age-adjusted curative shares of 26.7% for men and 26.9% for women (read off a figure, precision ±0.5 percentage points), no age-adjusted county value is provided.",
+   "problem": "None of the cited claims support the statement that 'no age-adjusted county value is provided'; k16:curative:men:national and k16:curative:women:national only report the digitised national reference lines from Kuva 16 and say nothing about whether age-adjusted county values are provided.",
+   "severity": "medium"
+  }
+ ]
+}

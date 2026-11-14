@@ -1,0 +1,34 @@
+{
+ "county": "Itä-Uusimaa",
+ "brief_generated_at": "2026-11-14T12:25:13+00:00",
+ "reviewed_at": "2026-11-14T12:25:49+00:00",
+ "note": "Flags are for human review only; they never change the brief's status or approve it.",
+ "rule_problems": [],
+ "model": "gemini-4-hydrogen",
+ "settings": {
+  "temperature": 0.0,
+  "seed": 20261114,
+  "thinking_level": "model default"
+ },
+ "raw_response": "data/processed/gemini_raw/review_ita-uusimaa_20261114T122513682710Z.json",
+ "flags": [
+  {
+   "location": "how_sure_are_we.headline",
+   "sentence": "Diagnosis records match well nationally, but Itä-Uusimaa's crude treatment shares lack age or stage adjustment, and public data omit primary care, referrals, and treatment start dates.",
+   "problem": "Claim [bs:coverage:Primary_care_occupational_health] specifies that primary care visits are 'not included in the report's data' (and explicitly warns never to say 'excluded'), rather than being omitted from public data generally.",
+   "severity": "low"
+  },
+  {
+   "location": "how_sure_are_we.details[0]",
+   "sentence": "A journal article found HILMO diagnoses match the Cancer Registry for about 90% of most cancer types (diagnosis concordance only), whereas reading Itä-Uusimaa's above-national crude 31.6% (95% CI 26.4–37.4; n=86/272) no-treatment-record share versus 27.5% (4089/14873) nationally as a data-quality signal suggests—as an inference, not a finding—that lower recorded treatment shares may partly reflect unrecorded treatment.",
+   "problem": "Claim [cty:no_treatment_record:Itä_Uudenmaan_hyvinvointialue] states that Itä-Uusimaa's 31.6% (95% CI 26.4–37.4) no-treatment-record share is 'not distinguishable vs national 27.5%'. Calling it 'above-national' without noting that its confidence interval includes the national benchmark overstates the comparison.",
+   "severity": "medium"
+  },
+  {
+   "location": "what_to_do_first.details[1]",
+   "sentence": "Next, because Health Care Act §52 sets no legal maximum time for a cancer suspicion and Finland lacks a unified national pathway monitoring system, the team recommends reporting referral-to-treatment access times using THL Ohjaus 21/2016 guidance definitions (for 16 cancers) and flagging stalled handovers while the roadmap plans national pathways and target access times by 2026–2028.",
+   "problem": "Claims [q:def306014c] and [q:b326e35410] specify that the 2026–2028 roadmap target covers national care pathway descriptions and access-to-care times for five unnamed cancers, not cancer pathways in general or lung cancer specifically.",
+   "severity": "medium"
+  }
+ ]
+}

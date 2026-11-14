@@ -1,0 +1,22 @@
+{
+ "county": "Pirkanmaa",
+ "brief_generated_at": "2026-11-14T12:20:04+00:00",
+ "reviewed_at": "2026-11-14T12:20:35+00:00",
+ "note": "Flags are for human review only; they never change the brief's status or approve it.",
+ "rule_problems": [],
+ "model": "gemini-4-hydrogen",
+ "settings": {
+  "temperature": 0.0,
+  "seed": 20261114,
+  "thinking_level": "model default"
+ },
+ "raw_response": "data/processed/gemini_raw/review_pirkanmaa_20261114T122004514017Z.json",
+ "flags": [
+  {
+   "location": "where_we_lag.headline",
+   "sentence": "Pirkanmaa's crude treatment shares exceed national values, so its main pathway gaps lie in unmonitored local target times and unmeasured access times from referral to treatment start.",
+   "problem": "Overreach: exceeding national crude (unadjusted, overlapping) treatment-share benchmarks does not establish that Pirkanmaa's main pathway gaps are limited to unmonitored local target times and unmeasured referral-to-treatment access times, nor do the cited claims rank or exhaust Pirkanmaa's pathway gaps.",
+   "severity": "medium"
+  }
+ ]
+}

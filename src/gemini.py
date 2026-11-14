@@ -5,6 +5,7 @@ data/processed/gemini_raw/<tag>_<UTC time>.json. The API key is read from .env a
 """
 import json
 import os
+import threading
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -27,17 +28,20 @@ def model_name(env_var: str) -> str:
 
 
 _CLIENT: genai.Client | None = None
+_CLIENT_LOCK = threading.Lock()
 
 
 def client() -> genai.Client:
-    """One client per process (a temporary client is closed when garbage-collected)."""
+    """One client per process (a temporary client is closed when garbage-collected). Created under a
+    lock: without it, parallel threads each create one and the discarded ones close mid-request."""
     global _CLIENT
-    if _CLIENT is None:
-        key = os.environ.get("GEMINI_API_KEY")
-        if not key:
-            raise SystemExit("GEMINI_API_KEY missing from .env")
-        _CLIENT = genai.Client(api_key=key)
-    return _CLIENT
+    with _CLIENT_LOCK:
+        if _CLIENT is None:
+            key = os.environ.get("GEMINI_API_KEY")
+            if not key:
+                raise SystemExit("GEMINI_API_KEY missing from .env")
+            _CLIENT = genai.Client(api_key=key)
+        return _CLIENT
 
 
 TRANSIENT = {429, 500, 502, 503, 504}

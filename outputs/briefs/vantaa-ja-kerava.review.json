@@ -1,0 +1,28 @@
+{
+ "county": "Vantaa ja Kerava",
+ "brief_generated_at": "2026-11-14T12:05:43+00:00",
+ "reviewed_at": "2026-11-14T12:06:27+00:00",
+ "note": "Flags are for human review only; they never change the brief's status or approve it.",
+ "rule_problems": [],
+ "model": "gemini-4-hydrogen",
+ "settings": {
+  "temperature": 0.0,
+  "seed": 20261114,
+  "thinking_level": "model default"
+ },
+ "raw_response": "data/processed/gemini_raw/review_vantaa-ja-kerava_20261114T120543100240Z.json",
+ "flags": [
+  {
+   "location": "how_sure_are_we.details[0]",
+   "sentence": "All county treatment shares are crude—unadjusted for age or stage because stage at diagnosis is missing for ~48% of new patients—and treatment categories overlap, while Kuva 16 provides only digitised national age-adjusted curative reference lines of 26.7% for men and 26.9% for women (±0.5 percentage points).",
+   "problem": "Missing stage (~48%) explains why shares cannot be stage-adjusted, not why they are unadjusted for age; also, Kuva 16 is a figure from which the national reference lines were digitised rather than Kuva 16 providing only national reference lines.",
+   "severity": "low"
+  },
+  {
+   "location": "what_to_do_first.details[2]",
+   "sentence": "While the roadmap plans national pathways, referral criteria, and coordinator guidance by 2026–2028 (for county adoption by 2029–2031) and the Filha programme's diagnostics recommendation is due before the 2030 mid-term evaluation, the team recommends a standard referral template, a persistent-symptoms referral rule, and a diagnostic contact person, since mentor insight notes weak referrals get lower urgency ratings.",
+   "problem": "The cited roadmap claims specify 2029–2031 county adoption only for the coordinator guidance (q:abcbb06ae3), not for the national pathways (q:def306014c) or referral criteria (q:c61439b30f), which also specifically apply to five or at least the five most common cancers.",
+   "severity": "low"
+  }
+ ]
+}

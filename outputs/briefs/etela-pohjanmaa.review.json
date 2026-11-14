@@ -1,0 +1,40 @@
+{
+ "county": "Etelä-Pohjanmaa",
+ "brief_generated_at": "2026-11-14T12:17:25+00:00",
+ "reviewed_at": "2026-11-14T12:17:55+00:00",
+ "note": "Flags are for human review only; they never change the brief's status or approve it.",
+ "rule_problems": [],
+ "model": "gemini-4-hydrogen",
+ "settings": {
+  "temperature": 0.0,
+  "seed": 20261114,
+  "thinking_level": "model default"
+ },
+ "raw_response": "data/processed/gemini_raw/review_etela-pohjanmaa_20261114T121725016734Z.json",
+ "flags": [
+  {
+   "location": "where_we_lag.headline",
+   "sentence": "Etelä-Pohjanmaa lags the national average in its crude symptomatic treatment share at 28.1% (95% CI 24.5–32.1; n=152/540), whose 95% confidence interval excludes the national 39.5% (5871/14873).",
+   "problem": "Overreach and missing caveat: the cited claim only shows the county's symptomatic treatment share is below the national average, not that it 'lags' (a lower share of symptomatic-only care does not indicate worse performance), and the sentence omits the required caveat that treatment categories overlap.",
+   "severity": "medium"
+  },
+  {
+   "location": "how_sure_are_we.details[0]",
+   "sentence": "Because the crude 25.7% (95% CI 22.2–29.6; n=139/540) share with no treatment record within 12 months—which mixes untreated patients and unrecorded care—has a 95% confidence interval including the national 27.5% (4089/14873), we infer treatment recording is relatively complete, making the crude 28.1% (95% CI 24.5–32.1; n=152/540) symptomatic share against 39.5% (5871/14873) nationally unlikely to be only a recording artefact.",
+   "problem": "Overreach: having a no-treatment-record share indistinguishable from the national 27.5% (which mixes untreated patients and unrecorded treatment) does not support inferring that treatment recording is relatively complete or that the symptomatic-treatment difference is unlikely to be a recording artefact.",
+   "severity": "medium"
+  },
+  {
+   "location": "how_sure_are_we.details[2]",
+   "sentence": "Outpatient primary care visits are not included in the report's data and occupational health is not mentioned, imaging appears only indirectly as the basis of diagnosis in approximately 20% of cases without wait times, and HILMO records a specialist visit within 12 months for 93.6% of patients nationally without county figures or timestamps.",
+   "problem": "Minor imprecision: the cited quote states that approximately 20% of diagnoses are based on clinical examination alone, such as imaging, rather than imaging alone.",
+   "severity": "low"
+  },
+  {
+   "location": "what_to_do_first.headline",
+   "sentence": "The team recommends reporting access times using THL guidance 21/2016 with handover alerts, standardising referrals and diagnostic contacts, and publishing county recording completeness for stage, drugs, and MDT.",
+   "problem": "Minor imprecision: recommendation 2 proposes naming a contact person for the diagnostic phase (and adding a persistent-symptoms referral rule), rather than 'standardising ... diagnostic contacts'.",
+   "severity": "low"
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "county": "Pohjois-Savo",
+ "brief_generated_at": "2026-11-14T12:10:03+00:00",
+ "reviewed_at": "2026-11-14T12:10:34+00:00",
+ "note": "Flags are for human review only; they never change the brief's status or approve it.",
+ "rule_problems": [],
+ "model": "gemini-4-hydrogen",
+ "settings": {
+  "temperature": 0.0,
+  "seed": 20261114,
+  "thinking_level": "model default"
+ },
+ "raw_response": "data/processed/gemini_raw/review_pohjois-savo_20261114T121003923276Z.json",
+ "flags": [
+  {
+   "location": "how_sure_are_we.headline",
+   "sentence": "Pohjois-Savo's crude 19.3% (95% CI 16.5–22.6; n=124/641) no-treatment-record share is below 27.5% (4089/14873) nationally, suggesting relatively complete treatment recording, though county shares remain unadjusted for age or stage.",
+   "problem": "The cited claims only give the county and national no-treatment-record shares and stage missingness; they do not establish that a lower no-treatment-record share indicates relatively complete treatment recording. Because the indicator mixes untreated patients and unrecorded treatment, presenting this inference as what the data suggest without that caveat is an overreach.",
+   "severity": "medium"
+  }
+ ]
+}
