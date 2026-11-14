@@ -6,7 +6,7 @@
 - [x] Tidy county treatment table (src/clean_county.py)
 
 ## 1. Data (by Sat 12:00)
-- [ ] Verify table 10 definitions, denominators and NaN meaning
+- [x] Verify table 10 definitions, denominators and NaN meaning (docs/definitions.md)
 - [ ] Wilson 95% CIs per county and treatment type
 - [ ] Extract county data behind charts (Kuva 6, 7, stage coverage)
 - [ ] Blind-spot table: pathway stage x data available / source / not measured
