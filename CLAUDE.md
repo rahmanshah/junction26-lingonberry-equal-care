@@ -83,6 +83,12 @@ Build checklist: PLAN.md (tick tasks when done).
   "diagnosed on clinical findings alone (e.g. imaging), not by tissue or cell sample".
 - All counties: `uv run python src/generate_all.py` -> outputs/briefs/summary.{json,md};
   `src/compare_flags.py before.json after.json` -> flags_before_after.md (keyword causes).
+- PIPELINE FROZEN (14 Nov, after run 3): no more prompt or validation-rule changes unless something
+  is wrong. Final run: 22/22 validated; 24 review flags (0 high). History:
+  outputs/briefs/flags_before_after.md (runs 1–3).
+- App branding: assets/logo.svg (favicon via set_page_config + st.logo; SVG accepted inside a running
+  app). Core message above the tabs is defined with its backing claims in src/core_message.py;
+  check_claims.py fails if any part is not backed by citable claims.
 - App: `uv run streamlit run src/app.py` (serves saved briefs; "Regenerate with Gemini" runs the
   pipeline live). Smoke test: streamlit.testing.v1.AppTest on src/app.py.
 - docs/:

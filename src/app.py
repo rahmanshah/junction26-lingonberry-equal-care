@@ -19,13 +19,25 @@ ROOT = Path(__file__).resolve().parent.parent
 os.chdir(ROOT)  # all pipeline paths are relative to the repo root
 sys.path.insert(0, str(ROOT / "src"))
 
-import altair as alt  # noqa: E402
-import pandas as pd  # noqa: E402
 import streamlit as st  # noqa: E402
 
+LOGO = ROOT / "assets" / "logo.svg"
+# First Streamlit call. Inside a running app Streamlit turns a local .svg path into an SVG data URI for
+# both the favicon and st.logo (checked in the test harness), so no PNG is needed.
+st.set_page_config(page_title="Lingonberry", page_icon=str(LOGO), layout="wide")
+st.logo(str(LOGO), size="large", icon_image=str(LOGO))
+
+import base64  # noqa: E402
+
+import altair as alt  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import core_message  # noqa: E402
 import counties  # noqa: E402
 import ledger  # noqa: E402
 from validate_brief import SECTIONS, validate  # noqa: E402
+
+LOGO_URI = "data:image/svg+xml;base64," + base64.b64encode(LOGO.read_bytes()).decode("ascii")
 
 BRIEFS = Path("outputs/briefs")
 TITLES = {"where_we_lag": "Where do we lag?", "how_sure_are_we": "How sure are we?",
@@ -50,8 +62,6 @@ MEASURED = {"yes": (":green[:material/check_circle: Measured]"),
             "partly": (":orange[:material/remove_circle: Partly measured]"),
             "no": (":red[:material/cancel: Not measured]")}
 HIGHLIGHT, OTHER, INK2 = "#2a78d6", "#b4b2ab", "#52514e"
-
-st.set_page_config(page_title="Lingonberry · Equal Care", page_icon=":material/pulmonology:", layout="wide")
 
 
 # ---------------------------------------------------------------- data (cached by file mtime)
@@ -135,6 +145,41 @@ def claim_card(cid: str) -> None:
             st.caption(f"Notes: {c['notes']}")
 
 
+SEVERITY = {"high": ("red", ":material/error:"), "medium": ("orange", ":material/warning:"),
+            "low": ("gray", ":material/info:")}
+
+
+def flag_place(location: str) -> str:
+    """'how_sure_are_we.details[2]' -> 'How sure are we? · detail 3'."""
+    m = re.match(r"(\w+)\.(headline|details\[(\d+)\])", location)
+    if not m:
+        return location
+    part = "headline" if m.group(2) == "headline" else f"detail {int(m.group(3)) + 1}"
+    return f"{TITLES.get(m.group(1), m.group(1))} · {part}"
+
+
+def flagged_for_review(review: dict, brief: dict) -> None:
+    """Model review flags, shown apart from the validated text. They never change the brief."""
+    st.divider()
+    with st.container(border=True):
+        n = len(review["flags"])
+        st.subheader(f":material/flag: Flagged for human review ({n})")
+        st.caption("Not part of the validated brief. A second model (gemini-4-hydrogen) read each sentence "
+                   "against its cited claims and raised these for a person to check. Flags never approve, "
+                   "reject or change the brief.")
+        if not n:
+            st.markdown(":green[:material/check: Nothing flagged]")
+        order = {"high": 0, "medium": 1, "low": 2}
+        for f in sorted(review["flags"], key=lambda f: order.get(f["severity"], 3)):
+            colour, icon = SEVERITY.get(f["severity"], ("gray", ":material/help:"))
+            with st.container(border=True):
+                st.badge(f["severity"].capitalize(), color=colour, icon=icon)
+                st.markdown(f"**{flag_place(f['location'])}**")
+                if f.get("sentence") and f["sentence"] != "-":
+                    st.markdown(f"> {f['sentence']}")
+                st.markdown(f["problem"])
+
+
 def sentence(s: dict, key: str, headline: bool = False) -> None:
     st.markdown(f"**{s['text']}**" if headline else s["text"])
     picked = st.pills("Claims", s["claim_ids"], key=key, format_func=short_id,
@@ -145,7 +190,11 @@ def sentence(s: dict, key: str, headline: bool = False) -> None:
 
 # ---------------------------------------------------------------- sidebar
 with st.sidebar:
-    st.title("Lingonberry")
+    st.markdown(
+        f'<div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.2rem">'
+        f'<img src="{LOGO_URI}" width="40" height="40" alt="Lingonberry logo">'
+        f'<span style="font-size:1.75rem;font-weight:700;line-height:1">Lingonberry</span></div>',
+        unsafe_allow_html=True)
     st.caption("Equal care across Finland · lung cancer pathway · Junction 2026")
     names = list(counties.FULL)
     short = st.selectbox("Wellbeing services county", names, index=names.index("Kymenlaakso"))
@@ -189,6 +238,21 @@ st.title(short)
 st.caption(f"{full} · lung cancer care pathway · new patients 2019–2023, 12-month follow-up · "
            "source: Finnish Cancer Registry, Keuhkosyöpä Suomessa 2019–2023")
 
+# Core message: the same on every county page; each part backed by ledger claims (src/core_message.py).
+core_parts, core_problems = core_message.resolve(claims)
+with st.container(border=True):
+    st.markdown(f"#### {core_message.MESSAGE}")
+    cols = st.columns(len(core_parts), gap="medium")
+    for i, (col, (part, ids)) in enumerate(zip(cols, core_parts)):
+        with col:
+            st.caption(f"‘{part[:1].upper() + part[1:]}’: backed by")
+            picked = st.pills(f"core-{i}", ids, key=f"core-{slug}-{i}", format_func=short_id,
+                              label_visibility="collapsed", selection_mode="single")
+            if picked:
+                claim_card(picked)
+    if core_problems:
+        st.error("The core message is not fully backed by the ledger: " + "; ".join(core_problems))
+
 tab_brief, tab_chart, tab_path, tab_verify = st.tabs(
     [":material/description: Brief", ":material/scatter_plot: Curative vs no record",
      ":material/route: Pathway", ":material/fact_check: How we verified this"])
@@ -215,6 +279,8 @@ with tab_brief:
                             sentence(d, f"{slug}-{s}-{i}")
                             if i < len(sec["details"]) - 1:
                                 st.divider()
+            if review_doc:
+                flagged_for_review(review_doc, brief_doc["brief"])
     with right:
         with st.container(border=True):
             st.subheader(":material/info: Limitations")
@@ -232,16 +298,6 @@ with tab_brief:
                 "- **Our recommendations** (:material/lightbulb:) are the team's own drafts, not yet reviewed "
                 "by mentors; each is cited together with its evidence.\n"
                 "- Public aggregate data only; no patient-level data.")
-        if review_doc:
-            with st.container(border=True):
-                st.subheader(":material/flag: Review flags")
-                st.caption(review_doc["note"])
-                if not review_doc["flags"]:
-                    st.markdown(":green[:material/check: No flags]")
-                for f in review_doc["flags"]:
-                    icon = {"high": ":red[:material/error:]", "medium": ":orange[:material/warning:]",
-                            "low": ":gray[:material/info:]"}[f["severity"]]
-                    st.markdown(f"{icon} **{f['severity']}** · `{f['location']}`  \n{f['problem']}")
 
 # ---------------------------------------------------------------- chart
 with tab_chart:

@@ -11,6 +11,7 @@
 7. English quotes are quotes of Hellu's brief and must belong to a brief claim (not a loose q: claim).
 8. The scanned docs contain no unmarked straight "…" quotes: source quotes must be <q lang="…">.
 9. Every superseded claim names, in its notes, existing claims that supersede it.
+10. Every part of the app's core message (src/core_message.py) resolves to existing, citable claims.
 
 Prints claims per status and per method.
 """
@@ -56,6 +57,10 @@ def main() -> int:
     known = {c["id"] for c in claims}
     for doc in SCANNED_DOCS:
         failures.extend(unmarked_quotes(doc))
+    # The app's core message must be backed by existing, citable claims (src/core_message.py).
+    import core_message
+    _, core_problems = core_message.resolve({c["id"]: c for c in claims})
+    failures.extend(core_problems)
 
     for c in claims:
         if not (c["claim_text"] or "").strip():
