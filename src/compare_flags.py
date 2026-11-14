@@ -1,12 +1,12 @@
-"""Compare review flags before and after a pipeline change, grouped by cause.
+"""Compare review flags across pipeline runs, grouped by cause.
 
 Causes are assigned by keyword rules on the flag text (first match wins, in CAUSES order). This is a
 transparent, repeatable classification, not a judgement: a few flags may be assigned to the wrong cause
-(on the 41 flags of the first all-county run, about 2 were), so every flag after the change is listed in
+(on the 41 flags of the first all-county run, about 2 were), so every flag of the last run is listed in
 full under its assigned cause.
 
-Usage: uv run python src/compare_flags.py outputs/briefs/summary_before.json outputs/briefs/summary.json
-Writes outputs/briefs/flags_before_after.md
+Usage: uv run python src/compare_flags.py LABEL=summary1.json LABEL=summary2.json [LABEL=summary3.json ...]
+       (oldest first). Writes outputs/briefs/flags_before_after.md
 """
 import json
 import re
@@ -29,57 +29,62 @@ CAUSES = [
 ]
 OTHER = "Other"
 ORDER = [c for c, _ in CAUSES] + [OTHER]
+OUT = Path("outputs/briefs/flags_before_after.md")
 
 
 def cause(text: str) -> str:
     return next((name for name, rule in CAUSES if rule(text)), OTHER)
 
 
-def flags(path: str) -> list[dict]:
+def load(path: str) -> tuple[dict, list[dict]]:
     s = json.loads(Path(path).read_text(encoding="utf-8"))
-    return [{"county": r["county"], **f, "cause": cause(f["problem"])} for r in s["counties"] for f in r["flags"]]
+    fl = [{"county": r["county"], **f, "cause": cause(f["problem"])} for r in s["counties"] for f in r["flags"]]
+    return s, fl
 
 
 def main() -> int:
-    if len(sys.argv) != 3:
+    args = sys.argv[1:]
+    if len(args) < 2 or not all("=" in a for a in args):
         print(__doc__)
         return 2
-    before, after = flags(sys.argv[1]), flags(sys.argv[2])
-    sb = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-    sa = json.loads(Path(sys.argv[2]).read_text(encoding="utf-8"))
+    runs = [(label, *load(path)) for label, path in (a.split("=", 1) for a in args)]
+    labels = [r[0] for r in runs]
+    head = "| " + " | ".join(labels) + " |"
+    sep = "|---" * len(labels) + "|"
 
-    def by(fl, key):
-        return Counter(f[key] for f in fl)
-
-    lines = ["# Review flags before and after the pipeline fixes", "",
-             f"Before: {sb['finished_at']} · {sb['totals']}  ", f"After: {sa['finished_at']} · {sa['totals']}", "",
-             "Causes are assigned by keyword rules on the flag text (`src/compare_flags.py`; first match wins). "
-             "Flags are from the model review: for human review only, and not fully repeatable between runs.", "",
-             "## By cause", "", "| Cause | Before | After | Change |", "|---|---|---|---|"]
-    cb, ca = by(before, "cause"), by(after, "cause")
+    lines = ["# Review flags across pipeline runs", ""]
+    for label, s, _ in runs:
+        retries = sum(1 for r in s["counties"] if (r.get("attempts") or 0) > 1)
+        lines.append(f"- **{label}**: {s['finished_at']} · {s['totals']} · {retries} needed the retry")
+    lines += ["", "Causes are assigned by keyword rules on the flag text (`src/compare_flags.py`; first match "
+              "wins). Flags come from the model review: for human review only, and not fully repeatable "
+              "between runs.", "", "## By cause", "", "| Cause " + head + " Change |", "|---" + sep + "---|"]
+    counts = [Counter(f["cause"] for f in fl) for _, _, fl in runs]
     for c in ORDER:
-        lines.append(f"| {c} | {cb[c]} | {ca[c]} | {ca[c] - cb[c]:+d} |")
-    lines.append(f"| **Total** | **{len(before)}** | **{len(after)}** | **{len(after) - len(before):+d}** |")
-    lines += ["", "## By severity", "", "| Severity | Before | After |", "|---|---|---|"]
-    sevb, seva = by(before, "severity"), by(after, "severity")
+        lines.append(f"| {c} | " + " | ".join(str(k[c]) for k in counts) + f" | {counts[-1][c] - counts[0][c]:+d} |")
+    totals = [len(fl) for _, _, fl in runs]
+    lines.append("| **Total** | " + " | ".join(f"**{t}**" for t in totals) + f" | **{totals[-1] - totals[0]:+d}** |")
+    lines += ["", "## By severity", "", "| Severity " + head, "|---" + sep]
+    sev = [Counter(f["severity"] for f in fl) for _, _, fl in runs]
     for s in ("high", "medium", "low"):
-        lines.append(f"| {s} | {sevb[s]} | {seva[s]} |")
-    lines += ["", "## By county", "", "| County | Before | After | Status after | Attempts after |", "|---|---|---|---|---|"]
-    after_rows = {r["county"]: r for r in sa["counties"]}
-    for r in sb["counties"]:
-        a = after_rows.get(r["county"], {})
-        lines.append(f"| {r['county']} | {len(r['flags'])} | {len(a.get('flags', []))} | {a.get('status', '–')} | "
-                     f"{a.get('attempts', '–')} |")
-    lines += ["", "## All flags after the fixes", ""]
+        lines.append(f"| {s} | " + " | ".join(str(k[s]) for k in sev) + " |")
+    lines += ["", "## By county (flags)", "", "| County " + head + " Status (last) | Attempts (last) |",
+              "|---" + sep + "---|---|"]
+    per = [{r["county"]: r for r in s["counties"]} for _, s, _ in runs]
+    for county in per[-1]:
+        last = per[-1][county]
+        lines.append(f"| {county} | " + " | ".join(str(len(p.get(county, {}).get("flags", []))) for p in per)
+                     + f" | {last['status']} | {last['attempts']} |")
+    lines += ["", f"## All flags in the last run ({labels[-1]})", ""]
+    last_flags = runs[-1][2]
     for c in ORDER:
-        fl = [f for f in after if f["cause"] == c]
+        fl = [f for f in last_flags if f["cause"] == c]
         if fl:
             lines += [f"**{c}** ({len(fl)})", ""] + [
                 f"- [{f['severity']}] {f['county']}, `{f['location']}`: {f['problem']}" for f in fl] + [""]
-    out = Path(sys.argv[2]).parent / "flags_before_after.md"
-    out.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print("\n".join(lines[:4 + 6 + len(ORDER) + 2]))
-    print(f"\nWrote {out}")
+    OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print("\n".join(lines[: lines.index("## By severity")]))
+    print(f"Wrote {OUT}")
     return 0
 
 

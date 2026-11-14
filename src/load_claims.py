@@ -268,6 +268,22 @@ def doc_quote_claims(path: str) -> list[dict]:
     return rows
 
 
+# ---------------------------------------------------------------- 7. report structure (our survey)
+def report_structure_claims() -> list[dict]:
+    """Facts about what the report contains, from our survey of its figures (docs/chart_data.md)."""
+    return [{
+        "id": "fig:age_adjusted_only_kuva16",
+        "claim_text": "In the 2019–2023 report, county-level age-adjusted treatment shares appear only in Kuva 16 "
+                      "(a PNG figure, by sex, with 95% CIs); the county table (Taulukko 11) gives crude shares only",
+        "value": None, "unit": None, "county": None, "metric": "report_structure",
+        "source_doc": "docs/chart_data.md", "location": "Summary table; section 'Kuva 16 in detail'",
+        "method": "assessed", "status": "verified locally",
+        "notes": "scope: the report's structure only. Of Kuva 16 we have digitised curative values for "
+                 "Kymenlaakso, Etelä-Karjala and Varsinais-Suomi; other counties have no age-adjusted value "
+                 "in the ledger",
+    }]
+
+
 # ---------------------------------------------------------------- 6. our recommendations
 RECS = "docs/recommendations.md"
 
@@ -447,8 +463,10 @@ _R252 = ("plan: STM roadmap (not the Filha programme), measure 2.5.2: standardis
          "(p.53); all significant cancers by 2029–2031")
 _R123 = ("plan: STM roadmap (not the Filha programme), measure 1.2.3: guidance on a named care-coordinator model "
          "by 2026–2028; counties adopt it by 2029–2031 (p.32); the care phase is not specified")
-_R321 = ("plan: STM roadmap (not the Filha programme), measure 3.2.1: national cancer quality registry; registry "
-         "decree updated by 2026–2028, annual reports for at least five cancers by 2029–2031 (pp.59–60)")
+_R321 = ("plan: STM roadmap (not the Filha programme), measure 3.2.1: national cancer quality registry. Dates: "
+         "only the registry decree is to be updated by 2026–2028 (not the registry itself); annual reports for "
+         "at least five cancers by 2029–2031 (pp.59–60). The 90% data-coverage indicator has NO date of its "
+         "own: never attach 2026–2028 or 2029–2031 to it")
 _FILHA = ("plan: Filha National Lung Cancer Programme (not the STM roadmap): a national lung cancer diagnostics "
           "recommendation with primary-care referral criteria and recommended time limits, to be carried out "
           "('toteutetaan') before the 2030 mid-term evaluation (p.24). 'Toteutetaan' may mean produced or "
@@ -564,6 +582,7 @@ def add_translations(rows: list[dict]) -> int:
 
 def main() -> int:
     rows = (county_claims() + national_claims() + kuva16_claims() + brief_claims() + recommendation_claims()
+            + report_structure_claims()
             + blind_spot_claims() + [r for d in QUOTE_DOCS for r in doc_quote_claims(d)])
     rows = attach_english(merge_quotes(rows))
     resolve_superseded(rows)

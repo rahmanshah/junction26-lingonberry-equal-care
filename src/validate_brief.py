@@ -18,6 +18,9 @@ A brief has three sections (where_we_lag, how_sure_are_we, what_to_do_first); ea
   - a sentence citing two or more different county treatment shares does not say they overlap
   - a sentence says treatment recording looks (relatively) complete although the county's
     no-treatment-record 95% interval is not entirely below the national value (vs_national != below)
+  - a sentence citing roadmap measure 3.1.2 or 2.5.2 mentions 2026–2028 without saying the milestone
+    covers five cancers ("five" / "5")
+  - a sentence citing roadmap measure 3.2.1 puts a date next to the 90% coverage indicator (it has none)
 
 Numbers that describe the study frame, not a finding, are always allowed: FRAME_NUMBERS.
 
@@ -47,6 +50,9 @@ def iter_sentences(brief: dict):
 FRAME_NUMBERS = {2019.0, 2023.0, 95.0, 12.0}
 CRUDE = re.compile(r"\bcrude\b|\bunadjusted\b|\bnot adjusted\b|vakioimato", re.I)
 OVERLAP = re.compile(r"\boverlap", re.I)
+YEARS_2026_2028 = re.compile(r"2026\s*[–-]\s*2028")
+FIVE = re.compile(r"\bfive\b|\b5\b", re.I)
+DATED_90 = re.compile(r"90\s?%[^.;]{0,60}\b20(26|28|29|31)\b|\b20(26|28|29|31)\b[^.;]{0,60}90\s?%")
 _Q = r"(?:relatively |fairly |largely |reasonably |more |mostly )"
 COMPLETE_RECORDING = re.compile(
     rf"{_Q}complete\w*[^.;]{{0,30}}\brecord|\brecord\w*[^.;]{{0,30}}\b(?:looks|appears|is|seems|being) {_Q}?complete\b"
@@ -142,6 +148,13 @@ def validate(brief: dict, allowed_ids: set[str] | None = None, claims: dict[str,
             if vs != "below":
                 problems.append(f"{where}: says recording looks complete, but the county's no-treatment-record "
                                 f"95% interval is not entirely below national (vs_national={vs}): {text!r}")
+        notes = " ".join(c.get("notes") or "" for c in cited)
+        if re.search(r"measure (3\.1\.2|2\.5\.2)", notes) and YEARS_2026_2028.search(text) and not FIVE.search(text):
+            problems.append(f"{where}: mentions 2026–2028 for roadmap measure 3.1.2/2.5.2 without saying the "
+                            f"milestone covers five cancers: {text!r}")
+        if "measure 3.2.1" in notes and DATED_90.search(text):
+            problems.append(f"{where}: puts a date next to the 90% coverage indicator, which has no date "
+                            f"(roadmap 3.2.1): {text!r}")
     return problems
 
 

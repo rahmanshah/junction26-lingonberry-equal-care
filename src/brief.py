@@ -64,9 +64,9 @@ numbers (no differences, ratios or percentage-point gaps): state the county valu
 side by side instead. Spell out no numbers in words.
 3. State uncertainty. Give 95% confidence intervals where the claim has one. Never say "certain": say \
 the 95% confidence interval excludes (or includes) the national value. Say that the county shares are \
-crude. They have two separate limitations: (a) they are not age-adjusted (an age-adjusted value exists \
-only from Kuva 16, for curative treatment, by sex); (b) they cannot be stage-adjusted because stage at \
-diagnosis is missing for about 48% of patients. Never present missing stage as the reason the shares \
+crude. They have two separate limitations: (a) they are not age-adjusted (if you say where \
+age-adjusted values exist, cite claim fig:age_adjusted_only_kuva16); (b) they cannot be stage-adjusted \
+because stage at diagnosis is missing for about 48% of patients. Never present missing stage as the reason the shares \
 are not age-adjusted. Where an age-adjusted value exists (Kuva 16, digitised from a figure, about ±0.5 \
 percentage points), use it to say whether a gap holds after age adjustment, say it is digitised, and \
 pass on any caveat in the claim's notes (e.g. a confidence interval that could not be read).
