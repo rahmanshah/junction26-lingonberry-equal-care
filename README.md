@@ -223,5 +223,5 @@ challenge supplied. Verified quotes and page numbers: `docs/source_verification.
 
 Code: [MIT](LICENSE).
 
-- **Shah**: data and AI.
+- **Shah**: team lead, data and AI.
 - **Hellu**: service design, 20+ years in Finnish healthcare.
