@@ -1,6 +1,26 @@
 # junction26-lingonberry-equal-care
 Junction 2026, Team Lingonberry: a cancer care pathway gap brief for each Finnish wellbeing services county, built on public data with every claim traced to its source. Work in progress.
 
+## Run the app
+
+```
+uv sync
+uv run streamlit run src/app.py
+```
+
+The app shows the saved, validated briefs in `outputs/briefs/` and every claim behind them
+(`data/ledger.sqlite`). It needs no API key for this. **Regenerate with Gemini** runs the live
+pipeline and needs `GEMINI_API_KEY`, `MODEL_REASON` and `MODEL_EXTRACT` in `.env`.
+
+Pipeline, from the repo root:
+
+```
+uv run python src/load_claims.py          # rebuild the claim ledger
+uv run python src/check_claims.py         # every claim sourced, every quote re-found verbatim
+uv run python src/translate_quotes.py     # English translations of Finnish quotes (Gemini)
+uv run python src/brief.py Kymenlaakso    # brief + validation + review (Gemini)
+```
+
 ## Data
 
 Public aggregate sources only; no patient-level data. Raw files live in `data/raw/`, which is

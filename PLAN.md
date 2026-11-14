@@ -37,10 +37,14 @@
 - [ ] Semantic review of briefs: the validator checks numbers and IDs, not meaning
 
 ## 4. App (Sat 16:00-18:00)
-- [ ] Streamlit: county picker, three questions (where we lag / how sure / what first)
-- [ ] Pathway view with gaps and blind spots
-- [ ] Limitations panel
-- [ ] First end-to-end demo by 18:00
+- [x] Streamlit: county picker, three questions (where we lag / how sure / what first) (src/app.py)
+- [x] Claim IDs clickable: claim, source, location, status, Finnish quote + translation
+- [x] Chart: curative vs no-treatment-record share, selected county highlighted
+- [x] Pathway view with gaps and blind spots (MOT delays labelled preliminary)
+- [x] Limitations panel; "How we verified this" (status counts, check_claims, validate_brief)
+- [x] "Regenerate with Gemini" runs brief + validate + review live
+- [ ] First end-to-end demo by 18:00 (app runs; demo with the team still to do)
+- [ ] Saved briefs for the other 20 counties (only Kymenlaakso and Varsinais-Suomi so far)
 
 ## 5. Polish and deploy (Sat evening)
 - [ ] Deploy; README with run steps and sources

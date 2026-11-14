@@ -64,6 +64,13 @@ Build checklist: PLAN.md (tick tasks when done).
   <q lang="en">…</q>. English quotes are quotes of Hellu's brief and must match a BRIEF_CLAIMS entry
   in src/load_claims.py. Straight "…" quotes are not allowed in these docs (check fails); use ‘…’
   for prose. Briefs may cite only: verified locally, verified by Hellu, preliminary, mentor insight.
+- Gemini pipeline (src/gemini.py saves every raw request/response to data/processed/gemini_raw/):
+  src/brief.py (MODEL_REASON, thinking HIGH; headline + details per section; claim IDs per sentence)
+  -> src/validate_brief.py (hard) + src/review_brief.py code rules (hard: overclaiming words, future
+  tense about plans) -> one retry -> DRAFT if still failing; then MODEL_EXTRACT review flags (soft,
+  human review only) in outputs/briefs/<county>.review.json. Briefs: outputs/briefs/<county>.json/.md.
+- App: `uv run streamlit run src/app.py` (serves saved briefs; "Regenerate with Gemini" runs the
+  pipeline live). Smoke test: streamlit.testing.v1.AppTest on src/app.py.
 - docs/:
   - definitions.md: report table 11 definitions, denominators, overlap, suppression (quotes)
   - chart_data.md: what data sits behind each report figure (PNG vs Plotly JSON)

@@ -1,0 +1,386 @@
+"""Lingonberry: Equal Care Across Finland. Streamlit app.
+
+Run with:  uv run streamlit run src/app.py
+
+Shows, for one wellbeing services county, the saved validated brief (outputs/briefs/<county>.json),
+every claim behind it (data/ledger.sqlite), a county comparison chart, the pathway blind spots and how
+the numbers were verified. "Regenerate with Gemini" runs the live pipeline (brief + validate + review).
+Public aggregate data only: no patient-level data is read or shown anywhere.
+"""
+import json
+import os
+import re
+import sqlite3
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+os.chdir(ROOT)  # all pipeline paths are relative to the repo root
+sys.path.insert(0, str(ROOT / "src"))
+
+import altair as alt  # noqa: E402
+import pandas as pd  # noqa: E402
+import streamlit as st  # noqa: E402
+
+import counties  # noqa: E402
+import ledger  # noqa: E402
+from validate_brief import SECTIONS, validate  # noqa: E402
+
+BRIEFS = Path("outputs/briefs")
+TITLES = {"where_we_lag": "Where do we lag?", "how_sure_are_we": "How sure are we?",
+          "what_to_do_first": "What should we do first?"}
+SOURCE_NAMES = {
+    "keuhkosyoparaportti_2019_2023.html": "Finnish Cancer Registry: Keuhkosyöpä Suomessa 2019–2023",
+    "strategy_2026_2035_fi.pdf": "National Cancer Strategy 2026–2035 (STM)",
+    "roadmap_2026_2031_fi.pdf": "Cancer strategy implementation roadmap 2026–2031 (STM)",
+    "filha_lung_programme_2026_fi.pdf": "Filha National Lung Cancer Programme 2026–2035",
+    "pathway_brief.md": "Team background brief (Hellu)",
+}
+STATUS_STYLE = {  # (badge colour, icon) — icon + label, never colour alone
+    "verified locally": ("green", ":material/verified:"),
+    "verified by Hellu": ("blue", ":material/person_check:"),
+    "preliminary": ("orange", ":material/hourglass_top:"),
+    "mentor insight": ("violet", ":material/forum:"),
+    "draft": ("gray", ":material/edit_note:"),
+    "superseded": ("red", ":material/block:"),
+}
+MEASURED = {"yes": (":green[:material/check_circle: Measured]"),
+            "partly": (":orange[:material/remove_circle: Partly measured]"),
+            "no": (":red[:material/cancel: Not measured]")}
+HIGHLIGHT, OTHER, INK2 = "#2a78d6", "#b4b2ab", "#52514e"
+
+st.set_page_config(page_title="Lingonberry · Equal Care", page_icon=":material/pulmonology:", layout="wide")
+
+
+# ---------------------------------------------------------------- data (cached by file mtime)
+def mtime(*paths: str | Path) -> float:
+    return sum(Path(p).stat().st_mtime for p in paths if Path(p).exists())
+
+
+@st.cache_data
+def load_claims(_m: float) -> dict[str, dict]:
+    con = sqlite3.connect(ledger.DB)
+    con.row_factory = sqlite3.Row
+    out = {r["id"]: dict(r) for r in con.execute("SELECT * FROM claims")}
+    con.close()
+    return out
+
+
+@st.cache_data
+def load_csv(path: str, _m: float) -> pd.DataFrame:
+    return pd.read_csv(path)
+
+
+@st.cache_data
+def load_brief(slug: str, _m: float) -> tuple[dict | None, dict | None]:
+    b, r = BRIEFS / f"{slug}.json", BRIEFS / f"{slug}.review.json"
+    brief = json.loads(b.read_text(encoding="utf-8")) if b.exists() else None
+    rev = json.loads(r.read_text(encoding="utf-8")) if r.exists() else None
+    return brief, rev
+
+
+@st.cache_data(show_spinner="Running src/check_claims.py…")
+def run_check_claims(_m: float) -> tuple[int, str]:
+    p = subprocess.run([sys.executable, "src/check_claims.py"], capture_output=True, text=True,
+                       encoding="utf-8", env={**os.environ, "PYTHONIOENCODING": "utf-8"})
+    return p.returncode, (p.stdout + p.stderr).strip()
+
+
+claims = load_claims(mtime(ledger.DB))
+ct = load_csv("data/processed/county_treatment.csv", mtime("data/processed/county_treatment.csv"))
+bs = load_csv("data/processed/blind_spots.csv", mtime("data/processed/blind_spots.csv")).fillna("")
+
+
+def clean(text: str) -> str:
+    """Render <q lang="…"> quote markers as typographic quotes."""
+    return re.sub(r'<q lang="[a-z]{2}">(.*?)</q>', r"“\1”", text)
+
+
+def source_name(c: dict) -> str:
+    doc = (c.get("source_doc") or "").split("/")[-1]
+    return SOURCE_NAMES.get(doc, doc)
+
+
+def short_id(cid: str) -> str:
+    return cid.replace("_hyvinvointialue", "").replace("_kaupunki", "")
+
+
+def status_badge(status: str) -> None:
+    colour, icon = STATUS_STYLE.get(status, ("gray", ":material/help:"))
+    st.badge(status, color=colour, icon=icon)
+
+
+def claim_card(cid: str) -> None:
+    c = claims.get(cid)
+    with st.container(border=True):
+        if c is None:
+            st.error(f"Claim {cid} is not in the ledger.")
+            return
+        st.markdown(f"**{c['claim_text']}**")
+        status_badge(c["status"])
+        st.caption(f"`{cid}` · method: {c['method']} · source: {source_name(c)} · location: {c['location']}")
+        if c.get("quote"):
+            lang = {"fi": "Finnish original", "en": "Quoted from the team brief"}.get(c["quote_lang"], "Quote")
+            st.markdown(f"*{lang}:*")
+            st.markdown("> " + c["quote"].replace("\n", " "))
+            if c.get("quote_en"):
+                st.markdown("*English translation (machine translation, gemini-4-hydrogen; check against the original):*")
+                st.markdown("> " + c["quote_en"])
+        if c.get("notes"):
+            st.caption(f"Notes: {c['notes']}")
+
+
+def sentence(s: dict, key: str, headline: bool = False) -> None:
+    st.markdown(f"**{s['text']}**" if headline else s["text"])
+    picked = st.pills("Claims", s["claim_ids"], key=key, format_func=short_id,
+                      label_visibility="collapsed", selection_mode="single")
+    if picked:
+        claim_card(picked)
+
+
+# ---------------------------------------------------------------- sidebar
+with st.sidebar:
+    st.title("Lingonberry")
+    st.caption("Equal care across Finland · lung cancer pathway · Junction 2026")
+    names = list(counties.FULL)
+    short = st.selectbox("Wellbeing services county", names, index=names.index("Kymenlaakso"))
+    full = counties.FULL[short]
+    slug = counties.slug(short)
+    brief_doc, review_doc = load_brief(slug, mtime(BRIEFS / f"{slug}.json", BRIEFS / f"{slug}.review.json"))
+
+    st.divider()
+    if brief_doc:
+        st.markdown("**Saved brief**")
+        if brief_doc["status"] == "validated":
+            st.badge("Validated", color="green", icon=":material/check:")
+        else:
+            st.badge("DRAFT: failed validation", color="orange", icon=":material/warning:")
+        st.caption(f"{brief_doc['model']} · thinking {brief_doc['thinking_level']} · "
+                   f"{brief_doc['generated_at']} · attempts: {brief_doc['attempts']}")
+    else:
+        st.info("No saved brief for this county yet.")
+    if st.button("Regenerate with Gemini", icon=":material/refresh:", width="stretch",
+                 help="Runs the live pipeline: brief (gemini-4-argon) → validate → review (gemini-4-hydrogen). "
+                      "Takes a few minutes and uses API quota."):
+        with st.status(f"Generating a brief for {short}…", expanded=True) as box:
+            try:
+                import brief as brief_pipeline
+                st.write("Calling the model, validating, reviewing…")
+                doc = brief_pipeline.run(short)
+                box.update(label=f"Done: {doc['status']} after {doc['attempts']} attempt(s)", state="complete")
+                st.cache_data.clear()
+                st.rerun()
+            except SystemExit as e:
+                box.update(label="Could not run the pipeline", state="error")
+                st.error(str(e))
+            except Exception as e:  # noqa: BLE001 - show any pipeline failure to the user
+                box.update(label="Pipeline failed", state="error")
+                st.exception(e)
+    st.divider()
+    st.caption("Public aggregate data only. No patient-level data is used anywhere.")
+
+# ---------------------------------------------------------------- header
+st.title(short)
+st.caption(f"{full} · lung cancer care pathway · new patients 2019–2023, 12-month follow-up · "
+           "source: Finnish Cancer Registry, Keuhkosyöpä Suomessa 2019–2023")
+
+tab_brief, tab_chart, tab_path, tab_verify = st.tabs(
+    [":material/description: Brief", ":material/scatter_plot: Curative vs no record",
+     ":material/route: Pathway", ":material/fact_check: How we verified this"])
+
+# ---------------------------------------------------------------- brief
+with tab_brief:
+    left, right = st.columns([2.2, 1], gap="large")
+    with left:
+        if not brief_doc or not brief_doc.get("brief"):
+            st.info(f"No saved brief for {short}. Use **Regenerate with Gemini** in the sidebar.")
+        else:
+            if brief_doc["status"] != "validated":
+                st.warning("This brief is a **DRAFT**: it failed validation after a retry. "
+                           "Problems are listed under *How we verified this*.")
+            st.caption("Every sentence cites claims from the ledger. Click a claim to see its source.")
+            for s in SECTIONS:
+                sec = brief_doc["brief"].get(s) or {}
+                with st.container(border=True):
+                    st.subheader(TITLES[s])
+                    if sec.get("headline"):
+                        sentence(sec["headline"], f"{slug}-{s}-h", headline=True)
+                    with st.expander("Details", icon=":material/expand_content:"):
+                        for i, d in enumerate(sec.get("details") or []):
+                            sentence(d, f"{slug}-{s}-{i}")
+                            if i < len(sec["details"]) - 1:
+                                st.divider()
+    with right:
+        with st.container(border=True):
+            st.subheader(":material/info: Limitations")
+            st.markdown(
+                "- **Crude shares.** County treatment shares are not adjusted for age or stage. "
+                "Stage at diagnosis is missing for about half of patients.\n"
+                "- **Categories overlap.** A patient can have several treatment types; shares never add up.\n"
+                "- **‘No treatment record’** mixes untreated patients and treatment that was not recorded.\n"
+                "- **MDT codes** measure recording practice, not whether a team reviewed the patient.\n"
+                "- **Age-adjusted values** were read off a report figure (Kuva 16, ±0.5 pp), curative only, by sex.\n"
+                "- **Preliminary:** the delay figures (155 days etc.) are from an unpublished study via Yle MOT; "
+                "national, not county-specific.\n"
+                "- **Mentor insight:** expert views without a written source.\n"
+                "- **Regional pathways:** five regions' documents, read by a teammate.\n"
+                "- Public aggregate data only; no patient-level data.")
+        if review_doc:
+            with st.container(border=True):
+                st.subheader(":material/flag: Review flags")
+                st.caption(review_doc["note"])
+                if not review_doc["flags"]:
+                    st.markdown(":green[:material/check: No flags]")
+                for f in review_doc["flags"]:
+                    icon = {"high": ":red[:material/error:]", "medium": ":orange[:material/warning:]",
+                            "low": ":gray[:material/info:]"}[f["severity"]]
+                    st.markdown(f"{icon} **{f['severity']}** · `{f['location']}`  \n{f['problem']}")
+
+# ---------------------------------------------------------------- chart
+with tab_chart:
+    cty = ct[ct["level"] == "county"]
+    x = cty[cty["treatment"] == "Ei hoitotietoa"].set_index("county")
+    y = cty[cty["treatment"] == "Parantava"].set_index("county")
+    d = pd.DataFrame({
+        "county": [counties.SHORT.get(c, c) for c in x.index],
+        "no_record": x["share"], "no_record_lo": x["ci_low"], "no_record_hi": x["ci_high"],
+        "curative": y.loc[x.index, "share"], "curative_lo": y.loc[x.index, "ci_low"],
+        "curative_hi": y.loc[x.index, "ci_high"], "patients": x["total"].astype(int),
+    }).reset_index(drop=True)
+    d["selected"] = d["county"] == short
+    nat_x, nat_y = float(x["national_share"].iloc[0]), float(y["national_share"].iloc[0])
+
+    colour = alt.condition("datum.selected", alt.value(HIGHLIGHT), alt.value(OTHER))
+    base = alt.Chart(d)
+    xs = alt.Scale(domain=[10, 50])
+    ys = alt.Scale(domain=[14, 42])
+    tooltip = [alt.Tooltip("county:N", title="County"),
+               alt.Tooltip("curative:Q", title="Curative %", format=".1f"),
+               alt.Tooltip("curative_lo:Q", title="  95% CI low", format=".1f"),
+               alt.Tooltip("curative_hi:Q", title="  95% CI high", format=".1f"),
+               alt.Tooltip("no_record:Q", title="No treatment record %", format=".1f"),
+               alt.Tooltip("no_record_lo:Q", title="  95% CI low", format=".1f"),
+               alt.Tooltip("no_record_hi:Q", title="  95% CI high", format=".1f"),
+               alt.Tooltip("patients:Q", title="New patients 2019–2023")]
+    ebx = base.mark_rule(strokeWidth=1.2).encode(x=alt.X("no_record_lo:Q", scale=xs), x2="no_record_hi:Q",
+                                                 y="curative:Q", color=colour, opacity=alt.value(0.7))
+    eby = base.mark_rule(strokeWidth=1.2).encode(x="no_record:Q", y=alt.Y("curative_lo:Q", scale=ys),
+                                                 y2="curative_hi:Q", color=colour, opacity=alt.value(0.7))
+    pts = base.mark_circle(stroke="white", strokeWidth=1.5, opacity=1).encode(
+        x=alt.X("no_record:Q", scale=xs, title="No treatment record within 12 months (%)"),
+        y=alt.Y("curative:Q", scale=ys, title="Received curative treatment (%)"),
+        color=colour, size=alt.condition("datum.selected", alt.value(220), alt.value(70)), tooltip=tooltip)
+    labels = (
+        base.transform_filter("!datum.selected").mark_text(align="left", dx=8, dy=-6, fontSize=11, color=INK2)
+        .encode(x="no_record:Q", y="curative:Q", text="county:N")
+        + base.transform_filter("datum.selected").mark_text(align="left", dx=10, dy=-8, fontSize=13,
+                                                            fontWeight="bold", color="#0b0b0b")
+        .encode(x="no_record:Q", y="curative:Q", text="county:N")
+    )
+    hline = alt.Chart(pd.DataFrame({"y": [nat_y]})).mark_rule(strokeDash=[6, 4], color=INK2).encode(y="y:Q")
+    vline = alt.Chart(pd.DataFrame({"x": [nat_x]})).mark_rule(strokeDash=[2, 4], color=OTHER).encode(x="x:Q")
+    chart = (ebx + eby + hline + vline + pts + labels).properties(height=560).configure_axis(
+        grid=True, gridColor="#e1e0d9", domainColor="#c3c2b7", labelColor=INK2, titleColor=INK2
+    ).configure_view(strokeWidth=0)
+    st.subheader("Curative treatment vs no treatment record, all 22 counties")
+    st.caption(f"Bars: Wilson 95% confidence intervals. Dashed lines: Finland, {nat_y:.1f}% curative and "
+               f"{nat_x:.1f}% with no treatment record. {short} is highlighted.")
+    st.altair_chart(chart, width="stretch")
+    st.caption("Crude shares, not adjusted for age or stage. Treatment categories overlap, so the two axes are "
+               "not parts of one whole. ‘No treatment record’ mixes untreated patients and treatment that was not "
+               "recorded. Source: report Taulukko 11 (county), Taulukko 5–6 (national); CIs computed in src/add_ci.py.")
+    with st.expander(f"{short}: all treatment measures vs Finland"):
+        sel = cty[cty["county"] == full][["treatment", "share", "ci_low", "ci_high", "national_share",
+                                          "vs_national", "n", "total"]].copy()
+        sel["treatment"] = sel["treatment"].map({
+            "Parantava": "Curative", "Jarruttava": "Life-prolonging", "Oireenmukainen": "Symptomatic",
+            "Ei hoitotietoa": "No treatment record", "MDT-käsittely": "MDT meeting recorded"})
+        st.dataframe(sel.rename(columns={"treatment": "Measure", "share": "County %", "ci_low": "95% CI low",
+                                         "ci_high": "95% CI high", "national_share": "Finland %",
+                                         "vs_national": "vs Finland", "n": "Patients", "total": "All patients"}),
+                     hide_index=True, width="stretch",
+                     column_config={"Finland %": st.column_config.NumberColumn(format="%.1f")})
+
+# ---------------------------------------------------------------- pathway
+with tab_path:
+    st.subheader("Which steps of the lung cancer pathway can public data see?")
+    st.caption("From symptoms to treatment. Delays are mean days from the MOT study: **preliminary, unpublished**, "
+               "national averages (not county-specific).")
+    groups =[("Patient delay", "mot:patient"), ("Primary care", "mot:primary"), ("Specialist care", "mot:specialist")]
+    weights = [int((bs["mot_interval"] == g).sum()) for g, _ in groups]
+    cols = st.columns(weights, gap="small")
+    for col, (group, cid) in zip(cols, groups):
+        with col, st.container(border=True):
+            days = claims[cid]["value"]
+            st.markdown(f"**{group}**  \n:orange-badge[:material/hourglass_top: {days:.0f} days · preliminary]")
+            for r in bs[bs["mot_interval"] == group].itertuples():
+                with st.container(border=True):
+                    st.markdown(f"**{r.stage}**  \n{MEASURED[r.measured]}")
+                    st.caption(f"By county: {r.by_county}")
+                    with st.popover("Evidence", icon=":material/search:", width="stretch"):
+                        st.markdown(f"**Public data:** {clean(r.report_note)}  \n*Source: report {r.report_source}*")
+                        if r.regional_pathways:
+                            st.markdown(f"**Regional pathways** (read by a teammate): {clean(r.regional_pathways)}")
+                        if r.policy:
+                            st.markdown(f"**National policy:** {clean(r.policy)}")
+                        if r.mentor_insight:
+                            st.markdown(f"**Mentor insight:** {r.mentor_insight}")
+    tot = claims["mot:total_fi"]["value"]
+    st.markdown(f":orange-badge[:material/hourglass_top: Preliminary] Symptoms to first treatment: **{tot:.0f} days** "
+                f"in Finland vs {claims['mot:total_se']['value']:.0f} in Sweden and "
+                f"{claims['mot:total_dk']['value']:.0f} in Denmark (Yle MOT 2025, unpublished study).")
+    st.caption("Which pathway steps fall in which MOT interval is the team's assumption. Measured status: "
+               "src/build_blind_spots.py, from the 2019–2023 report.")
+
+# ---------------------------------------------------------------- verification
+with tab_verify:
+    st.subheader("How we verified this")
+    st.markdown("Every number and quote in the brief is a row in the claim ledger (`data/ledger.sqlite`) with its "
+                "source, location, method and status. Gap figures are computed in our own code, never by a model.")
+    c1, c2 = st.columns(2, gap="large")
+    df = pd.DataFrame(list(claims.values()))
+    with c1, st.container(border=True):
+        st.markdown("**Claims by status**")
+        counts = df["status"].value_counts().reindex(ledger.STATUSES, fill_value=0).reset_index()
+        counts.columns = ["status", "claims"]
+        st.altair_chart(alt.Chart(counts).mark_bar(color=HIGHLIGHT, cornerRadiusEnd=4).encode(
+            x=alt.X("claims:Q", title="Claims"), y=alt.Y("status:N", sort=list(ledger.STATUSES), title=None),
+            tooltip=["status", "claims"]).properties(height=200), width="stretch")
+        by_method = df["method"].value_counts()
+        st.caption("By method: " + " · ".join(f"{k} {v}" for k, v in by_method.items()))
+        st.caption("Briefs may cite only: " + ", ".join(ledger.CITABLE) + ".")
+    with c2, st.container(border=True):
+        st.markdown("**Ledger check** (`src/check_claims.py`)")
+        code, out = run_check_claims(mtime(ledger.DB, "docs/source_verification.md", "docs/recommendations.md",
+                                           "docs/blind_spots.md"))
+        if code == 0:
+            st.markdown(":green[:material/check_circle: All checks passed]")
+        else:
+            st.markdown(":red[:material/cancel: Checks failed]")
+        st.caption("Every claim has a source and location; every quote is re-found verbatim in its source; "
+                   "every quote has an explicit language; superseded claims name their replacement.")
+        with st.expander("Output"):
+            st.code(out, language=None)
+
+    with st.container(border=True):
+        st.markdown(f"**Brief check for {short}** (`src/validate_brief.py`)")
+        if not brief_doc or not brief_doc.get("brief"):
+            st.caption("No saved brief to validate.")
+        else:
+            live = validate(brief_doc["brief"], set(brief_doc.get("provided_claim_ids") or []) or None, claims)
+            if not live:
+                st.markdown(":green[:material/check_circle: Valid now]: every sentence cites existing, citable "
+                            "claims, and every number matches its cited claims.")
+            else:
+                st.markdown(f":red[:material/cancel: {len(live)} problem(s) against the current ledger]")
+                for p in live:
+                    st.markdown(f"- {p}")
+            st.caption(f"At generation: {brief_doc['status']} after {brief_doc['attempts']} attempt(s); "
+                       f"{len(brief_doc['problems'])} problem(s) remaining. Raw model responses: "
+                       + ", ".join(f"`{Path(p).name}`" for p in brief_doc.get("raw_responses", [])))
+            if review_doc:
+                n = len(review_doc["flags"])
+                st.caption(f"Code rules (overclaiming words, future tense about plans): "
+                           f"{len(review_doc['rule_problems'])} problem(s). Model review: {n} flag(s) for "
+                           "human review (see the Brief tab); flags never approve or change a brief.")
