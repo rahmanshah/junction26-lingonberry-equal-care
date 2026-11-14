@@ -1,0 +1,13 @@
+# Streamlit settings for local runs and Streamlit Community Cloud.
+# No secrets here: the Gemini key goes in .env locally or in the host's secrets settings.
+
+[theme]
+base = "light"
+primaryColor = "#B3263A"      # lingonberry red, from assets/logo.svg
+font = "sans serif"
+
+[browser]
+gatherUsageStats = false
+
+[server]
+headless = true

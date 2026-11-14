@@ -28,14 +28,34 @@ st.set_page_config(page_title="Lingonberry", page_icon=str(LOGO), layout="wide")
 st.logo(str(LOGO), size="large", icon_image=str(LOGO))
 
 import base64  # noqa: E402
+import hashlib  # noqa: E402
 
 import altair as alt  # noqa: E402
 import pandas as pd  # noqa: E402
+from dotenv import load_dotenv  # noqa: E402
 
 import core_message  # noqa: E402
 import counties  # noqa: E402
 import ledger  # noqa: E402
+import sources  # noqa: E402
 from validate_brief import SECTIONS, validate  # noqa: E402
+
+# ---------------------------------------------------------------- deployment mode
+# Gemini settings come from .env locally, or from Streamlit secrets on a host. Viewing needs none.
+GEMINI_SETTINGS = ("GEMINI_API_KEY", "MODEL_REASON", "MODEL_EXTRACT")
+load_dotenv()
+try:
+    for _k in GEMINI_SETTINGS:
+        if _k in st.secrets and not os.environ.get(_k):
+            os.environ[_k] = str(st.secrets[_k])
+except Exception:  # noqa: BLE001 - no secrets file at all is the normal case for viewers
+    pass
+GEMINI_CONFIGURED = all(os.environ.get(k) for k in GEMINI_SETTINGS)
+# data/raw/ is not in the repo; without it check_claims.py cannot re-find quotes, so the app shows the
+# last locally recorded results instead (outputs/verification_snapshot.json).
+RAW_SOURCES = [p for p in sources.SOURCES if p.startswith("data/raw/")]
+RAW_PRESENT = all(Path(p).exists() for p in RAW_SOURCES)
+SNAPSHOT = Path("outputs/verification_snapshot.json")
 
 LOGO_URI = "data:image/svg+xml;base64," + base64.b64encode(LOGO.read_bytes()).decode("ascii")
 
@@ -96,6 +116,25 @@ def run_check_claims(_m: float) -> tuple[int, str]:
     p = subprocess.run([sys.executable, "src/check_claims.py"], capture_output=True, text=True,
                        encoding="utf-8", env={**os.environ, "PYTHONIOENCODING": "utf-8"})
     return p.returncode, (p.stdout + p.stderr).strip()
+
+
+@st.cache_data
+def load_snapshot(_m: float) -> dict | None:
+    return json.loads(SNAPSHOT.read_text(encoding="utf-8")) if SNAPSHOT.exists() else None
+
+
+def snapshot_time(snap: dict) -> str:
+    return snap["written_at"].replace("T", " ").replace("+00:00", " UTC")
+
+
+def snapshot_note(snap: dict) -> None:
+    """Where the snapshot comes from, and whether the deployed ledger is the one that was verified."""
+    same = hashlib.md5(ledger.DB.read_bytes()).hexdigest() == snap["ledger_md5"]
+    st.caption(f"The source documents (data/raw/) are not on this server, so this is the result recorded by "
+               f"`src/write_verification_snapshot.py` at commit `{snap['commit'][:7]}`"
+               + (" (with uncommitted changes)" if snap["commit_dirty"] else "") + ". "
+               + ("The ledger served here is the same file that was verified."
+                  if same else "**The ledger served here differs from the one that was verified.**"))
 
 
 claims = load_claims(mtime(ledger.DB))
@@ -213,9 +252,12 @@ with st.sidebar:
                    f"{brief_doc['generated_at']} · attempts: {brief_doc['attempts']}")
     else:
         st.info("No saved brief for this county yet.")
-    if st.button("Regenerate with Gemini", icon=":material/refresh:", width="stretch",
-                 help="Runs the live pipeline: brief (gemini-4-argon) → validate → review (gemini-4-hydrogen). "
-                      "Takes a few minutes and uses API quota."):
+    if not GEMINI_CONFIGURED:
+        st.caption(":material/visibility: View-only: showing saved, validated briefs. Live regeneration needs "
+                   "a Gemini API key, which this deployment does not have.")
+    elif st.button("Regenerate with Gemini", icon=":material/refresh:", width="stretch",
+                   help="Runs the live pipeline: brief (gemini-4-argon) → validate → review (gemini-4-hydrogen). "
+                        "Takes a few minutes and uses API quota."):
         with st.status(f"Generating a brief for {short}…", expanded=True) as box:
             try:
                 import brief as brief_pipeline
@@ -262,7 +304,8 @@ with tab_brief:
     left, right = st.columns([2.2, 1], gap="large")
     with left:
         if not brief_doc or not brief_doc.get("brief"):
-            st.info(f"No saved brief for {short}. Use **Regenerate with Gemini** in the sidebar.")
+            st.info(f"No saved brief for {short}."
+                    + (" Use **Regenerate with Gemini** in the sidebar." if GEMINI_CONFIGURED else ""))
         else:
             if brief_doc["status"] != "validated":
                 st.warning("This brief is a **DRAFT**: it failed validation after a retry. "
@@ -412,28 +455,47 @@ with tab_verify:
         by_method = df["method"].value_counts()
         st.caption("By method: " + " · ".join(f"{k} {v}" for k, v in by_method.items()))
         st.caption("Briefs may cite only: " + ", ".join(ledger.CITABLE) + ".")
+    snap = load_snapshot(mtime(SNAPSHOT)) if not RAW_PRESENT else None
     with c2, st.container(border=True):
         st.markdown("**Ledger check** (`src/check_claims.py`)")
-        code, out = run_check_claims(mtime(ledger.DB, "docs/source_verification.md", "docs/recommendations.md",
-                                           "docs/blind_spots.md"))
-        if code == 0:
-            st.markdown(":green[:material/check_circle: All checks passed]")
-        else:
-            st.markdown(":red[:material/cancel: Checks failed]")
         st.caption("Every claim has a source and location; every quote is re-found verbatim in its source; "
                    "every quote has an explicit language; superseded claims name their replacement.")
-        with st.expander("Output"):
-            st.code(out, language=None)
+        if RAW_PRESENT:
+            code, out = run_check_claims(mtime(ledger.DB, "docs/source_verification.md", "docs/recommendations.md",
+                                               "docs/blind_spots.md"))
+            st.markdown(":green[:material/check_circle: All checks passed] (run now)" if code == 0
+                        else ":red[:material/cancel: Checks failed] (run now)")
+        elif snap is None:
+            code, out = None, ""
+            st.warning("The source documents are not on this server and no verification snapshot was found.")
+        else:
+            code, out = snap["check_claims"]["exit_code"], snap["check_claims"]["output"]
+            st.markdown((":green[:material/check_circle: All checks passed]" if snap["check_claims"]["passed"]
+                         else ":red[:material/cancel: Checks failed]")
+                        + f" · **last verified locally on {snapshot_time(snap)}**")
+            snapshot_note(snap)
+        if out:
+            with st.expander("Output"):
+                st.code(out, language=None)
 
     with st.container(border=True):
         st.markdown(f"**Brief check for {short}** (`src/validate_brief.py`)")
         if not brief_doc or not brief_doc.get("brief"):
             st.caption("No saved brief to validate.")
         else:
+            if snap is not None:
+                rec = snap["validate_brief"].get(short) or {}
+                st.markdown((":green[:material/check_circle: Valid]" if rec.get("valid")
+                             else f":red[:material/cancel: {len(rec.get('problems', []))} problem(s)]")
+                            + f" · last verified locally on {snapshot_time(snap)}")
+                for p in rec.get("problems", []):
+                    st.markdown(f"- {p}")
+            # validate_brief needs only the committed ledger, so it can always be re-run here as well.
             live = validate(brief_doc["brief"], set(brief_doc.get("provided_claim_ids") or []) or None, claims)
             if not live:
-                st.markdown(":green[:material/check_circle: Valid now]: every sentence cites existing, citable "
-                            "claims, and every number matches its cited claims.")
+                st.markdown(":green[:material/check_circle: Valid now]: re-checked against the committed ledger. "
+                            "Every sentence cites existing, citable claims, and every number matches its cited "
+                            "claims.")
             else:
                 st.markdown(f":red[:material/cancel: {len(live)} problem(s) against the current ledger]")
                 for p in live:

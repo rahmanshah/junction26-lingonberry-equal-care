@@ -89,6 +89,11 @@ Build checklist: PLAN.md (tick tasks when done).
 - App branding: assets/logo.svg (favicon via set_page_config + st.logo; SVG accepted inside a running
   app). Core message above the tabs is defined with its backing claims in src/core_message.py;
   check_claims.py fails if any part is not backed by citable claims.
+- Deployment (Streamlit Community Cloud, main file src/app.py): view-only without secrets; the
+  Regenerate button appears only if GEMINI_API_KEY, MODEL_REASON and MODEL_EXTRACT are set (.env or
+  st.secrets). Without data/raw/ the app shows outputs/verification_snapshot.json: refresh it with
+  src/write_verification_snapshot.py on a clean tree after committing, then commit it.
+  requirements.txt = `uv export --no-hashes --format requirements-txt --no-emit-project`.
 - App: `uv run streamlit run src/app.py` (serves saved briefs; "Regenerate with Gemini" runs the
   pipeline live). Smoke test: streamlit.testing.v1.AppTest on src/app.py.
 - docs/:

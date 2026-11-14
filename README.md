@@ -35,6 +35,25 @@ uv run python src/generate_all.py         # all 22 counties, with a summary in o
 The raw files in `data/raw/` are not in the repo; see [Data](#data) for where to download them. They are
 needed to rebuild the ledger and to check quotes, but not to run the app.
 
+### Deploy on Streamlit Community Cloud
+
+- Repository: this repo, branch `main`. **Main file path: `src/app.py`**. Python 3.12.
+- Dependencies: `uv.lock` (`requirements.txt` is an export of it: `uv export --no-hashes --no-emit-project`).
+- No secrets are needed: the deployed app is view-only. To enable **Regenerate with Gemini**, add
+  `GEMINI_API_KEY`, `MODEL_REASON` and `MODEL_EXTRACT` under the app's *Secrets*. The button only
+  appears when all three are set.
+- Without `data/raw/`, *How we verified this* shows the last local verification from
+  `outputs/verification_snapshot.json`, with its time, the commit it describes, and whether the deployed
+  ledger is the file that was verified. The per-county brief check still re-runs live against the
+  committed ledger.
+
+After changing data, docs or briefs, refresh the snapshot. Commit first, so the snapshot's commit hash
+describes exactly what was verified; then commit the snapshot.
+
+```
+uv run python src/write_verification_snapshot.py
+```
+
 ## How verification works
 
 Every number and quote in a brief is a row in the **claim ledger** (`data/ledger.sqlite`). Each row has
