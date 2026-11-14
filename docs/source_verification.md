@@ -257,16 +257,18 @@ uniform recording instructions, and their use, must be ensured*).
 - **Registry and survival data** (p.23): "Rekisteritietoja hyödynnetään muun muassa keuhkosyövän määrän,
   ennusteen ja hoidon vaikuttavuustietojen seuraamiseen." (*Registry data are used to monitor, among other
   things, the number of lung cancers, prognosis and treatment effectiveness.*) Table 2 (p.18) also lists
-  "Rekisteritiedot 1- ja 5-vuotiselossaolosta" (*registry data on 1- and 5-year survival*). Verified.
+  "Rekisteritiedot 1- ja 5-vuotiselossaololuvusta" (*registry data on the 1- and 5-year survival rate*).
+  Verified.
 - **"Not pathway timestamps": overstated.** Table 2 (p.18), under the goal "Yhdenvertainen ja vaikuttava
   hoito jokaiselle asuinpaikasta riippumatta", lists these indicators:
 
-  > "Kysely keuhkosyöpää hoitaville sairaaloille ohjelman alussa ja lopussa; Hoitoonpääsy; suositusten ja
-  > ketjujen saatavuus; kansallisesti yhtenäiset tavoitteet ja vaikuttavuuden seurantamittarit on
-  > määritelty"
+  > "Kysely keuhkosyöpää hoitaville sairaaloille ohjelman alussa ja lopussa"
+  > "Hoitoonpääsy; suositusten ja ketjujen saatavuus; kansallisesti yhtenäiset tavoitteet ja
+  > vaikuttavuuden seurantamittarit on määritelty"
 
-  *Survey of hospitals at the start and end; access to care; availability of recommendations and
-  pathways; nationally uniform targets and effectiveness indicators defined.*
+  *Survey of hospitals at the start and end. Access to care; availability of recommendations and
+  pathways; nationally uniform targets and effectiveness indicators defined.* (Two paragraphs of the
+  same table cell.)
 
   So **access to care ("Hoitoonpääsy") is a listed indicator**. The programme does not say how it will be
   measured: there is no data source, no timestamps and no thresholds. The monitoring text (§4.3, pp.22–23)
@@ -281,7 +283,7 @@ leikkauksien määrässä on suurta."
 
 - Diagnostic speed ("diagnoosin nopeudessa"): verified.
 - Surgery volumes ("leikkauksien määrässä"): verified.
-- "Referral organisation" is **not what it says**. "Hoitovastuun järjestämisessä" means *the organisation
+- "Referral organisation" is **not what it says**. The phrase "hoitovastuun järjestämisessä" means *the organisation
   of care responsibility* (who holds responsibility for treatment).
 - Referral is addressed separately, on p.15: "potilas lähetetään jatkotutkimuksiin erikoissairaanhoidon
   yksikköön omien paikallisten ohjeistusten mukaisesti" (*the patient is referred to specialist care

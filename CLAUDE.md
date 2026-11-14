@@ -52,6 +52,12 @@ Build checklist: PLAN.md (tick tasks when done).
     cancer quality registry; p.18 Table 2 lists "Hoitoonpääsy" as an (undefined) indicator.
 - Claim statuses: "verified locally", "verified by Hellu, read 14 Nov", "preliminary"
   (MOT delays), "mentor insight (name)".
+- Claim ledger: data/ledger.sqlite (committed, derived), table `claims`. Rebuild with
+  `uv run python src/load_claims.py`, then `uv run python src/check_claims.py` (must pass before
+  any commit that touches docs or data). Quotes are located automatically in the local sources
+  (src/sources.py: whitespace/hyphen-insensitive; PDF pages, columns and table cells). Quotes in
+  docs must be verbatim, including inflection and case. Methods: computed / digitised / quoted /
+  mentor / assessed; statuses: verified locally / verified by Hellu / preliminary / mentor insight / draft.
 - docs/:
   - definitions.md: report table 11 definitions, denominators, overlap, suppression (quotes)
   - chart_data.md: what data sits behind each report figure (PNG vs Plotly JSON)

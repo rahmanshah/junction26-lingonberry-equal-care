@@ -19,8 +19,10 @@
 - [ ] Choose gap metric and demo county (sync 12:00)
 
 ## 2. Claim ledger (Sat 12:30-14:00)
-- [ ] SQLite schema: claim, value, unit, county, source, table/figure, status
-- [ ] Load all numbers used in the brief, with source links
+- [x] SQLite schema: claim, value, unit, county, source, table/figure, status (src/ledger.py)
+- [x] Load current evidence: county shares + CIs, Kuva 16, blind spots, verified quotes, brief (src/load_claims.py)
+- [x] Checks: source + location on every claim, every quote re-found in its source (src/check_claims.py)
+- [ ] Reload as the brief grows; every number in the brief must have a ledger id
 
 ## 3. Gemini pipeline (Sat 13:00-16:00)
 - [ ] Extract actions from strategy + roadmap PDFs with verbatim quote and page (Hydrogen)

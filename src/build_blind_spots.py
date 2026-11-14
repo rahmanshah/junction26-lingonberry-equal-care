@@ -20,7 +20,7 @@ CSV = Path("data/processed/blind_spots.csv")
 MD = Path("docs/blind_spots.md")
 
 ST_REPORT = "verified locally (report)"
-ST_POLICY = "verified locally (strategy/roadmap PDF)"
+ST_POLICY = "verified locally (strategy/roadmap/Filha PDF)"
 ST_HELLU = "verified by Hellu, read 14 Nov"
 ST_MOT = "preliminary, unpublished, Yle MOT 2025 (primary author unknown)"
 
@@ -38,6 +38,11 @@ assert sum(d for _, d in MOT.values()) == MOT_TOTAL["Finland"], "MOT intervals m
 ACCESS_TARGETS = ("Roadmap 3.1.2 (pp.56–57): national pathways with target access times for five "
                   "(unnamed) cancers by 2026–2028, Nordic model; strategy p.5 indicator 'Potilaat "
                   "pääsevät hoitoon tavoiteaikojen puitteissa' tied to THL Ohjaus 21/2016.")
+FILHA_DIAGNOSTICS = ("Filha programme (pp.3, 16, 24; printed pages): a national lung cancer diagnostics "
+                     "recommendation with primary-care referral criteria ('lähetekriteerit "
+                     "perusterveydenhuollolle') and recommended time limits for the diagnostic pathway "
+                     "stages in specialist care ('suositellut aikarajat'), due before the 2030 mid-term "
+                     "evaluation.")
 
 ROWS = [
     {
@@ -89,7 +94,8 @@ ROWS = [
                      "no time. Pirha handles referrals \"usually within 1–2 working days\"; Keski-Suomi "
                      "\"as quickly as possible\"."),
         "policy": ("Roadmap 2.5.2 (pp.52–53): standardised referral criteria ('standardoidut "
-                   "lähetekriteerit') by 2026–2028. Strategy p.33: no national system for pathways."),
+                   "lähetekriteerit') by 2026–2028. Strategy p.33: no national system for pathways. "
+                   + FILHA_DIAGNOSTICS),
         "mentor": ("Referral quality affects triage: a weak referral gets a lower urgency rating "
                    "(mentor insight, Kaisa)."),
     },
@@ -136,7 +142,7 @@ ROWS = [
         "mot": "specialist",
         "regional": "KYS: every patient in a weekly MDT. Keski-Suomi: every new case. HUS: \"when needed\".",
         "policy": ("Roadmap 3.1.2 (p.56): pathways will define recording and coding practices "
-                   "('kirjaamis- ja koodistokäytännöt')."),
+                   "('kirjaamis- ja koodistokäytännöistä')."),
         "mentor": "",
     },
     {
@@ -151,7 +157,8 @@ ROWS = [
         "regional": ("No region states a time to treatment, and none says whether its stated times are "
                      "monitored. Law (Health Care Act §52): treatment within 6 months; no cancer-specific "
                      "maximum."),
-        "policy": ACCESS_TARGETS,
+        "policy": ACCESS_TARGETS + " " + FILHA_DIAGNOSTICS + " The Filha time limits cover diagnostic "
+                  "stages; it names no time to treatment.",
         "mentor": "",
     },
 ]
@@ -198,7 +205,7 @@ lines = [
     "| Layer | Source | Status |",
     "|---|---|---|",
     f"| Measured? | \"Keuhkosyöpä Suomessa 2019–2023\" (Finnish Cancer Registry) | {ST_REPORT} |",
-    f"| Policy | National Cancer Strategy 2026–2035, Roadmap 2026–2031 (STM) | {ST_POLICY}; quotes in `docs/source_verification.md` |",
+    f"| Policy | National Cancer Strategy 2026–2035, Roadmap 2026–2031 (STM); Filha National Lung Cancer Programme 2026–2035 | {ST_POLICY}; quotes in `docs/source_verification.md` |",
     f"| Regional pathways | Hellu's review: 5 regional pathways (Keski-Suomi, Pirha, KYS, HUS, OYS), Satakunta clinic page, 1 regional study (`docs/pathway_brief.md` §6) | {ST_HELLU} |",
     f"| Delays | MOT \"Hitaasti syöpähoitoon\" (Yle 2025) | {ST_MOT} |",
     "| Mentor insight | Kaisa, Hanna | mentor insight |",

@@ -97,7 +97,7 @@ county "gaps" in these fields as data-quality signals first.
 | Varsinais-Suomi: life-prolonging treatment 9.7% [8.3–11.4] vs 30.4% nationally, and no treatment record 43.1% [40.5–45.6] vs 27.5%. The pattern suggests drug treatment is not being recorded | Report Taulukko 11; our CIs | verified locally (interpretation is ours) |
 | No treatment record ranges from 16.4% (Kymenlaakso) to 43.1% (Varsinais-Suomi); Etelä-Karjala 42.8% [37.8–48.0]. This mixes untreated patients with unrecorded treatment | Report Taulukko 11; our CIs | verified locally |
 | MDT coding: 21.6–37.4% in Sisä-Suomi counties, 0 records in 4 counties. "…ei kuvaa kattavasti moniammatillisen käsittelyn laajuutta" | Report §3.3, Taulukko 11 | verified locally |
-| National pathways will define "kirjaamis- ja koodistokäytännöt" (recording and coding practices) | Roadmap 3.1.2, p.56 | verified locally |
+| National pathways will define recording and coding practices ("kirjaamis- ja koodistokäytännöistä") | Roadmap 3.1.2, p.56 | verified locally |
 | A national quality registry is planned; indicator: data incl. stage ("ml. levinneisyystieto") at 90% coverage | Roadmap 3.2.1, pp.59–60 | verified locally |
 | "Keuhkosyövästä tai muistakaan syövistä ei laaturekisteriä Suomessa ole"; a study run by the Cancer Registry, THL and FICAN is assessing a cancer quality registry, starting with lung cancer | Filha programme p.21 | verified locally |
 | "Tällä hetkellä keuhkosyöpään liittyvien tietojen raportointi, kerääminen ja tallentaminen on puutteellista"; nationally uniform recording instructions ("yhtenäiset kirjaamisohjeet") must be ensured | Filha programme p.21 | verified locally |
@@ -117,7 +117,7 @@ in the brief.
 ## Corrections to the background brief (from the Filha check)
 
 - The regional variation the programme names is in diagnostic speed, **organisation of care
-  responsibility** ("hoitovastuun järjestäminen") and surgery volumes, not "referral organisation" (p.4).
+  responsibility** ("hoitovastuun järjestämisessä") and surgery volumes, not "referral organisation" (p.4).
 - Common lung cancer diagnostic guidelines **do** exist (p.4; Käypä hoito "Keuhkosyöpä" 2017, cited as
   ref. 8). What is missing is national guidance on timing.
 - The programme **does** list access to care as an indicator (Table 2, p.18), but leaves it undefined.
