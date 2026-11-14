@@ -99,9 +99,10 @@ Build checklist: PLAN.md (tick tasks when done).
   README prose needs a `<!-- claims: id … -->` marker on its line and must be in those claims (pages,
   Kuva/Taulukko, measure ids too). The Run it, Deploy and Data sources sections and fenced code are
   skipped; non-finding numbers are in EXEMPT in the script.
-  Terminology (README only for now; app unchanged): first mention "all 22 regions: the 21 wellbeing
-  services counties and the City of Helsinki", then "22 regions" / "every region" / "regional briefs";
-  "county" only next to a named county. build_readme.py fails on generic "county"/"counties" and on any
+  Terminology: README line under the pitch "22 regions: the 21 wellbeing services counties and the City
+  of Helsinki", then "22 regions" / "every region" / "regional briefs"; "county" only next to a named
+  county. App UI labels and the core message use "region" too (picker "Region"); the generated briefs
+  and ledger claim texts still say "county" (not regenerated). build_readme.py fails on generic "county"/"counties" and on any
   "N regions" / "N wellbeing services counties" that differs from counties.FULL (22 / 21). `--check` must pass before committing README, docs or data changes. VIDEO_URL is a placeholder.
 - App: `uv run streamlit run src/app.py` (serves saved briefs; "Regenerate with Gemini" runs the
   pipeline live). Smoke test: streamlit.testing.v1.AppTest on src/app.py.

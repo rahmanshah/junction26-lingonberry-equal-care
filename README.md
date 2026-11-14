@@ -1,6 +1,8 @@
 # <img src="assets/logo.svg" alt="" height="36"> Lingonberry
 
-**Make the wait visible: a lung cancer pathway brief for all 22 regions: the 21 wellbeing services counties and the City of Helsinki.**
+**Make the wait visible: a lung cancer pathway brief for every region in Finland.**
+
+22 regions: the 21 wellbeing services counties and the City of Helsinki.
 
 [**Live app**](https://junction26-lingonberry-equal-care-jvssmnbotqefgpxeiyfwjt.streamlit.app/) ·
 [**2-minute video**](VIDEO_URL) ·

@@ -8,7 +8,7 @@ import ledger
 import sources
 
 MESSAGE = ("Finland's cancer strategy sets a target for timely access to treatment, "
-           "but the national lung cancer report publishes no access times for any county.")
+           "but the national lung cancer report publishes no access times for any region.")
 
 STRATEGY = "data/raw/strategy_2026_2035_fi.pdf"
 PARTS = [
@@ -16,7 +16,7 @@ PARTS = [
      # Strategy p.5: indicator "patients access care within the target times", footnoted to THL 21/2016.
      [("quote", STRATEGY, "Potilaat pääsevät hoitoon tavoiteaikojen puitteissa***"),
       ("quote", STRATEGY, "*** THL (Ohjaus 21/2016)")]),
-    ("the national lung cancer report publishes no access times for any county",
+    ("the national lung cancer report publishes no access times for any region",
      # Blind-spot table (from the 2019–2023 report): referral not measured; first visit and treatment
      # start: whether, never when.
      [("id", "bs:coverage:Referral"), ("id", "bs:coverage:First_specialist_visit"),

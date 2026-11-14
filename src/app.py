@@ -2,8 +2,8 @@
 
 Run with:  uv run streamlit run src/app.py
 
-Shows, for one wellbeing services county, the saved validated brief (outputs/briefs/<county>.json),
-every claim behind it (data/ledger.sqlite), a county comparison chart, the pathway blind spots and how
+Shows, for one region (a wellbeing services county or the City of Helsinki), the saved validated brief
+(outputs/briefs/<slug>.json), every claim behind it (data/ledger.sqlite), a regional comparison chart, the pathway blind spots and how
 the numbers were verified. "Regenerate with Gemini" runs the live pipeline (brief + validate + review).
 Public aggregate data only: no patient-level data is read or shown anywhere.
 """
@@ -236,7 +236,8 @@ with st.sidebar:
         unsafe_allow_html=True)
     st.caption("Equal care across Finland · lung cancer pathway · Junction 2026")
     names = list(counties.FULL)
-    short = st.selectbox("Wellbeing services county", names, index=names.index("Kymenlaakso"))
+    short = st.selectbox("Region", names, index=names.index("Kymenlaakso"),
+                         help="21 wellbeing services counties and the City of Helsinki")
     full = counties.FULL[short]
     slug = counties.slug(short)
     brief_doc, review_doc = load_brief(slug, mtime(BRIEFS / f"{slug}.json", BRIEFS / f"{slug}.review.json"))
@@ -251,7 +252,7 @@ with st.sidebar:
         st.caption(f"{brief_doc['model']} · thinking {brief_doc['thinking_level']} · "
                    f"{brief_doc['generated_at']} · attempts: {brief_doc['attempts']}")
     else:
-        st.info("No saved brief for this county yet.")
+        st.info("No saved brief for this region yet.")
     if not GEMINI_CONFIGURED:
         st.caption(":material/visibility: View-only: showing saved, validated briefs. Live regeneration needs "
                    "a Gemini API key, which this deployment does not have.")
@@ -280,7 +281,7 @@ st.title(short)
 st.caption(f"{full} · lung cancer care pathway · new patients 2019–2023, 12-month follow-up · "
            "source: Finnish Cancer Registry, Keuhkosyöpä Suomessa 2019–2023")
 
-# Core message: the same on every county page; each part backed by ledger claims (src/core_message.py).
+# Core message: the same on every region page; each part backed by ledger claims (src/core_message.py).
 core_parts, core_problems = core_message.resolve(claims)
 with st.container(border=True):
     st.markdown(f"#### {core_message.MESSAGE}")
@@ -328,14 +329,14 @@ with tab_brief:
         with st.container(border=True):
             st.subheader(":material/info: Limitations")
             st.markdown(
-                "- **Crude shares.** County treatment shares are not adjusted for age or stage. "
+                "- **Crude shares.** Regional treatment shares are not adjusted for age or stage. "
                 "Stage at diagnosis is missing for about half of patients.\n"
                 "- **Categories overlap.** A patient can have several treatment types; shares never add up.\n"
                 "- **‘No treatment record’** mixes untreated patients and treatment that was not recorded.\n"
                 "- **MDT codes** measure recording practice, not whether a team reviewed the patient.\n"
                 "- **Age-adjusted values** were read off a report figure (Kuva 16, ±0.5 pp), curative only, by sex.\n"
                 "- **Preliminary:** the delay figures (155 days etc.) are from an unpublished study via Yle MOT; "
-                "national, not county-specific.\n"
+                "national, not region-specific.\n"
                 "- **Mentor insight:** expert views without a written source.\n"
                 "- **Regional pathways:** five regions' documents, read by a teammate.\n"
                 "- **Our recommendations** (:material/lightbulb:) are the team's own drafts, not yet reviewed "
@@ -360,7 +361,7 @@ with tab_chart:
     base = alt.Chart(d)
     xs = alt.Scale(domain=[10, 50])
     ys = alt.Scale(domain=[14, 42])
-    tooltip = [alt.Tooltip("county:N", title="County"),
+    tooltip = [alt.Tooltip("county:N", title="Region"),
                alt.Tooltip("curative:Q", title="Curative %", format=".1f"),
                alt.Tooltip("curative_lo:Q", title="  95% CI low", format=".1f"),
                alt.Tooltip("curative_hi:Q", title="  95% CI high", format=".1f"),
@@ -388,20 +389,20 @@ with tab_chart:
     chart = (ebx + eby + hline + vline + pts + labels).properties(height=560).configure_axis(
         grid=True, gridColor="#e1e0d9", domainColor="#c3c2b7", labelColor=INK2, titleColor=INK2
     ).configure_view(strokeWidth=0)
-    st.subheader("Curative treatment vs no treatment record, all 22 counties")
+    st.subheader("Curative treatment vs no treatment record, all 22 regions")
     st.caption(f"Bars: Wilson 95% confidence intervals. Dashed lines: Finland, {nat_y:.1f}% curative and "
                f"{nat_x:.1f}% with no treatment record. {short} is highlighted.")
     st.altair_chart(chart, width="stretch")
     st.caption("Crude shares, not adjusted for age or stage. Treatment categories overlap, so the two axes are "
                "not parts of one whole. ‘No treatment record’ mixes untreated patients and treatment that was not "
-               "recorded. Source: report Taulukko 11 (county), Taulukko 5–6 (national); CIs computed in src/add_ci.py.")
+               "recorded. Source: report Taulukko 11 (regions), Taulukko 5–6 (national); CIs computed in src/add_ci.py.")
     with st.expander(f"{short}: all treatment measures vs Finland"):
         sel = cty[cty["county"] == full][["treatment", "share", "ci_low", "ci_high", "national_share",
                                           "vs_national", "n", "total"]].copy()
         sel["treatment"] = sel["treatment"].map({
             "Parantava": "Curative", "Jarruttava": "Life-prolonging", "Oireenmukainen": "Symptomatic",
             "Ei hoitotietoa": "No treatment record", "MDT-käsittely": "MDT meeting recorded"})
-        st.dataframe(sel.rename(columns={"treatment": "Measure", "share": "County %", "ci_low": "95% CI low",
+        st.dataframe(sel.rename(columns={"treatment": "Measure", "share": "Region %", "ci_low": "95% CI low",
                                          "ci_high": "95% CI high", "national_share": "Finland %",
                                          "vs_national": "vs Finland", "n": "Patients", "total": "All patients"}),
                      hide_index=True, width="stretch",
@@ -411,7 +412,7 @@ with tab_chart:
 with tab_path:
     st.subheader("Which steps of the lung cancer pathway can public data see?")
     st.caption("From symptoms to treatment. Delays are mean days from the MOT study: **preliminary, unpublished**, "
-               "national averages (not county-specific).")
+               "national averages (not region-specific).")
     groups =[("Patient delay", "mot:patient"), ("Primary care", "mot:primary"), ("Specialist care", "mot:specialist")]
     weights = [int((bs["mot_interval"] == g).sum()) for g, _ in groups]
     cols = st.columns(weights, gap="small")
@@ -422,7 +423,7 @@ with tab_path:
             for r in bs[bs["mot_interval"] == group].itertuples():
                 with st.container(border=True):
                     st.markdown(f"**{r.stage}**  \n{MEASURED[r.measured]}")
-                    st.caption(f"By county: {r.by_county}")
+                    st.caption(f"By region: {r.by_county}")
                     with st.popover("Evidence", icon=":material/search:", width="stretch"):
                         st.markdown(f"**Public data:** {clean(r.report_note)}  \n*Source: report {r.report_source}*")
                         if r.regional_pathways:
