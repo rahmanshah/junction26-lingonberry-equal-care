@@ -2,7 +2,7 @@
  "county": "Kymenlaakso",
  "county_full": "Kymenlaakson hyvinvointialue",
  "status": "validated",
- "generated_at": "2026-11-14T12:03:53+00:00",
+ "generated_at": "2026-11-14T12:53:21+00:00",
  "model": "gemini-4-argon",
  "thinking_level": "HIGH",
  "attempts": 1,
@@ -10,34 +10,15 @@
  "brief": {
   "where_we_lag": {
    "headline": {
-    "text": "Kymenlaakso lags national levels in crude curative treatment at 19.3% (95% CI 16.3–22.7) versus 27.0% and crude MDT recording at 0.5% (95% CI 0.2–1.5) versus 6.0%.",
+    "text": "Kymenlaakso’s crude curative treatment share is 19.3% (95% CI 16.3–22.7; n=114/591), where the 95% confidence interval excludes the national 27.0% (4009/14873).",
     "claim_ids": [
      "cty:curative:Kymenlaakson_hyvinvointialue",
-     "nat:curative",
-     "cty:mdt_recorded:Kymenlaakson_hyvinvointialue",
-     "nat:mdt_recorded"
+     "nat:curative"
     ]
    },
    "details": [
     {
-     "text": "The county's crude curative treatment share, which is not adjusted for age or stage, is 19.3% (95% CI 16.3–22.7; n=114/591) alongside the national 27.0% (4009/14873), and the 95% confidence interval excludes the national value.",
-     "claim_ids": [
-      "cty:curative:Kymenlaakson_hyvinvointialue",
-      "nat:curative",
-      "bs:coverage:Diagnosis"
-     ]
-    },
-    {
-     "text": "In figures digitised from Kuva 16 with precision ±0.5 percentage points, the age-adjusted curative share gap holds for men at 17.9% (95% CI 13.9–22.9) versus 26.7% nationally, as the 95% confidence interval excludes the dashed national reference line, whereas for women at 22.6% (95% CI 16.8–29.3) versus 26.9% nationally, the 95% confidence interval includes it.",
-     "claim_ids": [
-      "k16:curative:men:Kymenlaakson_hyvinvointialue",
-      "k16:curative:men:national",
-      "k16:curative:women:Kymenlaakson_hyvinvointialue",
-      "k16:curative:women:national"
-     ]
-    },
-    {
-     "text": "Across overlapping treatment categories that are not mutually exclusive, Kymenlaakso's crude shares exceed national values for life-prolonging treatment at 37.6% (95% CI 33.8–41.5; n=222/591) versus 30.4% (4522/14873) and symptomatic treatment at 51.3% (95% CI 47.2–55.3; n=303/591) versus 39.5% (5871/14873), with each 95% confidence interval excluding the national value.",
+     "text": "In Kymenlaakso, crude shares are higher than national values for life-prolonging treatment at 37.6% (95% CI 33.8–41.5; n=222/591) versus 30.4% (4522/14873) nationally and for symptomatic treatment at 51.3% (95% CI 47.2–55.3; n=303/591) versus 39.5% (5871/14873) nationally, with 95% confidence intervals excluding the national values in these overlapping treatment categories (a patient can have several).",
      "claim_ids": [
       "cty:life_prolonging:Kymenlaakson_hyvinvointialue",
       "nat:life_prolonging",
@@ -46,7 +27,16 @@
      ]
     },
     {
-     "text": "Crude MDT meeting recording is 0.5% (95% CI 0.2–1.5; n=3/591) compared with 6.0% (893/14873) nationally, with the 95% confidence interval excluding the national value, though HILMO captures specialist procedures only from direct patient contacts so this measures recording practice rather than care.",
+     "text": "After age adjustment in values digitised from Kuva 16 (precision about ±0.5 percentage points), the curative treatment gap holds for men at 17.9% (95% CI 13.9–22.9) versus 26.7% nationally (95% confidence interval excludes the national value), while for women the age-adjusted share is 22.6% (95% CI 16.8–29.3) versus 26.9% nationally (95% confidence interval includes the national value).",
+     "claim_ids": [
+      "k16:curative:men:Kymenlaakson_hyvinvointialue",
+      "k16:curative:men:national",
+      "k16:curative:women:Kymenlaakson_hyvinvointialue",
+      "k16:curative:women:national"
+     ]
+    },
+    {
+     "text": "A multidisciplinary team (MDT) meeting is recorded for a crude share of 0.5% (95% CI 0.2–1.5; n=3/591) of patients in Kymenlaakso versus 6.0% (893/14873) nationally, with the 95% confidence interval excluding the national value, though HILMO only captures procedures from direct patient contacts so MDT records measure recording practice rather than care.",
      "claim_ids": [
       "cty:mdt_recorded:Kymenlaakson_hyvinvointialue",
       "nat:mdt_recorded",
@@ -58,110 +48,113 @@
   },
   "how_sure_are_we": {
    "headline": {
-    "text": "A crude 16.4% (95% CI 13.7–19.6) share with no treatment record versus 27.5% nationally suggests Kymenlaakso's curative gap is not only a recording artefact, though stage is unmeasured.",
+    "text": "Kymenlaakso’s crude share with no treatment record within 12 months is 16.4% (95% CI 13.7–19.6; n=97/591), where the 95% confidence interval excludes the national 27.5% (4089/14873).",
     "claim_ids": [
      "cty:no_treatment_record:Kymenlaakson_hyvinvointialue",
-     "nat:no_treatment_record",
-     "bs:coverage:Diagnosis"
+     "nat:no_treatment_record"
     ]
    },
    "details": [
     {
-     "text": "Kymenlaakso's crude share with no treatment record within 12 months—mixing patients who had no treatment and unrecorded treatment—is 16.4% (95% CI 13.7–19.6; n=97/591) versus 27.5% (4089/14873) nationally (95% CI excludes the national value); read as a data-quality signal, this inference is consistent with relatively complete treatment recording, making a recording artefact less likely.",
+     "text": "Because the crude no-treatment-record share mixes untreated patients and unrecorded treatment, having its 95% confidence interval entirely below the national value is consistent—as an inference, not a finding—with relatively complete treatment recording, so a low crude curative share among the overlapping treatment categories is less likely to be only a recording artefact.",
      "claim_ids": [
       "cty:no_treatment_record:Kymenlaakson_hyvinvointialue",
       "nat:no_treatment_record",
-      "bs:coverage:Treatment_start"
+      "bs:coverage:Treatment_start",
+      "cty:curative:Kymenlaakson_hyvinvointialue"
      ]
     },
     {
-     "text": "However, this signal is not direct evidence of complete treatment capture—a journal article finding that HILMO matches the Cancer Registry for about 90% of most cancer types concerns diagnosis concordance only—and missing stage at diagnosis for a large share of patients nationally prevents stage adjustment.",
+     "text": "The county treatment shares are crude and have 2 separate limitations: they are not age-adjusted (an age-adjusted value exists only from Kuva 16, for curative treatment, by sex), and separately they cannot be stage-adjusted because stage at diagnosis is missing for about 48% of patients.",
      "claim_ids": [
-      "lit:hilmo_90",
+      "cty:curative:Kymenlaakson_hyvinvointialue",
+      "k16:curative:men:Kymenlaakson_hyvinvointialue",
+      "k16:curative:women:Kymenlaakson_hyvinvointialue",
       "bs:coverage:Diagnosis",
       "q:7885b0974f"
      ]
     },
     {
-     "text": "Public data also leave early pathway stages unseen: symptom onset is unmeasured, outpatient primary care visits are not included in the report's data, occupational health is unmentioned, imaging appears only indirectly as the basis of diagnosis in approximately 20% of cases, and referral, specialist visit, and treatment start dates are absent.",
+     "text": "A journal article found that HILMO diagnoses match the Cancer Registry for about 90% of most cancer types, which concerns diagnosis concordance only and not treatment or MDT recording, while the report’s public data do not measure symptoms, referrals or treatment start dates, and primary care visits are not included in the report's data.",
      "claim_ids": [
+      "lit:hilmo_90",
       "bs:coverage:Symptoms",
-      "bs:coverage:Primary_care_occupational_health",
-      "q:323de0d90d",
-      "bs:coverage:Imaging",
-      "q:5eb155decc",
       "bs:coverage:Referral",
-      "bs:coverage:First_specialist_visit",
-      "bs:coverage:Treatment_start"
+      "bs:coverage:Treatment_start",
+      "bs:coverage:Primary_care_occupational_health",
+      "q:323de0d90d"
      ]
     },
     {
-     "text": "Preliminary, unpublished national figures average 155 days from symptoms to treatment in Finland versus 107 in Sweden and 67 in Denmark—with 56 days of patient delay, 41 days in primary care, and 58 days in specialist care, the longest stage—while the Health Care Act sets no legal maximum time for a cancer suspicion.",
+     "text": "Public data note clinical-only diagnosis such as imaging in about 20% of patients and specialist visits within 12 months (93.6% nationally) without dates, while preliminary, unpublished national averages—not county figures—show 155 days from symptoms to treatment in Finland (56 patient, 41 primary care, 58 specialist days) versus 107 in Sweden and 67 in Denmark.",
      "claim_ids": [
+      "bs:coverage:Imaging",
+      "q:5eb155decc",
+      "bs:coverage:First_specialist_visit",
       "mot:total_fi",
       "mot:total_se",
       "mot:total_dk",
       "mot:patient",
       "mot:primary",
-      "mot:specialist",
-      "law:no_max"
+      "mot:specialist"
      ]
     }
    ]
   },
   "what_to_do_first": {
    "headline": {
-    "text": "The team recommends reporting lung cancer access times using THL 21/2016 definitions, adopting standardised referrals and diagnostic coordination, and publishing county recording completeness for stage, drugs, and MDT.",
+    "text": "The team recommends reporting THL 21/2016 access times with handover alerts, standardising referrals with a diagnostic contact person, and publishing county recording completeness for stage, drug treatment and MDT.",
     "claim_ids": [
      "rec:1",
      "rec:2",
-     "rec:3",
-     "thl:21_2016",
-     "q:950a2f797b"
+     "rec:3"
     ]
    },
    "details": [
     {
-     "text": "The team recommends reporting lung cancer access times across referral, specialist visit, diagnosis, and treatment start using THL guidance Ohjaus 21/2016 definitions and flagging stalled handovers, as Finland currently lacks unified national access monitoring while the roadmap plans cancer-specific access times in 2026–2028 and the Filha programme's diagnostics recommendation is due before the 2030 mid-term evaluation.",
+     "text": "The team recommends reporting lung cancer access times (referral, specialist visit, diagnosis, treatment start) using THL guidance Ohjaus 21/2016 definitions for 16 cancers and flagging stalled handovers, as Health Care Act §52 sets no legal maximum time for a cancer suspicion and the STM roadmap's measure 3.1.2 plans national pathway descriptions and target access times by 2026–2028.",
      "claim_ids": [
       "rec:1",
       "thl:21_2016",
       "q:24169121a4",
-      "q:ccda20dce9",
+      "law:no_max",
+      "q:ed87906241",
       "q:def306014c",
-      "q:432c0e51d6",
-      "q:614febebf2"
+      "q:b326e35410"
      ]
     },
     {
-     "text": "The team recommends adopting a standard referral template and a persistent-symptoms referral rule after a normal X-ray—as set out in KYS's regional pathway document—plus a named diagnostic-phase contact person, since mentor insight notes weak referrals receive lower specialist urgency and the roadmap plans standardised referral criteria and care-coordinator guidance in 2026–2028 for county adoption in 2029–2031.",
+     "text": "The team recommends a standard referral template, referring persistent symptoms after a normal X-ray to a pulmonologist, and a named diagnostic contact person, as mentor insight notes weak referrals get lower urgency, the Filha programme's diagnostics recommendation is to be carried out before the 2030 mid-term evaluation, and the STM roadmap's measure 1.2.3 plans care-coordinator guidance by 2026–2028.",
      "claim_ids": [
       "rec:2",
-      "reg:kys_template",
-      "reg:kys_persistent",
       "mentor:kaisa_referral",
-      "q:c61439b30f",
-      "q:abcbb06ae3",
-      "q:050ee09ebe"
+      "q:29b792498e",
+      "q:8f358a9de6",
+      "q:614febebf2",
+      "q:fc81032a80",
+      "q:050ee09ebe",
+      "q:abcbb06ae3"
      ]
     },
     {
-     "text": "Given Kymenlaakso's 0.5% (95% CI 0.2–1.5; n=3/591) crude MDT recording share versus 6.0% (893/14873) nationally and incomplete national lung cancer data storage, the team recommends publishing county recording completeness for stage, drug treatment, and MDT coding while the roadmap plans a national quality registry targeting 90% data coverage including stage alongside uniform recording instructions.",
+     "text": "Given Kymenlaakso’s 0.5% (95% CI 0.2–1.5; n=3/591) crude MDT share versus 6.0% (893/14873) nationally and stage missing for about 48% of patients, the team recommends publishing county recording completeness for stage, drug treatment and MDT coding as data-quality signals while the STM roadmap's measure 3.2.1 plans a quality registry with 90% coverage including stage by 2029–2031.",
      "claim_ids": [
       "rec:3",
       "cty:mdt_recorded:Kymenlaakson_hyvinvointialue",
       "nat:mdt_recorded",
+      "bs:coverage:Diagnosis",
+      "q:7885b0974f",
       "q:950a2f797b",
-      "q:82d365cd2c",
       "q:f07a34a300",
-      "q:4a856bd695"
+      "q:4a856bd695",
+      "q:f540c706f8"
      ]
     }
    ]
   }
  },
  "raw_responses": [
-  "data/processed/gemini_raw/brief_kymenlaakso_attempt1_20261114T115908495703Z.json"
+  "data/processed/gemini_raw/brief_kymenlaakso_attempt1_20261114T124958087827Z.json"
  ],
  "provided_claim_ids": [
   "bs:coverage:Diagnosis",
@@ -200,6 +193,7 @@
   "q:050ee09ebe",
   "q:0780bf74b0",
   "q:0c7bf2dacb",
+  "q:14dff3e002",
   "q:14f646162a",
   "q:168b4b3443",
   "q:172221bcc9",
@@ -263,6 +257,7 @@
   "q:ed87906241",
   "q:f07a34a300",
   "q:f540c706f8",
+  "q:facebc6b98",
   "q:fc81032a80",
   "rec:1",
   "rec:2",
@@ -614,6 +609,16 @@
    "quote_lang": "fi",
    "quote_en": "*** THL (Ohjaus 21/2016). Monitoring access to care in cancer treatment."
   },
+  "q:29b792498e": {
+   "claim_text": "Policy evidence for pathway stage 'Referral'",
+   "status": "verified locally",
+   "method": "quoted",
+   "source_doc": "data/raw/filha_lung_programme_2026_fi.pdf",
+   "location": "p.16",
+   "quote": "lähetekriteerit perusterveydenhuollolle",
+   "quote_lang": "fi",
+   "quote_en": "referral criteria for primary health care"
+  },
   "q:323de0d90d": {
    "claim_text": "Report evidence for pathway stage 'Primary care / occupational health'",
    "status": "verified locally",
@@ -633,16 +638,6 @@
    "quote": "Erikoissairaanhoidon toimenpiteet viedään HILMO:on vain suorista potilaskontakteista, joten saatu tieto ei kuvaa kattavasti moniammatillisen käsittelyn laajuutta.",
    "quote_lang": "fi",
    "quote_en": "Specialised medical care procedures are entered into HILMO only from direct patient contacts, so the obtained data do not comprehensively describe the extent of multidisciplinary review."
-  },
-  "q:432c0e51d6": {
-   "claim_text": "The upcoming national diagnostics recommendation will include “suositellut aikarajat erikoissairaanhoitoon eri diagnostiikan polun vaiheille” (recommended time limits in specialist care), due before the 2030 mid-term evaluation",
-   "status": "verified locally",
-   "method": "quoted",
-   "source_doc": "data/raw/filha_lung_programme_2026_fi.pdf",
-   "location": "p.16",
-   "quote": "suositellut aikarajat erikoissairaanhoitoon eri diagnostiikan polun vaiheille",
-   "quote_lang": "fi",
-   "quote_en": "recommended time limits for specialised medical care for the different stages of the diagnostic pathway"
   },
   "q:4a856bd695": {
    "claim_text": "the registry's data, including stage, allows reliable assessment and comparison of quality and effectiveness, with 90% data coverage",
@@ -684,15 +679,15 @@
    "quote_lang": "fi",
    "quote_en": "stage at diagnosis is missing for nearly half of new patients"
   },
-  "q:82d365cd2c": {
-   "claim_text": "“Tällä hetkellä keuhkosyöpään liittyvien tietojen raportointi, kerääminen ja tallentaminen on puutteellista”; nationally uniform recording instructions (“yhtenäiset kirjaamisohjeet”) must be ensured",
+  "q:8f358a9de6": {
+   "claim_text": "p.16: > “Tämän ohjelman yhtenä toimenpiteenä tuotetaan kansallinen suositus keuhkosyöpien diagnostiikasta. Se > sisältää myös lähetekriteerit perusterveydenhuollolle ja suositellut aikarajat erikoissairaanhoitoon > eri diagnostiikan polun vaiheille.”",
    "status": "verified locally",
    "method": "quoted",
    "source_doc": "data/raw/filha_lung_programme_2026_fi.pdf",
-   "location": "p.21",
-   "quote": "yhtenäiset kirjaamisohjeet",
+   "location": "p.16",
+   "quote": "Tämän ohjelman yhtenä toimenpiteenä tuotetaan kansallinen suositus keuhkosyöpien diagnostiikasta. Se sisältää myös lähetekriteerit perusterveydenhuollolle ja suositellut aikarajat erikoissairaanhoitoon eri diagnostiikan polun vaiheille.",
    "quote_lang": "fi",
-   "quote_en": "uniform recording instructions"
+   "quote_en": "As one measure of this programme, a national guideline on the diagnostics of lung cancers will be produced. It also includes referral criteria for primary health care and recommended time limits for specialised medical care for the different stages of the diagnostic pathway."
   },
   "q:950a2f797b": {
    "claim_text": "Reporting, collection and storage of lung cancer data is currently incomplete.",
@@ -714,25 +709,15 @@
    "quote_lang": "fi",
    "quote_en": "2026–2028: Guidelines on the model of a designated physician, nurse or special worker responsible for coordinating cancer care. 2029–2031: Wellbeing services counties have adopted these guidelines."
   },
-  "q:c61439b30f": {
-   "claim_text": "2026–2028: standardised referral criteria and symptom-based models included in the national pathways of at least the five most common cancers.",
+  "q:b326e35410": {
+   "claim_text": "National pathways with “syöpäkohtaiset hoitoonpääsyajat” for five (unnamed) cancers in 2026–2028, Nordic model",
    "status": "verified locally",
    "method": "quoted",
    "source_doc": "data/raw/roadmap_2026_2031_fi.pdf",
-   "location": "p.53",
-   "quote": "2026–2028: Standardoidut lähetekriteerit ja oirelähtöiset toimintamallit sisällytetty vähintään viiden yleisimmän syövän kansallisiin hoitoketjukuvauksiin.",
+   "location": "p.57",
+   "quote": "syöpäkohtaiset hoitoonpääsyajat",
    "quote_lang": "fi",
-   "quote_en": "2026–2028: Standardised referral criteria and symptom-based operating models included in the national care pathway descriptions of at least the five most common cancers."
-  },
-  "q:ccda20dce9": {
-   "claim_text": "Finland has no national system steering cancer pathways or their monitoring, “mukaan lukien hoitoonpääsy”",
-   "status": "verified locally",
-   "method": "quoted",
-   "source_doc": "data/raw/strategy_2026_2035_fi.pdf",
-   "location": "p.33",
-   "quote": "mukaan lukien hoitoonpääsy",
-   "quote_lang": "fi",
-   "quote_en": "including access to care"
+   "quote_en": "cancer-specific access-to-care times"
   },
   "q:def306014c": {
    "claim_text": "p.57, timetable: > “2026–2028: Kansalliset hoitoketjukuvaukset tehty viidestä syövästä ja syöpäkohtaiset > hoitoonpääsyajat on määritetty.”",
@@ -744,6 +729,16 @@
    "quote_lang": "fi",
    "quote_en": "2026–2028: National care pathway descriptions completed for five cancers and cancer-specific access-to-care times have been defined."
   },
+  "q:ed87906241": {
+   "claim_text": "p.56, heading: > “Toimenpide 3.1.2 Laaditaan syöpäkohtaiset hoitoketjukuvaukset, ja niiden pohjalta sovelletut > alueelliset hoitoketjut, sekä mekanismi niiden ylläpitoon ja hallintaan”",
+   "status": "verified locally",
+   "method": "quoted",
+   "source_doc": "data/raw/roadmap_2026_2031_fi.pdf",
+   "location": "p.56",
+   "quote": "Toimenpide 3.1.2 Laaditaan syöpäkohtaiset hoitoketjukuvaukset, ja niiden pohjalta sovelletut alueelliset hoitoketjut, sekä mekanismi niiden ylläpitoon ja hallintaan",
+   "quote_lang": "fi",
+   "quote_en": "Measure 3.1.2 Prepare cancer-specific care pathway descriptions, and regional care pathways adapted on their basis, as well as a mechanism for their maintenance and management"
+  },
   "q:f07a34a300": {
    "claim_text": "A national cancer care quality registry will be set up alongside THL's Cancer Registry.",
    "status": "verified locally",
@@ -753,6 +748,26 @@
    "quote": "Perustetaan THL:n Syöpärekisterin yhteyteen kansallinen syövän hoidon laaturekisteri.",
    "quote_lang": "fi",
    "quote_en": "A national cancer care quality register is established in connection with THL's Cancer Registry."
+  },
+  "q:f540c706f8": {
+   "claim_text": "A national quality registry is planned; indicator: data incl. stage (“ml. levinneisyystieto”) at 90% coverage",
+   "status": "verified locally",
+   "method": "quoted",
+   "source_doc": "data/raw/roadmap_2026_2031_fi.pdf",
+   "location": "p.60",
+   "quote": "ml. levinneisyystieto",
+   "quote_lang": "fi",
+   "quote_en": "incl. stage information"
+  },
+  "q:fc81032a80": {
+   "claim_text": "Measure 1.2.3: Create an operating model and guidance for a named worker responsible for coordinating cancer care.",
+   "status": "verified locally",
+   "method": "quoted",
+   "source_doc": "data/raw/roadmap_2026_2031_fi.pdf",
+   "location": "p.32",
+   "quote": "Toimenpide 1.2.3 Luodaan toimintamalli ja ohjeistus syövän hoidon koordinaatiosta vastaavan, nimetyn työntekijän mallista",
+   "quote_lang": "fi",
+   "quote_en": "Measure 1.2.3 Create an operating model and guidelines on the model of a designated employee responsible for coordinating cancer care"
   },
   "rec:1": {
    "claim_text": "Team recommendation 1: Counties report access times using the THL 21/2016 definitions, with handover alerts. Each wellbeing services county reports lung cancer access times (referral → first specialist visit → diagnosis → treatment start) using the definitions in THL's Hoitoonpääsyn seuranta syövän hoidossa (Ohjaus 21/2016). Until national target times exist, flag stalled handovers.",
@@ -782,26 +797,6 @@
    "location": "§3. Report recording completeness per county: stage, drug treatment, MDT coding",
    "quote": null,
    "quote_lang": null,
-   "quote_en": null
-  },
-  "reg:kys_persistent": {
-   "claim_text": "KYS: refer persistent unexplained symptoms even if the X-ray is clear",
-   "status": "verified by Hellu",
-   "method": "quoted",
-   "source_doc": "docs/pathway_brief.md",
-   "location": "6. Regional pathways compared",
-   "quote": "persistent unexplained symptoms → refer for pulmonologist assessment even if the X-ray is clear",
-   "quote_lang": "en",
-   "quote_en": null
-  },
-  "reg:kys_template": {
-   "claim_text": "Only KYS lists required referral content and provides a referral template",
-   "status": "verified by Hellu",
-   "method": "quoted",
-   "source_doc": "docs/pathway_brief.md",
-   "location": "6. Regional pathways compared",
-   "quote": "KYS is the only region that lists what a referral must contain (history, medications, pack-years, asbestos exposure, functional capacity, what the patient has been told) and provides a referral template.",
-   "quote_lang": "en",
    "quote_en": null
   },
   "thl:21_2016": {

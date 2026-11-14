@@ -1,7 +1,7 @@
 {
  "county": "Kanta-Häme",
- "brief_generated_at": "2026-11-14T12:19:40+00:00",
- "reviewed_at": "2026-11-14T12:20:21+00:00",
+ "brief_generated_at": "2026-11-14T13:13:33+00:00",
+ "reviewed_at": "2026-11-14T13:14:08+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,19 +10,13 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_kanta-hame_20261114T121940321961Z.json",
+ "raw_response": "data/processed/gemini_raw/review_kanta-hame_20261114T131333866371Z.json",
  "flags": [
   {
-   "location": "where_we_lag.details[1]",
-   "sentence": "The county's crude curative treatment share is 23.4% (95% CI 20.1–27.2; n=128/546) compared with 27.0% (4009/14873) nationally, and its crude life-prolonging treatment share is 32.2% (95% CI 28.4–36.3; n=176/546) compared with 30.4% (4522/14873) nationally; each 95% confidence interval includes the national value.",
-   "problem": "Missing required caveat from the cited claims: treatment categories overlap (a patient can receive multiple treatment types, so shares across categories do not sum to 100%).",
-   "severity": "medium"
-  },
-  {
-   "location": "what_to_do_first.details[1]",
-   "sentence": "Since the Health Care Act sets no maximum time for a cancer suspicion, the team recommends reporting access times using THL guidance 21/2016 (defining 16 cancers) with handover alerts while the roadmap plans national pathways and target access times in 2026–2028 and the Filha programme's diagnostics recommendation with specialist care time limits is due before the 2030 mid-term evaluation.",
-   "problem": "Overreach and minor imprecision: the cited roadmap claim (q:b326e35410) specifies national pathways and target access times in 2026–2028 are planned for five unnamed cancers (so it is not known whether lung cancer is included), and THL guidance 21/2016 defines how cancer access times are recorded for 16 cancers rather than 'defining 16 cancers'.",
-   "severity": "medium"
+   "location": "how_sure_are_we.headline",
+   "sentence": "A journal article shows about 90% diagnosis concordance in HILMO, but table treatment shares lack age and stage adjustment, and public data omit pathway timestamps.",
+   "problem": "The cited claims ([lit:hilmo_90], [bs:coverage:Diagnosis], [bs:coverage:Treatment_start]) support diagnosis concordance, missing stage (~48%, preventing stage adjustment of curative shares), and missing treatment start dates, but none of the cited claims state that table treatment shares lack age adjustment or that pathway timestamps beyond treatment start are omitted.",
+   "severity": "low"
   }
  ]
 }

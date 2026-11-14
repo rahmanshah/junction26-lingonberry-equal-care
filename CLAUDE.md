@@ -75,7 +75,14 @@ Build checklist: PLAN.md (tick tasks when done).
   mention it). Review settings: temperature 0, fixed seed, model default thinking (MINIMAL is not
   supported; LOW was not more repeatable). Review output is repeatable in which sentences are flagged,
   not in severity/wording.
-- All counties: `uv run python src/generate_all.py` -> outputs/briefs/summary.{json,md}.
+- More validation rules: two or more county treatment shares in a sentence require "overlap"; "recording
+  looks (relatively) complete" only if the county's no-record vs_national is "below" (95% CI entirely
+  below national). Plan claims carry "plan: <document, measure, page, dates>" notes (roadmap vs Filha);
+  Filha's diagnostics recommendation is "carried out before the 2030 mid-term evaluation" (Finnish
+  'toteutetaan' may mean produced or implemented; never say completed/implemented). The ~20% claim is
+  "diagnosed on clinical findings alone (e.g. imaging), not by tissue or cell sample".
+- All counties: `uv run python src/generate_all.py` -> outputs/briefs/summary.{json,md};
+  `src/compare_flags.py before.json after.json` -> flags_before_after.md (keyword causes).
 - App: `uv run streamlit run src/app.py` (serves saved briefs; "Regenerate with Gemini" runs the
   pipeline live). Smoke test: streamlit.testing.v1.AppTest on src/app.py.
 - docs/:

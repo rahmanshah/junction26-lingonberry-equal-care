@@ -1,7 +1,7 @@
 {
  "county": "Pirkanmaa",
- "brief_generated_at": "2026-11-14T12:20:04+00:00",
- "reviewed_at": "2026-11-14T12:20:35+00:00",
+ "brief_generated_at": "2026-11-14T13:12:54+00:00",
+ "reviewed_at": "2026-11-14T13:13:18+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,12 +10,18 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_pirkanmaa_20261114T122004514017Z.json",
+ "raw_response": "data/processed/gemini_raw/review_pirkanmaa_20261114T131254422346Z.json",
  "flags": [
   {
    "location": "where_we_lag.headline",
-   "sentence": "Pirkanmaa's crude treatment shares exceed national values, so its main pathway gaps lie in unmonitored local target times and unmeasured access times from referral to treatment start.",
-   "problem": "Overreach: exceeding national crude (unadjusted, overlapping) treatment-share benchmarks does not establish that Pirkanmaa's main pathway gaps are limited to unmonitored local target times and unmeasured referral-to-treatment access times, nor do the cited claims rank or exhaust Pirkanmaa's pathway gaps.",
+   "sentence": "Pirkanmaa's crude curative treatment share of 31.9% exceeds the 27.0% national level, yet the county does not monitor whether its stated pathway target times are met.",
+   "problem": "Overreach: claim reg:not_monitored states that no region says in its pathway document whether it meets its stated times, which shows a lack of public reporting rather than proving that the county does not monitor target times internally.",
+   "severity": "medium"
+  },
+  {
+   "location": "where_we_lag.details[2]",
+   "sentence": "In Pirkanmaa's regional pathway document, referral handling in 1–2 working days, invitations in 3–4 working days, CT most often within a week, and bronchoscopy results in 3–5 days are unmonitored targets rather than commitments, and no diagnostic-phase contact person is named.",
+   "problem": "Overreach: calling the stated times 'unmonitored targets' goes beyond claim reg:not_monitored, which only supports that no region says in its pathway document whether it meets its stated times.",
    "severity": "medium"
   }
  ]

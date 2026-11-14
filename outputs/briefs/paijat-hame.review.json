@@ -1,7 +1,7 @@
 {
  "county": "Päijät-Häme",
- "brief_generated_at": "2026-11-14T12:02:06+00:00",
- "reviewed_at": "2026-11-14T12:02:37+00:00",
+ "brief_generated_at": "2026-11-14T12:56:00+00:00",
+ "reviewed_at": "2026-11-14T12:56:47+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,18 +10,18 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_paijat-hame_20261114T120206945315Z.json",
+ "raw_response": "data/processed/gemini_raw/review_paijat-hame_20261114T125600193388Z.json",
  "flags": [
   {
    "location": "where_we_lag.details[1]",
-   "sentence": "The county's crude curative treatment share is 29.6% (95% CI 26.2–33.2; n=195/659), with a 95% confidence interval that includes the national 27.0% (4009/14873), while crude life-prolonging treatment at 44.5% (95% CI 40.7–48.3; n=293/659) and symptomatic treatment at 50.8% (95% CI 47.0–54.6; n=335/659) have 95% confidence intervals that exclude the national 30.4% (4522/14873) and 39.5% (5871/14873).",
-   "problem": "Missing required caveat from the cited county claims: the three treatment categories overlap (they sum to 124.9%), and the sentence does not note that categories overlap (or that the shares are not age- or stage-adjusted).",
+   "sentence": "Because treatment categories overlap (a patient can have several), Päijät-Häme's crude shares are above national levels for life-prolonging treatment at 44.5% (95% CI 40.7–48.3; n=293/659) versus 30.4% (4522/14873) and symptomatic treatment at 50.8% (95% CI 47.0–54.6; n=335/659) versus 39.5% (5871/14873), as the 95% confidence intervals exclude the national values.",
+   "problem": "Unsupported causal claim (overreach): the sentence states that Päijät-Häme's crude shares are above national levels 'Because treatment categories overlap', whereas the cited claims only note that categories overlap for both county and national figures and do not support overlapping categories as the cause of the county exceeding national shares.",
    "severity": "medium"
   },
   {
-   "location": "how_sure_are_we.details[1]",
-   "sentence": "While the 95% confidence intervals for Päijät-Häme's crude shares exclude national values for life-prolonging (44.5% vs 30.4%), symptomatic (50.8% vs 39.5%), no-treatment-record (17.8% vs 27.5%) and MDT-recorded (0.3% vs 6.0%) categories, only national age-adjusted curative reference lines of 26.7% for men and 26.9% for women (digitised from a figure, ±0.5 percentage points) are available here.",
-   "problem": "Missing required caveat from the cited county claims: the listed categories overlap (life-prolonging, symptomatic, no-treatment-record, and MDT-recorded are not mutually exclusive), which is omitted from the sentence.",
+   "location": "what_to_do_first.details[1]",
+   "sentence": "Since Health Care Act §52 sets no maximum time for a cancer suspicion and preliminary national figures show 58 days in specialist care, the team recommends reporting access times using THL guidance Ohjaus 21/2016 definitions (for 16 cancers) with handover alerts while the STM roadmap (measure 3.1.2) plans national pathway descriptions and access times by 2026–2028.",
+   "problem": "Overreach / missing scope qualifier: the cited STM roadmap claims (q:def306014c, q:b326e35410) state that measure 3.1.2 plans national pathway descriptions and cancer-specific access times for five (unnamed) cancers by 2026–2028 (and all significant cancers by 2029–2031), not for lung cancer or all cancers generally by 2026–2028.",
    "severity": "medium"
   }
  ]

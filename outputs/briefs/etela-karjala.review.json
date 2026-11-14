@@ -1,7 +1,7 @@
 {
  "county": "Etelä-Karjala",
- "brief_generated_at": "2026-11-14T12:26:21+00:00",
- "reviewed_at": "2026-11-14T12:27:00+00:00",
+ "brief_generated_at": "2026-11-14T12:51:44+00:00",
+ "reviewed_at": "2026-11-14T12:52:21+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,25 +10,25 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_etela-karjala_20261114T122621676032Z.json",
+ "raw_response": "data/processed/gemini_raw/review_etela-karjala_20261114T125144986665Z.json",
  "flags": [
   {
-   "location": "how_sure_are_we.details[1]",
-   "sentence": "The county shares are crude (not adjusted for age or stage) because stage at diagnosis is missing for ~48% of new patients nationally, a journal article's finding of about 90% HILMO-to-Cancer Registry concordance concerns diagnoses only rather than treatment recording, and HILMO MDT entries reflect recording practice from direct patient contacts rather than care.",
-   "problem": "None of the cited claims state that the county shares are crude or not age-adjusted, and missing stage data (~48% nationally) only explains why shares cannot be stage-adjusted, not why they are unadjusted for age.",
-   "severity": "medium"
-  },
-  {
-   "location": "what_to_do_first.headline",
-   "sentence": "Given Etelä-Karjala's high crude no-treatment-record share, the team recommends prioritising recording-completeness reporting, alongside reporting THL Ohjaus 21/2016 guidance access times with handover alerts and standardising referrals and coordination.",
-   "problem": "The cited recommendation claims (rec:3, rec:1, rec:2) do not state that recording-completeness reporting should be prioritised over the other two recommendations; rec:3 only advises reading county gaps in those fields as data-quality signals first.",
+   "location": "how_sure_are_we.details[3]",
+   "sentence": "Preliminary, unpublished national figures from a Yle MOT study report an average of 155 days from first symptoms to treatment in Finland (56 days patient delay, 41 days in primary care, and 58 days in specialist care) versus 107 days in Sweden and 67 days in Denmark, but no county-specific wait times exist.",
+   "problem": "Overreach: the cited Yle MOT claims state that the figures are national averages and not county-specific, which does not support the universal claim that no county-specific wait times exist.",
    "severity": "medium"
   },
   {
    "location": "what_to_do_first.details[2]",
-   "sentence": "Because referrals follow local instructions, mentor insight notes weak referrals receive lower urgency, and roadmap plans for referral criteria (2026–2028) and care-coordinator guidance (2026–2028; county adoption 2029–2031) leave the care phase open, the team recommends a referral template and persistent-symptoms rule after a normal X-ray modelled on the KYS regional pathway document, plus a named diagnostic-phase contact.",
-   "problem": "According to the cited claims, only the care-coordinator guidance leaves the care phase open (q:050ee09ebe), whereas the standardised referral criteria plans (q:9a1cd194f5, q:c61439b30f) specifically concern transfer to specialist care and diagnostic tests; grouping both under 'leave the care phase open' is imprecise.",
-   "severity": "low"
+   "sentence": "Because referrals follow local instructions, treatment responsibility organisation varies regionally, and mentor insight notes that a weak referral gets a lower urgency rating in specialist care, the team recommends adopting a KYS-style referral content list and template, referring patients with persistent symptoms after a normal X-ray to a pulmonologist, and naming a diagnostic-phase contact person.",
+   "problem": "Unsupported statement: the cited claim [q:1b9eaf2217] only translates the phrase 'in the organisation of treatment responsibility' ('hoitovastuun järjestämisessä') and does not state that treatment responsibility organisation varies regionally.",
+   "severity": "medium"
+  },
+  {
+   "location": "what_to_do_first.details[3]",
+   "sentence": "The team's recommendations prepare for national plans: the STM roadmap plans pathway access times and coding practices (measure 3.1.2), referral criteria (measure 2.5.2), care-coordinator guidance (measure 1.2.3, adopted by 2029–2031) and a quality registry (measure 3.2.1, 90% coverage by 2029–2031) by 2026–2028, while the Filha programme's diagnostics recommendation is to be carried out before the 2030 mid-term evaluation.",
+   "problem": "Misstated milestones and missing scope caveats: under measure 3.2.1 ([q:f07a34a300], [q:4a856bd695]), only the registry decree is scheduled to be updated by 2026–2028 (not the quality registry itself) and the 2029–2031 milestone is annual reports for at least five cancers (no timeframe is given for 90% coverage); additionally, measures 3.1.2 and 2.5.2 in 2026–2028 apply only to five cancers (unnamed or most common), not all cancers.",
+   "severity": "high"
   }
  ]
 }

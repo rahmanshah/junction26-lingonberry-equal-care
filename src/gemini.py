@@ -47,6 +47,15 @@ def client() -> genai.Client:
 TRANSIENT = {429, 500, 502, 503, 504}
 
 
+def is_transient(e: Exception) -> bool:
+    """Rate limit / overload (API status code) or a dropped connection raised by the SDK's HTTP layer
+    (e.g. RemoteProtocolError: server disconnected). The HTTP package is an SDK internal, so it is
+    recognised by module name rather than imported."""
+    if isinstance(e, genai_errors.APIError):
+        return getattr(e, "code", None) in TRANSIENT
+    return type(e).__module__.split(".")[0].startswith(("httpx", "httpcore"))
+
+
 def structured_call(model: str, system: str, prompt: str, schema: type[BaseModel], tag: str,
                     thinking_level: str | None = None, temperature: float = 0.2,
                     seed: int | None = None, retries: int = 4) -> tuple[BaseModel | None, str, Path]:
@@ -67,8 +76,8 @@ def structured_call(model: str, system: str, prompt: str, schema: type[BaseModel
         try:
             response = client().models.generate_content(model=model, contents=prompt, config=config)
             break
-        except genai_errors.APIError as e:
-            if getattr(e, "code", None) not in TRANSIENT or attempt == retries:
+        except Exception as e:  # noqa: BLE001 - re-raised below unless transient
+            if not is_transient(e) or attempt == retries:
                 raise
             time.sleep(15 * 2 ** attempt)
     RAW_DIR.mkdir(parents=True, exist_ok=True)

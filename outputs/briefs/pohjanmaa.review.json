@@ -1,7 +1,7 @@
 {
  "county": "Pohjanmaa",
- "brief_generated_at": "2026-11-14T12:11:32+00:00",
- "reviewed_at": "2026-11-14T12:12:12+00:00",
+ "brief_generated_at": "2026-11-14T13:03:00+00:00",
+ "reviewed_at": "2026-11-14T13:03:22+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,6 +10,6 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_pohjanmaa_20261114T121132231127Z.json",
+ "raw_response": "data/processed/gemini_raw/review_pohjanmaa_20261114T130300613106Z.json",
  "flags": []
 }

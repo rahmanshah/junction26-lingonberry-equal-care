@@ -433,6 +433,54 @@ SCOPE = {
 }
 
 
+IMAGING_SCOPE = ("diagnosed on clinical findings alone (e.g. imaging), not by tissue or cell sample (~20% of "
+                 "patients); not a measure of imaging use or imaging waits")
+SCOPE["bs:coverage:Imaging"] = IMAGING_SCOPE
+
+# Notes for quote claims, matched by the opening words of the quote (source, prefix, note). Every
+# entry must match at least one claim (apply_quote_notes asserts this), so no note is lost silently.
+_R312 = ("plan: STM cancer strategy implementation roadmap (not the Filha programme), measure 3.1.2: national "
+         "cancer-specific pathway descriptions and cancer-specific access times for five (unnamed) cancers by "
+         "2026–2028 (p.57); all significant cancers by 2029–2031")
+_R252 = ("plan: STM roadmap (not the Filha programme), measure 2.5.2: standardised referral criteria and "
+         "symptom-based models in the national pathways of at least the five most common cancers by 2026–2028 "
+         "(p.53); all significant cancers by 2029–2031")
+_R123 = ("plan: STM roadmap (not the Filha programme), measure 1.2.3: guidance on a named care-coordinator model "
+         "by 2026–2028; counties adopt it by 2029–2031 (p.32); the care phase is not specified")
+_R321 = ("plan: STM roadmap (not the Filha programme), measure 3.2.1: national cancer quality registry; registry "
+         "decree updated by 2026–2028, annual reports for at least five cancers by 2029–2031 (pp.59–60)")
+_FILHA = ("plan: Filha National Lung Cancer Programme (not the STM roadmap): a national lung cancer diagnostics "
+          "recommendation with primary-care referral criteria and recommended time limits, to be carried out "
+          "('toteutetaan') before the 2030 mid-term evaluation (p.24). 'Toteutetaan' may mean produced or "
+          "implemented: say 'carried out', never 'completed' or 'implemented'")
+QUOTE_NOTES = [
+    *[(ROADMAP, p, _R312) for p in ("Toimenpide 3.1.2", "Kansalliset hoitoketjut kuvataan", "Ketjuissa määritellään",
+                                    "kirjaamis- ja koodistokäytännöistä", "2026–2028: Kansalliset hoitoketjukuvaukset",
+                                    "syöpäkohtaiset hoitoonpääsyajat", "Mittari: Potilaat pääsevät")],
+    *[(ROADMAP, p, _R252) for p in ("Tuetaan sujuvaa siirtymää", "standardoidut lähetekriteerit",
+                                    "oirelähtöiset toimintamallit", "2026–2028: Standardoidut lähetekriteerit")],
+    *[(ROADMAP, p, _R123) for p in ("Toimenpide 1.2.3", "Tärkeintä on että potilas", "Selvityksessä kartoitetaan",
+                                    "2026–2028: Ohjeistus syövän hoidon", "hoitojen aikana sekä",
+                                    "missä hoidon vaiheessa")],
+    *[(ROADMAP, p, _R321) for p in ("Perustetaan THL:n Syöpärekisterin", "Laaturekisterin tietopohja",
+                                    "ml. levinneisyystieto")],
+    *[(FILHA, p, _FILHA) for p in ("Väliarvio toteutetaan", "Tämän ohjelman yhtenä toimenpiteenä",
+                                   "Keuhkosyövän oireita ja lähetekriteereitä", "lähetekriteerit perusterveydenhuollolle",
+                                   "suositellut aikarajat", "on jo aloitettu työstämään")],
+    (REPORT, "pelkkään kliiniseen tutkimukseen", f"scope: {IMAGING_SCOPE}"),
+]
+
+
+def apply_quote_notes(rows: list[dict]) -> None:
+    for src, prefix, note in QUOTE_NOTES:
+        key = sources.normalise(prefix)
+        hits = [r for r in rows if r.get("quote") and r["source_doc"] == src
+                and sources.normalise(r["quote"]).startswith(key)]
+        assert hits, f"QUOTE_NOTES entry matched no claim: {src} / {prefix!r}"
+        for r in hits:
+            r["notes"] = f"{note}; {r['notes']}"
+
+
 def scope_for(cid: str) -> str | None:
     return next((s for key, s in SCOPE.items() if cid == key or (key.endswith(":") and cid.startswith(key))), None)
 
@@ -519,6 +567,7 @@ def main() -> int:
             + blind_spot_claims() + [r for d in QUOTE_DOCS for r in doc_quote_claims(d)])
     rows = attach_english(merge_quotes(rows))
     resolve_superseded(rows)
+    apply_quote_notes(rows)
     n_tr = add_translations(rows)
     con = ledger.create()
     ledger.insert(con, rows)

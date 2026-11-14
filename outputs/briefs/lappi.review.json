@@ -1,7 +1,7 @@
 {
  "county": "Lappi",
- "brief_generated_at": "2026-11-14T12:14:20+00:00",
- "reviewed_at": "2026-11-14T12:14:47+00:00",
+ "brief_generated_at": "2026-11-14T13:20:48+00:00",
+ "reviewed_at": "2026-11-14T13:21:19+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,6 +10,19 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_lappi_20261114T121420776435Z.json",
- "flags": []
+ "raw_response": "data/processed/gemini_raw/review_lappi_20261114T132048194843Z.json",
+ "flags": [
+  {
+   "location": "what_to_do_first.headline",
+   "sentence": "The team recommends auditing recording completeness for Lapin hyvinvointialue's crude shares across overlapping categories, tracking access times using THL 21/2016 definitions, and standardising referrals and diagnostic coordination.",
+   "problem": "Team recommendation 3 ([rec:3]) recommends reporting and publishing county-level recording completeness for stage, drug treatment, and MDT coding, not auditing recording completeness for crude treatment shares.",
+   "severity": "low"
+  },
+  {
+   "location": "what_to_do_first.details[0]",
+   "sentence": "Because Lapin hyvinvointialue has a 33.8% (95% CI 30.4–37.4) crude no-treatment-record share and a 3.0% (95% CI 1.9–4.5) crude MDT-recorded share among overlapping categories alongside incomplete national data and 48% missing stage, the team recommends reporting county recording completeness for stage, drug treatment and MDT coding while THL, FICAN and the Cancer Registry assess a lung cancer quality registry.",
+   "problem": "The cited claims ([bs:coverage:Diagnosis] and [q:7885b0974f]) state that stage at diagnosis is missing for 'nearly half' (~48%) of new patients, whereas '48% missing stage' omits the approximation.",
+   "severity": "low"
+  }
+ ]
 }

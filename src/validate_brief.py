@@ -15,6 +15,9 @@ A brief has three sections (where_we_lag, how_sure_are_we, what_to_do_first); ea
     "not adjusted" (or Finnish "vakioimaton")
   - a sentence citing one of our recommendations (status "recommendation (ours)") does not say it is
     a recommendation ("recommend…")
+  - a sentence citing two or more different county treatment shares does not say they overlap
+  - a sentence says treatment recording looks (relatively) complete although the county's
+    no-treatment-record 95% interval is not entirely below the national value (vs_national != below)
 
 Numbers that describe the study frame, not a finding, are always allowed: FRAME_NUMBERS.
 
@@ -43,6 +46,11 @@ def iter_sentences(brief: dict):
 # Study period 2019–2023, 95% confidence level, 12-month follow-up window.
 FRAME_NUMBERS = {2019.0, 2023.0, 95.0, 12.0}
 CRUDE = re.compile(r"\bcrude\b|\bunadjusted\b|\bnot adjusted\b|vakioimato", re.I)
+OVERLAP = re.compile(r"\boverlap", re.I)
+_Q = r"(?:relatively |fairly |largely |reasonably |more |mostly )"
+COMPLETE_RECORDING = re.compile(
+    rf"{_Q}complete\w*[^.;]{{0,30}}\brecord|\brecord\w*[^.;]{{0,30}}\b(?:looks|appears|is|seems|being) {_Q}?complete\b"
+    rf"|consistent with {_Q}?complete", re.I)
 NUM = re.compile(r"(?<![\w.,])(\d{1,3}(?:,\d{3})+(?![\d])|\d+(?:[.,]\d+)?)(?!\w)")
 
 
@@ -123,6 +131,17 @@ def validate(brief: dict, allowed_ids: set[str] | None = None, claims: dict[str,
             problems.append(f"{where}: cites a crude county share but does not say 'crude': {text!r}")
         if ledger.RECOMMENDATION in statuses and "recommend" not in text.lower():
             problems.append(f"{where}: cites our recommendation but does not say it is a recommendation: {text!r}")
+        cty_metrics = {c["metric"] for c in cited if c["id"].startswith("cty:")}
+        if len(cty_metrics) >= 2 and not OVERLAP.search(text):
+            problems.append(f"{where}: cites {len(cty_metrics)} county treatment shares but does not say the "
+                            f"categories overlap: {text!r}")
+        if COMPLETE_RECORDING.search(text):
+            pool_ids = (allowed_ids or set()) | set(ids)
+            nr = [claims[i] for i in pool_ids if i.startswith("cty:no_treatment_record:") and i in claims]
+            vs = re.search(r"vs_national=([^;]+)", nr[0]["notes"]).group(1).strip() if nr else "unknown"
+            if vs != "below":
+                problems.append(f"{where}: says recording looks complete, but the county's no-treatment-record "
+                                f"95% interval is not entirely below national (vs_national={vs}): {text!r}")
     return problems
 
 

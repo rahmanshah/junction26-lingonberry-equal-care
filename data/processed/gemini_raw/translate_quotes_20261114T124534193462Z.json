@@ -1,0 +1,80 @@
+{
+ "tag": "translate_quotes",
+ "model": "gemini-4-hydrogen",
+ "requested_at": "2026-11-14T12:45:34.193462+00:00",
+ "model_version": "gemini-4-hydrogen",
+ "config": {
+  "temperature": 0.2,
+  "seed": null,
+  "thinking_level": null,
+  "response_schema": "Translations"
+ },
+ "system_instruction": "You translate short Finnish quotes from Finnish health-policy documents (national cancer strategy, implementation roadmap, national lung cancer programme, Cancer Registry report) into English.\nTranslate faithfully and literally enough to be checked against the original: keep every number, date, percentage, section or table reference and abbreviation exactly; do not add, explain or omit anything. If a quote is a fragment, translate it as a fragment. Return one translation per key.",
+ "prompt": "Translate each quote. Return items with the same keys.\n\n[2f4239e981] toteutetaan\n[7b70822554] toimenpiteiden implementointi aloitetaan kunkin toimenpiteen valmistuttua",
+ "response": {
+  "sdk_http_response": {
+   "headers": {
+    "x-gemini-service-tier": "standard",
+    "content-type": "application/json; charset=UTF-8",
+    "vary": "Origin, X-Origin, Referer",
+    "content-encoding": "gzip",
+    "date": "Sat, 14 Nov 2026 12:45:45 GMT",
+    "server": "scaffolding on HTTPServer2",
+    "x-xss-protection": "0",
+    "x-frame-options": "SAMEORIGIN",
+    "x-content-type-options": "nosniff",
+    "server-timing": "gfet4t7; dur=8028",
+    "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+    "transfer-encoding": "chunked"
+   }
+  },
+  "candidates": [
+   {
+    "content": {
+     "parts": [
+      {
+       "text": "{\n  \"items\": [\n    {\n      \"key\": \"2f4239e981\",\n      \"translation\": \"is implemented\"\n    },\n    {\n      \"key\": \"7b70822554\",\n      \"translation\": \"implementation of the measures is started once each measure has been completed\"\n    }\n  ]\n}",
+       "thought_signature": "EvMRCvARAWkUfRPlX0nfyYV8jChbwFKFR6Tywv16VC2rwXZ3dbBSdH8-gBcYgZ1E8D2AR7kRBW_J4xKTmwS7PL33mDMr3KSz2mtHMkBY1JpC0_VpbfpEbo0m029nKFeImFsZ1BQ-sK0TOLVHFi0ZCidYudPnWqyd0hIBoMHNPJ2KlBN8mNfpcCqOzZuIJpAIMIYrIaQH-BDExKWoy9qLuzofcckM-LXHXrY3n_ZyEP_QpAy6HXF3BKgNZE9Cjtfjwzr6FsO1hC-2PI3lyMHQ1dBwYXAZfanlhaHwXY8P4vpMfmxXh7770zd6-pefc6Jk5uRsG59boTpXrPHNOJ8RwhIqLaSHcfIoUt8ZkQB1e9ZTFdKh-ngWmtXMmM6FQ0k00_M7vyIHwjQoe1Xut3dZkocOtafuRQXxi9I_IhtEJ-7nSTEjH2Vp1fr3fFYPYICWPhePh3WhPO928NVOz1ZqeGOG3osCfU1nTURhpWoV5vtLY3eZWrXaiSQ2lPRWxmVvdCGPBJjmXnh2R-5w7tl_reX_kfwDdscZRGOhGcyAR62KMmBrR7pduxNPQi5-r7e8BN8xkVqHc7_1E1SkBAKuJE2bczQ13OUtn55PBBQZw8UHRtfx1ABb7-b3IQliRtEPTLntED6BeIbEXg3NS6vmdXEzCzcBHBg8hjjyb3t9ZJ4bRKFKlrlthXMZYsNkWXpeW0T3enT3Ttv84l9rypWt2p02diGdamWgZ_lppBvIVSxFhi0407fnQuTz9lxh3TWSrNOThgrQgcP28B0t6OfS7r5zoOSRXA5TJegodJ3UYfzUhLMlaVgIRqlptAe-qTKiCkr2pZ4gSlAxyJge_L_GbAD536XW5PqqMqnJ86d6OaJZSXtgHxAQ2vfF0UKKkbG6Z-R3uhDgfYVAZDPy_ybdAvrkkNH74fBXuvHIjxhChP9sBN3BePTT9pLf2bgLXy0qhtmmP1bnyx6KBxTMzU9-aCz5A2SMBu4qXF2uu-KRLghyEv9RX2jstV9KmVgUfO2g785PZopqEOYcLJjKCAAZCJoi8XLmEL_gdqtxkGNRLaWhrhfOzUfkndgtw4fDC-OpHgcCF_MHPpkYKH8Rh5cWLWcVqiHcmDnksPDt2ud0HHrzNsPFggl6pQUq6zAIq-VLJCo7URV8yu9fe5d72tL8IaCbzlm0CibT3EVE2TduGZ_RYmQ-dCN_ItgOMfnVfmAXVAjjM0OyjwlhX_yovUa7V_fEYLcQ4jAI_4pH6IYH4mdTG-b69FPNchdZks3v1U4rcKZ_5cmIHTX0af0ERfHz3vGE8P-umQ2FTLSdfqKe-HbZkymoTwCzsGSeV5mPa8rLEJr6iBC1W1o_6QlwDHgY4spk4BJJloSm35X5pSRu-x2zpt9VGR8bUqY2yHARx7HZSmaf8uXjkWu-FwYzrIQct67uEK_wUIGlXrIt_bF_i0W5ykNOPUNmSY1FQ-fBuNjeaLfT2Ey5jMe3K_0xbBlZ8Cu4ToYXhcTDSpBVfv_lg3kiJpFdIgIC3T5XN41uI6KIYcaAJ-Uu7SsDJ3sJ-sBSGKEuSjyqOqVuUVQsPHhxfaQSEO35v1GOTj0_-0AmyAqOCLy5FJ50VhE947ZnQ1UsexMr1juEjcYGz3cKTg9-ncR0NJQjDf30DscNlAmG3lO76Mbrd9qnoYXvJmvt6-WlULf2j1NeKP-jf5hnCJuPB4vTiCKue8q0wxm4y-7QWTioYuIqNEyn1T7qz13kEg4OVcVNLFRPyw5e7_RJunwRPE2aYUd4Lmz394CPr85BjgM9N8td1oCpq6p5xpwXnPHyPjZf8rRMn1aRJhJIfDhp8wdDggCVKWkuWVfZeEasSfMVHq4M58sf-mCt7dK1TvBHtYVk2uWEP66-hzjdxYWzgSWfkfVh9NBTE2eBNnTrnqca-OLfGpRDypOD6LIivEP6uUWzD8G4incfRIt4qPCw5A7kx2OqChYdR_LfsBlbmC57c3ZiWx8Q7rynPLkkVjrRyQFXYHPgLCAPOP5EFYPLXRyy9t_5juFxMAsEBlhOQNYlwjgT4f0FXqnIfsc6nxCg5w823XFmmf9zOoEq1AutzPSQnAKfDIAXwerDa_D9zK2MHIPrQH1bE6ViwQgBctMTi662AisefnpqMyASRA0LOh7Q5lISQ0c3pHOcPE-d4aa8J-Jr3--vpEgquOqks7lO3NWSfOwbMlfxJqYIJXxvRAXvmaGY1PE745n0S6WYRBdHgfSg1DG8in2ITaPF0FBtB_a_WNSgmbawJDITbuGOeUm5Wn43dyrPVEmsxkIJAGQTFFjnyLRDtYtFgNb5XAEMzSDqRg7qJ4UkQMYtBYaM7_BMAk31AvMGdsw7WhmKNhoy860sMO5Piwx6gVLT2vCR3e6Wa2fSlvwzCtAaSv3Rp1PM4E0q28dKioVH83fbs5UedwCSg4J2PWUH5yvB5JfHtyFplAkz3LbqvXUKs_lCY7ZW0F0QhpZQo2nPRYonF0eWr0iQHyDn7FwumlcV67XNlNrRrdZNskG0Rgt4ezjxPqPO4ZSWHsM3VIEv-5QI_NL59JEtpyD09Wxc02bVEaB4gLfueAU-RlW42Qze5xsf_Dgb14UJGvG3xwIC6Ru6YGMcPRBwfCvUT1dkPv3uthkWYvUPuRtY-VFfN8y6wJtoxprx-SHfF7GA0TmzWvG6_uSZGLo4-jvJvXnoyUTvrSyVyc_Tzi8OIZKZ1QqTF256iwyNXXUyvT22ZfvNaFp-jPxHTTad6kju35xAc_OKMx4jgvMk2ZbFIJ9htyMqE5NfNmA1HyJrbnmlZD6vGCAqKDX1U7i5iioe0fvE8i2WUfVaGCvDAPTufdEJeQkG12Ev3PCe3OuBLrK5tmMKS_FM41wyAfYGg4tsF_AhG1woTUUiCxnI-VTR81TR0OzIauqXHPrNDkYHjFaDULobq4TIQsP6faDmH2CR0KZhkA0PgGH5v5-n4XUalngv9mOMuOkMGgcplIXlbafz20861Nw3nRzPZewL7bsGJZlNPPN-fwtpYGq7Ke-QvQc0Pfic-N-Id7isLbHM870="
+      }
+     ],
+     "role": "model"
+    },
+    "finish_reason": "STOP",
+    "index": 0
+   }
+  ],
+  "model_version": "gemini-4-hydrogen",
+  "response_id": "8Vf4au7bC5C5kdUPuPe9kAU",
+  "usage_metadata": {
+   "candidates_token_count": 102,
+   "candidates_tokens_details": [
+    {
+     "modality": "TEXT",
+     "token_count": 102
+    }
+   ],
+   "prompt_token_count": 405,
+   "prompt_tokens_details": [
+    {
+     "modality": "TEXT",
+     "token_count": 405
+    }
+   ],
+   "thoughts_token_count": 520,
+   "total_token_count": 1027
+  },
+  "automatic_function_calling_history": [],
+  "parsed": {
+   "items": [
+    {
+     "key": "2f4239e981",
+     "translation": "is implemented"
+    },
+    {
+     "key": "7b70822554",
+     "translation": "implementation of the measures is started once each measure has been completed"
+    }
+   ]
+  }
+ }
+}

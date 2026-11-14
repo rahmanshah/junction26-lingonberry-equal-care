@@ -52,7 +52,8 @@ FILHA_DIAGNOSTICS = ("Filha programme (pp.3, 16, 24; printed pages): a national 
                      "recommendation with primary-care referral criteria ("
                      + fi("lähetekriteerit perusterveydenhuollolle") + ") and recommended time limits for "
                      "the diagnostic pathway stages in specialist care (" + fi("suositellut aikarajat")
-                     + "), due before the 2030 mid-term evaluation.")
+                     + "), to be carried out before the 2030 mid-term evaluation (Filha's verb "
+                     + fi("toteutetaan") + " may mean produced or implemented).")
 
 ROWS = [
     {

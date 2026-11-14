@@ -1,7 +1,7 @@
 {
  "county": "Etelä-Savo",
- "brief_generated_at": "2026-11-14T12:07:56+00:00",
- "reviewed_at": "2026-11-14T12:08:19+00:00",
+ "brief_generated_at": "2026-11-14T12:58:06+00:00",
+ "reviewed_at": "2026-11-14T12:58:47+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,6 +10,25 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_etela-savo_20261114T120756414112Z.json",
- "flags": []
+ "raw_response": "data/processed/gemini_raw/review_etela-savo_20261114T125806999520Z.json",
+ "flags": [
+  {
+   "location": "what_to_do_first.details[0]",
+   "sentence": "The team recommends publishing county recording completeness for stage, drug treatment, and MDT coding as data-quality signals, given Etelä-Savo's crude 0.2% (95% CI 0.0–1.2; n=1/448) recorded MDT share versus 6.0% (893/14873) nationally, about 48% missing stage, incomplete data requiring uniform instructions, and STM roadmap measure 3.2.1 planning a quality registry decree update by 2026–2028 and 90% stage coverage by 2029–2031.",
+   "problem": "The cited claims for STM roadmap measure 3.2.1 state that the 90% target is for the quality registry's overall data coverage (including stage information), not specifically '90% stage coverage', and they assign the 2029–2031 timeframe to annual reports for at least five cancers rather than to achieving 90% coverage.",
+   "severity": "medium"
+  },
+  {
+   "location": "what_to_do_first.details[1]",
+   "sentence": "The team recommends reporting access times using THL Ohjaus 21/2016 definitions (16 cancers) and flagging stalled handovers while national monitoring is lacking: STM roadmap measure 3.1.2 plans national pathway descriptions and access times by 2026–2028 (all significant cancers by 2029–2031), and the Filha programme's diagnostics recommendation with time limits is to be carried out before the 2030 mid-term evaluation.",
+   "problem": "The cited claims specify that STM roadmap measure 3.1.2 plans national pathway descriptions and access times by 2026–2028 only for five (unnamed) cancers before covering all significant cancers by 2029–2031, which is omitted in the 2026–2028 clause.",
+   "severity": "low"
+  },
+  {
+   "location": "what_to_do_first.details[3]",
+   "sentence": "The team recommends these local steps while national plans proceed: STM roadmap measure 2.5.2 plans standardised referral criteria and symptom-based models by 2026–2028, STM roadmap measure 1.2.3 plans care-coordinator guidance by 2026–2028 for county adoption by 2029–2031, and the Filha programme's diagnostics recommendation with primary-care referral criteria is to be carried out before the 2030 mid-term evaluation.",
+   "problem": "The cited claims specify that STM roadmap measure 2.5.2 includes standardised referral criteria and symptom-based models by 2026–2028 only in the national pathways of at least the five most common cancers (with all significant cancers by 2029–2031), so stating this without the cancer-scope limitation overstates what is planned for 2026–2028.",
+   "severity": "medium"
+  }
+ ]
 }

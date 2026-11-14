@@ -215,13 +215,21 @@ When (p.24):
 > osa-alueiden suositukset toteutetaan ennen väliarviointia.</q>
 
 *The mid-term evaluation is in 2030 and the final evaluation in 2036. Recommendations for the
-different areas will be completed before the mid-term evaluation.*
+different areas will be carried out before the mid-term evaluation.*
+
+**The verb is ambiguous.** *Toteutetaan* means ‘is carried out’. For a recommendation it can mean
+‘produced’ or ‘implemented’, and machine translation gives ‘implemented’.
+- Two lines earlier the programme uses a different word for implementation:
+  <q lang="fi">toimenpiteiden implementointi aloitetaan kunkin toimenpiteen valmistuttua</q> (*implementation
+  of the measures starts once each measure is completed*). This favours ‘produced’.
+- That is an interpretation, so we say **‘carried out before the 2030 mid-term evaluation’**. We do not
+  say ‘completed’ or ‘implemented’.
 
 p.20 says work on the diagnostics recommendation has already started (<q lang="fi">on jo aloitettu työstämään
 keuhkosyövän diagnostiikkasuositusta</q>).
 
-**So:** the recommendation is due before the 2030 mid-term evaluation, with no exact date. Besides
-referral criteria, it will also bring **recommended time limits**.
+**So:** the recommendation is to be carried out before the 2030 mid-term evaluation, with no exact date.
+Besides referral criteria, it will also bring **recommended time limits**.
 
 ### d) No lung cancer or cancer quality registry; Cancer Registry, THL and FICAN assessing: **verified, slightly reworded**, p.21
 

@@ -1,7 +1,7 @@
 {
  "county": "Satakunta",
- "brief_generated_at": "2026-11-14T12:12:59+00:00",
- "reviewed_at": "2026-11-14T12:13:43+00:00",
+ "brief_generated_at": "2026-11-14T13:04:20+00:00",
+ "reviewed_at": "2026-11-14T13:04:50+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,18 +10,24 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_satakunta_20261114T121259373197Z.json",
+ "raw_response": "data/processed/gemini_raw/review_satakunta_20261114T130420958365Z.json",
  "flags": [
   {
-   "location": "how_sure_are_we.details[3]",
-   "sentence": "In the public report, primary care visits are not included in the report's data and occupational health is not mentioned, symptoms and referrals are not measured, and imaging (approximately 20% of diagnoses), first specialist visits (93.6% within 12 months), and treatment records lack pathway dates or waiting times.",
-   "problem": "Attaches 'approximately 20% of diagnoses' to imaging in general, whereas bs:coverage:Imaging and q:5eb155decc state that approximately 20% of diagnoses are based on clinical examination alone, such as imaging.",
+   "location": "where_we_lag.details[0]",
+   "sentence": "In Satakunta, the crude curative treatment share is 24.5% (95% CI 21.4–27.9; n=167/682), whose 95% confidence interval includes the national 27.0% (4009/14873) in 2019–2023.",
+   "problem": "Missing caveat: the cited claim [cty:curative:Satakunnan_hyvinvointialue] notes that treatment categories overlap, which is not stated in this sentence.",
    "severity": "medium"
   },
   {
-   "location": "what_to_do_first.details[1]",
-   "sentence": "Because referrals follow local instructions and a mentor insight notes weak referrals receive lower urgency ratings, the team recommends adopting a standard referral template and referring persistent symptoms after a normal X-ray (modelled on the KYS regional pathway document), while the Filha programme's diagnostics recommendation is due to be completed before the 2030 mid-term evaluation.",
-   "problem": "Uses the wrong verb ('completed') for the Filha programme's recommendation: q:614febebf2 states that the sub-area recommendations will be implemented ('toteutetaan') before the 2030 interim evaluation, and q:432c0e51d6 only says the upcoming recommendation is due before the 2030 mid-term evaluation.",
+   "location": "what_to_do_first.details[0]",
+   "sentence": "Because a University of Turku regional study of Satakunta found the biggest delay in specialist care and the Health Care Act sets no maximum wait for cancer suspicion, the team recommends reporting THL Ohjaus 21/2016 access times for 16 cancers and flagging stalled handovers; the STM roadmap (measure 3.1.2) plans national pathways and access times for five cancers by 2026–2028.",
+   "problem": "Overreach: [rec:1] recommends reporting lung cancer access times using THL Ohjaus 21/2016 definitions, whereas [thl:21_2016] states that THL Ohjaus 21/2016 defines how access times are recorded for 16 cancers; the team did not recommend reporting all 16 cancers.",
+   "severity": "medium"
+  },
+  {
+   "location": "what_to_do_first.details[2]",
+   "sentence": "With stage missing for about 48% of patients, incomplete data reporting, and Satakunta's crude 0.6% (95% CI 0.2–1.5; n=4/682) recorded MDT share versus 6.0% nationally, the team recommends publishing per county how completely stage, drug treatment and MDT meetings are recorded and reading gaps as data-quality signals; the STM roadmap (measure 3.2.1) plans a national quality registry by 2026–2028.",
+   "problem": "Misleading timeline and missing caveat: [q:f07a34a300] notes that STM roadmap measure 3.2.1 updates the registry decree by 2026–2028 and schedules annual reports for at least five cancers by 2029–2031, rather than completing the national quality registry itself by 2026–2028; also [cty:mdt_recorded:Satakunnan_hyvinvointialue] notes that categories overlap, which is omitted.",
    "severity": "medium"
   }
  ]

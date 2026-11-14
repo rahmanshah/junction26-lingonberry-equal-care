@@ -1,7 +1,7 @@
 {
  "county": "Keski-Suomi",
- "brief_generated_at": "2026-11-14T12:06:00+00:00",
- "reviewed_at": "2026-11-14T12:06:57+00:00",
+ "brief_generated_at": "2026-11-14T12:59:44+00:00",
+ "reviewed_at": "2026-11-14T13:00:20+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,12 +10,12 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_keski-suomi_20261114T120600297366Z.json",
+ "raw_response": "data/processed/gemini_raw/review_keski-suomi_20261114T125944285693Z.json",
  "flags": [
   {
-   "location": "how_sure_are_we.details[2]",
-   "sentence": "Public report data do not measure symptom onset, referral dates, or when treatment started; outpatient primary care visits are not included in the report's data and occupational health is not mentioned, imaging appears only indirectly as the diagnostic basis in approximately 20% of cases, and specialist visits (93.6% nationally within 12 months) lack county breakdowns or dates.",
-   "problem": "The cited quote (q:5eb155decc) attributes the approximately 20% share to clinical examination alone, giving imaging as an example ('clinical examination alone, such as imaging, in approximately 20%'), rather than to imaging specifically.",
+   "location": "how_sure_are_we.headline",
+   "sentence": "Registry diagnosis concordance is about 90%, but county treatment shares are crude, unadjusted for age or stage, and public data omit key pathway dates and pre-referral steps.",
+   "problem": "None of the claims cited for this sentence mention that county treatment shares are crude or unadjusted for age (only stage adjustment is supported by bs:coverage:Diagnosis); the crude and age-adjustment claims are cited in details[0] rather than here.",
    "severity": "low"
   }
  ]

@@ -64,17 +64,23 @@ numbers (no differences, ratios or percentage-point gaps): state the county valu
 side by side instead. Spell out no numbers in words.
 3. State uncertainty. Give 95% confidence intervals where the claim has one. Never say "certain": say \
 the 95% confidence interval excludes (or includes) the national value. Say that the county shares are \
-crude (not adjusted for age or stage). Where an age-adjusted value exists (Kuva 16, digitised from a \
-figure, about ±0.5 percentage points), use it to say whether a gap holds after age adjustment, say it is \
-digitised, and pass on any caveat in the claim's notes (e.g. a confidence interval that could not be read).
+crude. They have two separate limitations: (a) they are not age-adjusted (an age-adjusted value exists \
+only from Kuva 16, for curative treatment, by sex); (b) they cannot be stage-adjusted because stage at \
+diagnosis is missing for about 48% of patients. Never present missing stage as the reason the shares \
+are not age-adjusted. Where an age-adjusted value exists (Kuva 16, digitised from a figure, about ±0.5 \
+percentage points), use it to say whether a gap holds after age adjustment, say it is digitised, and \
+pass on any caveat in the claim's notes (e.g. a confidence interval that could not be read).
 4. The treatment categories overlap (a patient can have several); never add them up or present them as \
-a breakdown. "No treatment record within 12 months" mixes untreated patients and treatment that was not \
-recorded; never call it "untreated" or "missing data". MDT records measure recording practice, not care.
-5. Read the no-treatment-record share as a data-quality signal, and present that reading as an \
-inference, not a finding. If it is at or below the national value, this is consistent with relatively \
-complete treatment recording (it is not direct evidence of it), so a low curative share is less likely \
-to be only a recording artefact; do not cite a low no-record share as a reason to fix recording. If it \
-is above national, a low share of a treatment type may partly reflect unrecorded treatment.
+a breakdown, and whenever a sentence mentions two or more county treatment shares, say in that sentence \
+that the categories overlap. "No treatment record within 12 months" mixes untreated patients and \
+treatment that was not recorded; never call it "untreated" or "missing data". MDT records measure \
+recording practice, not care.
+5. Read the no-treatment-record share as a data-quality signal, using its 95% interval (the claim says \
+"below", "above" or "not distinguishable" vs national). Only if the county's claim says "below" (the \
+interval is entirely below national) may you say this is consistent with relatively complete treatment \
+recording, as an inference, not a finding; a low curative share is then less likely to be only a \
+recording artefact. If it says "not distinguishable", say nothing about recording completeness. If it \
+says "above", you may say low treatment shares may partly reflect unrecorded treatment.
 6. Label status in the sentence itself: a sentence citing a claim with status "preliminary" must say \
 "preliminary" (e.g. "preliminary, unpublished figures"); one citing "mentor insight" must say \
 "mentor insight". Claims "verified by Hellu" were read in full by a teammate in documents we do not \
@@ -90,9 +96,11 @@ recording; a regional finding describes only the named region's document; nation
 county figures.
 8. Describe planned national measures as plans, with the plan's own verb and date, in the present \
 tense: e.g. "the roadmap plans national pathways with target access times for five cancers by \
-2026–2028"; "the Filha programme's diagnostics recommendation is due to be completed before the 2030 \
-mid-term evaluation". A recommendation being completed is not the same as it being implemented. Never \
-write "will" about national measures. Never use the words certain, proves, guarantees or definitely.
+2026–2028"; "the Filha programme's diagnostics recommendation is to be carried out before the 2030 \
+mid-term evaluation" (say "carried out", never "completed" or "implemented"). Attribute each plan to the \
+document, measure and date in its notes ("plan: …"): the STM roadmap and the Filha programme are \
+different documents with different dates; never mix them in one attribution. Never write "will" about \
+national measures. Never use the words certain, proves, guarantees or definitely.
 9. Each section has a headline (the main point, one sentence of at most 30 words, with claim IDs) and \
 2–4 detail sentences. "where_we_lag": where this county's pathway lags national values. \
 "how_sure_are_we": what is well supported, what is uncertain and what public data cannot show. \
@@ -100,8 +108,8 @@ write "will" about national measures. Never use the words certain, proves, guara
 county's data, each backed by evidence claims.
 10. Plain, direct English. No claims about other counties. No headings or numbering inside sentences. \
 Apply these rules and the claim notes by writing accurately; do not restate them in the brief (do not \
-write things like "completing is not the same as implementing" or "this describes only its own \
-document"), and keep each sentence under about 60 words."""
+write things like "this describes only its own document" or explain the meaning of a Finnish verb), and \
+keep each sentence under about 60 words."""
 
 
 def load(statuses=ledger.CITABLE) -> list[dict]:

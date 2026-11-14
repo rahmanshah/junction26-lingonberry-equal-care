@@ -1,7 +1,7 @@
 {
  "county": "Pohjois-Karjala",
- "brief_generated_at": "2026-11-14T12:07:08+00:00",
- "reviewed_at": "2026-11-14T12:07:47+00:00",
+ "brief_generated_at": "2026-11-14T12:59:39+00:00",
+ "reviewed_at": "2026-11-14T13:00:24+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,6 +10,25 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_pohjois-karjala_20261114T120708317911Z.json",
- "flags": []
+ "raw_response": "data/processed/gemini_raw/review_pohjois-karjala_20261114T125939865943Z.json",
+ "flags": [
+  {
+   "location": "what_to_do_first.details[0]",
+   "sentence": "The team recommends reporting access times (referral to specialist visit, diagnosis and treatment start) using THL guidance Ohjaus 21/2016 (for 16 cancers) and flagging stalled handovers; the STM roadmap (measure 3.1.2) plans national pathways and access times by 2026–2028, while the Filha programme's diagnostics recommendation with time limits is to be carried out before the 2030 mid-term evaluation.",
+   "problem": "Overreaches the STM roadmap claims (q:def306014c, q:b326e35410): measure 3.1.2 plans national pathway descriptions and access times by 2026–2028 only for five (unnamed) cancers, and for all significant cancers by 2029–2031.",
+   "severity": "medium"
+  },
+  {
+   "location": "what_to_do_first.details[1]",
+   "sentence": "To address referral quality—as a mentor insight notes a weak referral gets a lower urgency rating—the team recommends adopting the KYS care chain document's referral template and rule to refer persistent symptoms after a normal X-ray, plus naming a diagnostic contact person while the STM roadmap plans referral criteria (measure 2.5.2) and coordinator guidance (measure 1.2.3) by 2026–2028.",
+   "problem": "Missing scope qualifier on STM roadmap measure 2.5.2 (q:c61439b30f, q:37bb4c3b38): the 2026–2028 target covers at least the five most common cancers (all significant cancers by 2029–2031), and for measure 1.2.3 (q:abcbb06ae3, q:050ee09ebe) county adoption is planned for 2029–2031 with the care phase left unspecified.",
+   "severity": "medium"
+  },
+  {
+   "location": "what_to_do_first.details[2]",
+   "sentence": "Given Pohjois-Karjala's 0.0% (95% CI 0.0–0.8; n=0/510) crude recorded MDT share versus 6.0% (893/14873) nationally and about 48% missing stage at diagnosis, the team recommends publishing county recording completeness for stage, drug treatment and MDT coding while the STM roadmap plans pathway coding rules (measure 3.1.2, by 2026–2028) and a quality registry with 90% coverage (measure 3.2.1, reports by 2029–2031).",
+   "problem": "Overreaches STM roadmap scope and blurs national vs county scope: measure 3.1.2 (q:990a0d39a0) by 2026–2028 applies only to five unnamed cancers (all significant cancers by 2029–2031) and measure 3.2.1 (q:f07a34a300) annual reports by 2029–2031 cover at least five cancers; additionally, the ~48% missing stage figure (bs:coverage:Diagnosis, q:7885b0974f) is a national report-wide figure rather than established for Pohjois-Karjala specifically.",
+   "severity": "medium"
+  }
+ ]
 }
