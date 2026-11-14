@@ -7,6 +7,13 @@
 Junction 2026, AstraZeneca challenge *Equal Care Across Finland*; also entered in Google DeepMind's
 *Best Use of Gemini API*.
 
+> **In short**
+> - **Problem:** Finland's cancer strategy sets a target for timely access to treatment, but the national lung cancer report publishes no access times for any county. <!-- claims: q:168b4b3443 q:24169121a4 bs:coverage:Referral bs:coverage:First_specialist_visit bs:coverage:Treatment_start -->
+> - **What it does:** a brief for each of the 22 counties (where we lag, how sure we are, what to do first), with every sentence linked to its source and the original Finnish quote.
+> - **Findings:** Kymenlaakso's crude curative share is 19.3% against 27.0% nationally, with recording that looks relatively complete: likely a real gap. Varsinais-Suomi has the highest share with no treatment record, 43.1% against 27.5%: a care gap or a recording gap? <!-- claims: cty:curative:Kymenlaakson_hyvinvointialue nat:curative cty:no_treatment_record:Kymenlaakson_hyvinvointialue cty:no_treatment_record:Varsinais_Suomen_hyvinvointialue nat:no_treatment_record -->
+> - **Gemini:** Argon writes each brief only from ledger claims, code checks IDs, numbers and wording, and Hydrogen flags possible overclaims for human review and translates the Finnish quotes. Gemini writes, the ledger decides.
+> - **Try it:** [live app](https://junction26-lingonberry-equal-care-jvssmnbotqefgpxeiyfwjt.streamlit.app/), view-only, no API key needed.
+
 ![The Kymenlaakso brief in the app: the core message, claim IDs under every sentence, and a limitations panel](assets/screenshot.png)
 
 ## The problem
