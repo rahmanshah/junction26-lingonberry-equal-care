@@ -74,8 +74,14 @@ Build checklist: PLAN.md (tick tasks when done).
 - Demo counties (to confirm at 12:00 sync): Kymenlaakso, Etelä-Karjala, Varsinais-Suomi.
 - Not adjusted for age or stage: a low curative share is not proof of worse care.
 
+- Age-adjusted curative (Kuva 16, digitised, ±0.5 pp; data/processed/kuva16_curative_digitised.csv,
+  src/digitise_kuva16.py): national line 26.7% men / 26.9% women.
+  - Kymenlaakso: men 17.9 [13.9–22.9] below; women 22.6 [16.8–29.3] lower but CI overlaps.
+  - Etelä-Karjala: men 18.9 [13.5–25.7] below; women 19.8 [13.4–29.0] lower but CI overlaps.
+  - Varsinais-Suomi: men 22.7 (CI hidden in dot, upper ≤ ~26.0) borderline below; women 27.4
+    [23.1–31.8] not below.
+
 ## Open checks
-- Kuva 16 (age-adjusted county shares + CIs, by sex; no Ei hoitotietoa or MDT panel; Kainuu
-  partly missing) is PNG only. If digitised in our own code, prefer it for gap claims
-  (ledger status "digitised from figure").
+- Kuva 16 for other counties/treatments: digitise only if needed (ledger status
+  "digitised from figure").
 - Kuva 7 (diagnosis method) and Kuva 13 (stage coverage) by county: PNG stacked bars, digitise.

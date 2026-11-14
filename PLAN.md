@@ -10,7 +10,8 @@
 - [x] Wilson 95% CIs per county and treatment type (src/add_ci.py)
 - [x] Chart: curative vs no-treatment-record share (src/plot_scatter.py)
 - [x] Survey data behind charts (docs/chart_data.md): county figures are PNG only
-- [ ] Digitise Kuva 16 (age-adjusted, by sex), then Kuva 7 and 13 if needed
+- [x] Digitise Kuva 16 curative, 3 demo counties + national line (src/digitise_kuva16.py)
+- [ ] Digitise rest of Kuva 16, Kuva 7, Kuva 13 only if needed
 - [ ] Blind-spot table: pathway stage x data available / source / not measured
 - [ ] Choose gap metric and demo county (sync 12:00)
 

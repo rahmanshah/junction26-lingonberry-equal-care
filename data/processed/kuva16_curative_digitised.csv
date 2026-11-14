@@ -1,0 +1,9 @@
+county,sex,value,ci_low,ci_high,method,precision_pp,note
+Koko maa (national reference line),men,26.7,,,digitised from Kuva 16,0.5,dashed national line in this sex's Parantava panel
+Kymenlaakson hyvinvointialue,men,17.9,13.9,22.9,digitised from Kuva 16,0.5,
+Etelä-Karjalan hyvinvointialue,men,18.9,13.5,25.7,digitised from Kuva 16,0.5,
+Varsinais-Suomen hyvinvointialue,men,22.7,,,digitised from Kuva 16,0.5,CI bar hidden inside the dot (half-width < ~3.3 pp)
+Koko maa (national reference line),women,26.9,,,digitised from Kuva 16,0.5,dashed national line in this sex's Parantava panel
+Kymenlaakson hyvinvointialue,women,22.6,16.8,29.3,digitised from Kuva 16,0.5,
+Etelä-Karjalan hyvinvointialue,women,19.8,13.4,29.0,digitised from Kuva 16,0.5,
+Varsinais-Suomen hyvinvointialue,women,27.4,23.1,31.8,digitised from Kuva 16,0.5,
