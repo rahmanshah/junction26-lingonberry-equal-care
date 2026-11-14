@@ -1,0 +1,334 @@
+{
+ "tag": "translate_quotes",
+ "model": "gemini-4-hydrogen",
+ "requested_at": "2026-11-14T10:53:18.627361+00:00",
+ "config": {
+  "thinking_level": null,
+  "temperature": 0.2,
+  "response_schema": "Translations"
+ },
+ "system_instruction": "You translate short Finnish quotes from Finnish health-policy documents (national cancer strategy, implementation roadmap, national lung cancer programme, Cancer Registry report) into English.\nTranslate faithfully and literally enough to be checked against the original: keep every number, date, percentage, section or table reference and abbreviation exactly; do not add, explain or omit anything. If a quote is a fragment, translate it as a fragment. Return one translation per key.",
+ "prompt": "Translate each quote. Return items with the same keys.\n\n[a55fda220d] oirelähtöiset toimintamallit\n[4fb934fe2b] Avoterveydenhuollon käyntejä ei ole mukana aineistossa.\n[52702612ee] pelkkään kliiniseen tutkimukseen, kuten kuvantamiseen, noin 20 %:ssa\n[d05b5f39fb] standardoidut lähetekriteerit\n[ed5c8f9e1e] lähetekriteerit perusterveydenhuollolle\n[16bbe89acf] suositellut aikarajat\n[b33cf7fb59] Potilaat pääsevät hoitoon tavoiteaikojen puitteissa\n[a0188a52c0] levinneisyys toteamishetkellä puuttuu lähes puolelta uusia potilaita\n[1912106c90] Erikoissairaanhoidon toimenpiteet viedään HILMO:on vain suorista potilaskontakteista, joten saatu tieto ei kuvaa kattavasti moniammatillisen käsittelyn laajuutta.\n[7f4f1654a0] kirjaamis- ja koodistokäytännöistä\n[6580a75101] Kansalliset hoitosuositukset ja hoitoketjut ohjaavat yhdenvertaista, viiveetöntä ja vaikuttavaa hoitoa\n[ba9452634a] Suomessa ei ole yhtenäistä kansallista järjestelmää, joka ohjaisi syöpäkohtaisten hoitosuositusten laatimista sekä niihin perustuvien hoitoketjujen toteutusta ja seurantaa (laatu- ja vaikuttavuustavoitteet/indikaattorit, mukaan lukien hoitoonpääsy sekä syöpäkohtaiset ja geneeriset PROM-vointimittarit). Olemassa olevia hoitosuosituksia ja -ketjuja sekä seurattavia tavoitteita ja indikaattoreita ei koordinoida kansallisella tasolla. Tämä ylläpitää alueellista eriarvoisuutta syövän hoidon saatavuudessa ja vaikuttavuudessa.\n[1c1be976b3] Toimenpide 3.1.2 Laaditaan syöpäkohtaiset hoitoketjukuvaukset, ja niiden pohjalta sovelletut alueelliset hoitoketjut, sekä mekanismi niiden ylläpitoon ja hallintaan\n[52b774720f] Kansalliset hoitoketjut kuvataan hyödyntäen pohjoismaissa kehitettyjä malleja. Tällaisia ovat Tanskan Kræftpakkeforløb, Ruotsin standardiserade vårdförlopp (SVF) ja Norjan Pakkeforløp - kreft, joissa kansalliset hoitosuositukset ja standardoidut hoitopolut muodostavat yhtenäisen, kansallisesti johdetun kokonaisuuden.\n[25c23c79c1] Ketjuissa määritellään ja sovitaan mm. työnjaosta eri toimijoiden välillä, tavoitelluista hoitoonpääsyajoista, keskeisistä laatu- ja vaikuttavuusindikaattoreista sekä kirjaamis- ja koodistokäytännöistä.\n[21992ba8c0] 2026–2028: Kansalliset hoitoketjukuvaukset tehty viidestä syövästä ja syöpäkohtaiset hoitoonpääsyajat on määritetty.\n[3628c1bf68] Mittari: Potilaat pääsevät hoitoon tavoiteaikojen puitteissa.\n[0dcb2cc6bd] Toimenpide 1.2.3 Luodaan toimintamalli ja ohjeistus syövän hoidon koordinaatiosta vastaavan, nimetyn työntekijän mallista\n[5567b70c0a] Tärkeintä on että potilas tietää, kenellä on kokonaiskuva hänen hoidostaan, ja miten hän voi tarpeen mukaan olla yhteydessä hoitavaan yksikköön.\n[4615277457] Selvityksessä kartoitetaan, missä hoidon vaiheessa ja mille potilasryhmille hoidon koordinaatiosta vastaava työntekijä olisi tärkeintä kohdentaa.\n[a5cf219277] 2026–2028: Ohjeistus syövän hoidon koordinaatiosta vastaavan nimetyn lääkärin, hoitajan tai erityistyöntekijän mallista. 2029–2031: Hyvinvointialueet ovat ottaneet tämän ohjeistuksen käyttöön.\n[c18f888c28] hoitojen aikana sekä kuntoutuksessa\n[c389f0263a] Hoitoonpääsyn seuranta syövän hoidossa\n[7ddcbfad15] hoitoonpääsyajat\n[5263b117f5] Strategiset tavoitteet\n[96b459ae68] Varmistetaan yhdenvertainen ja vaikuttava syövänhoito\n[1f2d71a61f] *** THL (Ohjaus 21/2016). Hoitoonpääsyn seuranta syövän hoidossa.\n[c044f94a6b] Hoitoonpääsyn seuranta syövän hoidossa (THL 2016)\n[06408732f5] Tuetaan sujuvaa siirtymää erikoissairaanhoitoon määrittämällä kansallisiin hoitoketjuihin kuuluvat standardoidut lähetekriteerit, joiden täyttyessä mahdollisista syöpäoireista kärsivät potilaat ohjataan nopeasti tarvittaviin diagnostisiin tutkimuksiin\n[04e018dea2] 2026–2028: Standardoidut lähetekriteerit ja oirelähtöiset toimintamallit sisällytetty vähintään viiden yleisimmän syövän kansallisiin hoitoketjukuvauksiin.\n[6ea58cdf91] Perustetaan THL:n Syöpärekisterin yhteyteen kansallinen syövän hoidon laaturekisteri.\n[92241d8241] Laaturekisterin tietopohja (ml. levinneisyystieto) mahdollistaa laadun ja vaikuttavuuden luotettavan arvioinnin ja vertailun (tietopohjan kattavuus 90 %)\n[ad29e0c31a] Ohjelman tarkoitus ei ole toimia hoitosuosituksena, vaan luoda toimintasuunnitelma, jolla ennaltaehkäistään keuhkosyöpää ja parannetaan potilaan saamaa hoitoa ja sen oikea-aikaisuutta.\n[3efe5e6d90] kattaa koko keuhkosyövän hoitoketju ensioireista palliatiiviseen hoitoon\n[734014da72] Keuhkosyöpien diagnostiikkaan on Suomessa yhteiset ohjeet, mutta alueellinen vaihtelu diagnoosin nopeudessa, hoitovastuun järjestämisessä tai leikkauksien määrässä on suurta. Valtakunnallisesti ei ole ollut tarkkaa yhtenäistä ohjeistusta siitä, millä aikataululla diagnostiikan eri osa-alueet tulisi olla tehtyinä.\n[70c20248fe] Keuhkosyöpä. Käypä hoito -suositus.\n[a49e219e8a] Keuhkosyövän oireita ja lähetekriteereitä käsitellään tarkemmin diagnostiikkasuosituksessa, joka julkaistaan myöhemmin erillisenä osionaan.\n[3f23e6ecdc] Tämän ohjelman yhtenä toimenpiteenä tuotetaan kansallinen suositus keuhkosyöpien diagnostiikasta. Se sisältää myös lähetekriteerit perusterveydenhuollolle ja suositellut aikarajat erikoissairaanhoitoon eri diagnostiikan polun vaiheille.\n[fcf8fef3d1] Väliarvio toteutetaan vuonna 2030, ohjelman puolivälissä ja loppuarviointi vuonna 2036. Eri osa-alueiden suositukset toteutetaan ennen väliarviointia.\n[c570abe61f] on jo aloitettu työstämään keuhkosyövän diagnostiikkasuositusta\n[f957228551] Keuhkosyövästä tai muistakaan syövistä ei laaturekisteriä Suomessa ole.\n[42d4272483] Osana Valtakunnallista keuhkosyöpäohjelmaa työryhmän jäsen osallistuu asiantuntijana Syöpärekisterin, THL:n ja FICANin hallinnoimaan tutkimukseen syöpien laaturekisteristä. Tutkimuksen tavoitteena on selvittää ja arvioida ensimmäisenä keuhkosyöpien hoidon toteutumista ja hoitotuloksia.\n[8c220fff68] Tällä hetkellä keuhkosyöpään liittyvien tietojen raportointi, kerääminen ja tallentaminen on puutteellista.\n[f4601f7c63] Koko valtakunnan yhtenäiset kirjaamisohjeet ja niiden käyttö on tärkeää varmistaa\n[bafe4a49b4] Tavoitteiden toteutumista seurataan vuosittain selkeillä mittareilla, ja tarkastellaan ohjelman puolivälissä tehtävässä väliarviossa sekä ohjelman päättyessä.\n[120c1c85bb] otantakysely keuhkosyöpää hoitaville sairaaloille ohjelman alussa ja lopussa\n[9a3cca623d] Rekisteritietoja hyödynnetään muun muassa keuhkosyövän määrän, ennusteen ja hoidon vaikuttavuustietojen seuraamiseen.\n[c08f579b2d] Rekisteritiedot 1- ja 5-vuotiselossaololuvusta\n[71b1ebcf3c] Yhdenvertainen ja vaikuttava hoito jokaiselle asuinpaikasta riippumatta\n[8eeb0d6c6e] Kysely keuhkosyöpää hoitaville sairaaloille ohjelman alussa ja lopussa\n[88299fc81a] Hoitoonpääsy; suositusten ja ketjujen saatavuus; kansallisesti yhtenäiset tavoitteet ja vaikuttavuuden seurantamittarit on määritelty\n[0347dc9c1c] Hoitoonpääsy\n[b9ef3f199f] alueellinen vaihtelu diagnoosin nopeudessa, hoitovastuun järjestämisessä tai leikkauksien määrässä on suurta.\n[6de246c3ca] diagnoosin nopeudessa\n[e4562354ce] leikkauksien määrässä\n[4bf19c2bb6] hoitovastuun järjestämisessä\n[097d26e06e] potilas lähetetään jatkotutkimuksiin erikoissairaanhoidon yksikköön omien paikallisten ohjeistusten mukaisesti\n[ffd9e24160] Hoidon järjestämisen käytännöt vaihtelevat hyvinvointialueittain\n[d7947cbd72] mukaan lukien hoitoonpääsy\n[7f57210847] syöpäkohtaiset hoitoonpääsyajat\n[51c83af338] Valtakunnallisesti ei ole ollut tarkkaa yhtenäistä ohjeistusta siitä, millä aikataululla diagnostiikan eri osa-alueet tulisi olla tehtyinä\n[9a659fd4b0] suositellut aikarajat erikoissairaanhoitoon eri diagnostiikan polun vaiheille\n[8188d51025] missä hoidon vaiheessa … olisi tärkeintä kohdentaa\n[41758b5d4d] …ei kuvaa kattavasti moniammatillisen käsittelyn laajuutta\n[2c4563fd3a] ml. levinneisyystieto\n[eee590bf24] yhtenäiset kirjaamisohjeet",
+ "response": {
+  "sdk_http_response": {
+   "headers": {
+    "x-gemini-service-tier": "standard",
+    "content-type": "application/json; charset=UTF-8",
+    "vary": "Origin, X-Origin, Referer",
+    "content-encoding": "gzip",
+    "date": "Sat, 14 Nov 2026 10:53:57 GMT",
+    "server": "scaffolding on HTTPServer2",
+    "x-xss-protection": "0",
+    "x-frame-options": "SAMEORIGIN",
+    "x-content-type-options": "nosniff",
+    "server-timing": "gfet4t7; dur=36510",
+    "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+    "transfer-encoding": "chunked"
+   }
+  },
+  "candidates": [
+   {
+    "content": {
+     "parts": [
+      {
+       "text": "{\"items\":[{\"key\":\"a55fda220d\",\"translation\":\"symptom-based operating models\"},{\"key\":\"4fb934fe2b\",\"translation\":\"Outpatient health care visits are not included in the data.\"},{\"key\":\"52702612ee\",\"translation\":\"to clinical examination alone, such as imaging, in approximately 20%\"},{\"key\":\"d05b5f39fb\",\"translation\":\"standardised referral criteria\"},{\"key\":\"ed5c8f9e1e\",\"translation\":\"referral criteria for primary health care\"},{\"key\":\"16bbe89acf\",\"translation\":\"recommended time limits\"},{\"key\":\"b33cf7fb59\",\"translation\":\"Patients access treatment within the target times\"},{\"key\":\"a0188a52c0\",\"translation\":\"stage at diagnosis is missing for nearly half of new patients\"},{\"key\":\"1912106c90\",\"translation\":\"Specialised medical care procedures are entered into HILMO only from direct patient contacts, so the obtained data do not comprehensively describe the extent of multidisciplinary review.\"},{\"key\":\"7f4f1654a0\",\"translation\":\"on recording and coding practices\"},{\"key\":\"6580a75101\",\"translation\":\"National clinical guidelines and care pathways guide equitable, prompt and effective care\"},{\"key\":\"ba9452634a\",\"translation\":\"Finland does not have a uniform national system to guide the preparation of cancer-specific clinical guidelines and the implementation and monitoring of care pathways based on them (quality and effectiveness targets/indicators, including access to care as well as cancer-specific and generic PROM well-being measures). Existing clinical guidelines and care pathways as well as monitored targets and indicators are not coordinated at the national level. This maintains regional inequality in the availability and effectiveness of cancer care.\"},{\"key\":\"1c1be976b3\",\"translation\":\"Measure 3.1.2 Prepare cancer-specific care pathway descriptions, and regional care pathways adapted on their basis, as well as a mechanism for their maintenance and management\"},{\"key\":\"52b774720f\",\"translation\":\"National care pathways are described utilising models developed in the Nordic countries. These include Denmark's Kræftpakkeforløb, Sweden's standardiserade vårdförlopp (SVF) and Norway's Pakkeforløp - kreft, in which national clinical guidelines and standardised care pathways form a uniform, nationally led entity.\"},{\"key\":\"25c23c79c1\",\"translation\":\"The pathways define and agree on, among other things, the division of labour between different actors, target times for access to care, key quality and effectiveness indicators, and recording and coding practices.\"},{\"key\":\"21992ba8c0\",\"translation\":\"2026–2028: National care pathway descriptions completed for five cancers and cancer-specific access-to-care times have been defined.\"},{\"key\":\"3628c1bf68\",\"translation\":\"Indicator: Patients access treatment within the target times.\"},{\"key\":\"0dcb2cc6bd\",\"translation\":\"Measure 1.2.3 Create an operating model and guidelines on the model of a designated employee responsible for coordinating cancer care\"},{\"key\":\"5567b70c0a\",\"translation\":\"The most important thing is that the patient knows who has the overall picture of their care, and how they can contact the treating unit as needed.\"},{\"key\":\"4615277457\",\"translation\":\"The study maps out at which stage of care and to which patient groups it would be most important to target the employee responsible for care coordination.\"},{\"key\":\"a5cf219277\",\"translation\":\"2026–2028: Guidelines on the model of a designated physician, nurse or special worker responsible for coordinating cancer care. 2029–2031: Wellbeing services counties have adopted these guidelines.\"},{\"key\":\"c18f888c28\",\"translation\":\"during treatments and in rehabilitation\"},{\"key\":\"c389f0263a\",\"translation\":\"Monitoring access to care in cancer treatment\"},{\"key\":\"7ddcbfad15\",\"translation\":\"access-to-care times\"},{\"key\":\"5263b117f5\",\"translation\":\"Strategic objectives\"},{\"key\":\"96b459ae68\",\"translation\":\"Ensure equitable and effective cancer care\"},{\"key\":\"1f2d71a61f\",\"translation\":\"*** THL (Ohjaus 21/2016). Monitoring access to care in cancer treatment.\"},{\"key\":\"c044f94a6b\",\"translation\":\"Monitoring access to care in cancer treatment (THL 2016)\"},{\"key\":\"06408732f5\",\"translation\":\"Support a smooth transition to specialised medical care by defining standardised referral criteria included in national care pathways, upon the fulfilment of which patients suffering from possible cancer symptoms are rapidly referred to the necessary diagnostic examinations\"},{\"key\":\"04e018dea2\",\"translation\":\"2026–2028: Standardised referral criteria and symptom-based operating models included in the national care pathway descriptions of at least the five most common cancers.\"},{\"key\":\"6ea58cdf91\",\"translation\":\"A national cancer care quality register is established in connection with THL's Cancer Registry.\"},{\"key\":\"92241d8241\",\"translation\":\"The quality register's data base (incl. stage information) enables reliable evaluation and comparison of quality and effectiveness (data base coverage 90%)\"},{\"key\":\"ad29e0c31a\",\"translation\":\"The purpose of the programme is not to act as a clinical guideline, but to create an action plan to prevent lung cancer and improve the care received by the patient and its timeliness.\"},{\"key\":\"3efe5e6d90\",\"translation\":\"cover the entire lung cancer care pathway from initial symptoms to palliative care\"},{\"key\":\"734014da72\",\"translation\":\"Finland has common guidelines for the diagnostics of lung cancers, but regional variation in the speed of diagnosis, the organisation of treatment responsibility, or the number of surgeries is large. Nationally, there have been no precise uniform guidelines on the schedule within which the different sub-areas of diagnostics should be completed.\"},{\"key\":\"70c20248fe\",\"translation\":\"Lung cancer. Current Care Guideline.\"},{\"key\":\"a49e219e8a\",\"translation\":\"Lung cancer symptoms and referral criteria are discussed in more detail in the diagnostics guideline, which will be published later as a separate section.\"},{\"key\":\"3f23e6ecdc\",\"translation\":\"As one measure of this programme, a national guideline on the diagnostics of lung cancers will be produced. It also includes referral criteria for primary health care and recommended time limits for specialised medical care for the different stages of the diagnostic pathway.\"},{\"key\":\"fcf8fef3d1\",\"translation\":\"The interim evaluation will be carried out in 2030, halfway through the programme, and the final evaluation in 2036. Guidelines for the different sub-areas will be implemented before the interim evaluation.\"},{\"key\":\"c570abe61f\",\"translation\":\"work has already begun on the lung cancer diagnostics guideline\"},{\"key\":\"f957228551\",\"translation\":\"There is no quality register for lung cancer or other cancers in Finland.\"},{\"key\":\"42d4272483\",\"translation\":\"As part of the National Lung Cancer Programme, a member of the working group participates as an expert in a study on a cancer quality register administered by the Cancer Registry, THL and FICAN. The aim of the study is to investigate and evaluate, first, the implementation of lung cancer treatment and treatment outcomes.\"},{\"key\":\"8c220fff68\",\"translation\":\"Currently, the reporting, collection and storage of data related to lung cancer are deficient.\"},{\"key\":\"f4601f7c63\",\"translation\":\"It is important to ensure uniform recording instructions across the entire country and their use\"},{\"key\":\"bafe4a49b4\",\"translation\":\"The achievement of the objectives is monitored annually with clear indicators, and examined in an interim evaluation conducted halfway through the programme as well as at the end of the programme.\"},{\"key\":\"120c1c85bb\",\"translation\":\"sample survey to hospitals treating lung cancer at the beginning and end of the programme\"},{\"key\":\"9a3cca623d\",\"translation\":\"Registry data are utilised, among other things, to monitor the number of lung cancers, prognosis, and treatment effectiveness data.\"},{\"key\":\"c08f579b2d\",\"translation\":\"Registry data on 1- and 5-year survival rates\"},{\"key\":\"71b1ebcf3c\",\"translation\":\"Equitable and effective care for everyone regardless of place of residence\"},{\"key\":\"8eeb0d6c6e\",\"translation\":\"Survey to hospitals treating lung cancer at the beginning and end of the programme\"},{\"key\":\"88299fc81a\",\"translation\":\"Access to care; availability of guidelines and pathways; nationally uniform targets and effectiveness monitoring indicators have been defined\"},{\"key\":\"0347dc9c1c\",\"translation\":\"Access to care\"},{\"key\":\"b9ef3f199f\",\"translation\":\"regional variation in the speed of diagnosis, the organisation of treatment responsibility, or the number of surgeries is large.\"},{\"key\":\"6de246c3ca\",\"translation\":\"in the speed of diagnosis\"},{\"key\":\"e4562354ce\",\"translation\":\"in the number of surgeries\"},{\"key\":\"4bf19c2bb6\",\"translation\":\"in the organisation of treatment responsibility\"},{\"key\":\"097d26e06e\",\"translation\":\"the patient is referred for further examinations to a specialised medical care unit in accordance with their own local guidelines\"},{\"key\":\"ffd9e24160\",\"translation\":\"Practices for organising care vary by wellbeing services county\"},{\"key\":\"d7947cbd72\",\"translation\":\"including access to care\"},{\"key\":\"7f57210847\",\"translation\":\"cancer-specific access-to-care times\"},{\"key\":\"51c83af338\",\"translation\":\"Nationally, there have been no precise uniform guidelines on the schedule within which the different sub-areas of diagnostics should be completed\"},{\"key\":\"9a659fd4b0\",\"translation\":\"recommended time limits for specialised medical care for the different stages of the diagnostic pathway\"},{\"key\":\"8188d51025\",\"translation\":\"at which stage of care … it would be most important to target\"},{\"key\":\"41758b5d4d\",\"translation\":\"…does not comprehensively describe the extent of multidisciplinary review\"},{\"key\":\"2c4563fd3a\",\"translation\":\"incl. stage information\"},{\"key\":\"eee590bf24\",\"translation\":\"uniform recording instructions\"}]}",
+       "thought_signature": "EoWoAQqBqAEBaRR9EykyH5PXDKFnHeXSqgngpyUf1tAYhYAfDKWzuWFshf4iNAcRuhOx_laBNV2HhZzHZ1WNJbMExyUOVtPLF0sSXUu1C9n_ugl7fIbD11BVXCegdkc822IYPz-AUTGua3uCimD17V6g959U98iaFiyV8wq7_hb0nb4NXpjdwDCKtQ96xwpWNTkOhb41CKIt_emd4Ae7jLkyegE8LcLLwcNXvNcJlSe3CgKW9HDacrLF5Eq5CeUEYzL-Lkf4QQRfCXQnXRVGP6nHGkda0wdbfeTLEor93NNsX57V4dMmtHhOZZfrqrv7AwYq5ZN-FqubPgyur7oYrVYya6qvAJyoxkx-DkmhTXsHoDmCjpGr51b92fRSPCOc0ItBwdJRMfYACtBjPBKRwq4Gl1q4HmKPONMPxh_V3LSZNTem87SpOAXfw_dsTzvWFDKt5sXX45HreaCK1AOzZ33joiW7aDLpphBvsg6CEAv_xjMfo5Cg28_ntqbex9qstzlgmPvXYVxrXnTUpiyqfxHYWshopAQAYdzgUEsGPtjHxKKxLJ7rRcyjBYStA8aJy_ug7ERqRp5Yx_zLjdL8HlQ-KffqzHppkkfEJwCFADhBgEngDati2uZvTS8kpSZ2_4iNzehQWIzwUlUlrtDDcs12HaP2KCcCeb9zUJbTBSMJVm-zFV9DbtxW_RsctY_jgm-uS-w0vPwmyL0cARtioKns0_Krb5ytCDyIKiBrei7LMEXxtQg9Xl81fFiKv1w1e5WrR8JmAhJrDj3tj7YLt2zD3MkjDDFupyxe6JXAWt_kzNq4tLUa7aWhcYkf-KiqpcfoJ7xAH0YuuPS-BhVQLbpNg87hOZ2ku3zJSNu_sjOP4YQgy4a68tg4-AvO-pzdyvr0UagzCOQF8uDn840jevXFBCz3sxgxBQ_x-feN1V_C7Euzmr-wSaqdRS6ZX3DSp9qTYF6plpijpI_NxyaVoM3U4VXGbIcEMikm4fgRZsrkE1HLEwDVZ2fH8jyYNElsnaLrtTcyswH8RhyKbi5UTrW7Uf5YiG9qWKK3-kUmquS_Kk4oObS_oyQ5i83n1d5CLbtGYSE5SE54rjfJFPBkCtybvuZUsQL67e0bMdAu6lSLU1v4A8XNMC_c5g2Kpir-pK36KEi-pTN8L5GnDjRzlvBchF2wMS3rF7Nbd8NwFP-wNOjANY8EH1tbKNT3r2Q2NSNEKmtma7qnvDcZCjVhen64HngxSFp91YEm0ElCyISpvZTg0NKWcDxt8ZlStpM940A8VmDALGUYkMZDCxIYt-C0eNpKo8K9kNhQo4hAYxPTrWl2eVXliolYa2ykrTI9tBcQelZ7hztnioRHyk4RIltxJ-vnaEtSj1pF45HJGvO-a1btNMu6KeahLRO7guUVUwDExlDVh2yWEsVGpfMlADUr3PN0emgQI1-rRY46cv4pfDWRPgFl8dQQQ6NBp8CmleY03GLmNgiNA6o6Yz_17CFw0d8vM9OG9RfqZUGBjrktdVdB_M1zcDXuG0-Jp5_4I6mCy-xe8S02aLme7T2_6HXuTojGBnSuKf6SYFhWqnNUSh1vhAAqU0cmh8XrSPtiYFZLr2_euQdfoXKmTXVdoApA-f9XHThLtCdXHGmVNAHHEHuD-VRsvC__nlhTjimaN7GXY6C9ECTp9eirbgHX0OV8zVSsf2tBDfia-CzWhsOU3COdLE6lWr821XqjSSwatuVaWiXqb3SZvvCUwenxUTXCVqzW6XPnLf-yJ68os-XrsR1C6uqaENmWSH7xSjuAMRorHBsvpg2XcFxBZb8pjxcvxml9Kh4dj2wPZKtAg2lIO9xD2dfo5-UyZ25D9bTq9wufnsCwJ18gV67Crl9juZuIAA0mtgkUQr9e2xCY_KsxpknKAbge4oRmkV268jpAjLm1C5mxlgWnR-ULPeNumtYcgryiD6zSBPdb_8p39_zFKdWQ-16NUft5y80sdaJUI8XaAKgXGxLIwXRkgsW_FGswtElPIZjMIqhoqCQ8BG59LMzFyhEU8n2E3bOMGAIRdzvOP0WF_NyMSCb3kDYKOAObGnQ9Z-kAlKtpF8XBEffvW6TjB7X4xmFlyKI6qdsUWeLyV3gHx449ufzsR2tgJbOI8B8VmF1O6OQxt6GEZse4sza7mVPBNQl0isF_bAOOJ7dvfm7QnNJzxRqIwuKOh3r0vyTf5ZHEq4tE76qCrm8vCRlecSFivf5BtoRaLL616FpI9sQDXF7ItoCDKXSDCaZ3DxGaqXio38xdPZvxQnr4wyUFDP1WvNCX9DQNPDwXfvg2pMa92rjvorbrL-QGRTqS2srIYw_FldIGDcF_WKerLEk4jTOdBruGDpGXggSvYPZsQ8KRYqzWgB4nY-KKmWAqjUc-V2Kg22ZG053ev14izjtf_V364lDIbKI-FXJUEo0YUvOBJrBs6bJAGXCZHTjwimBDcrBE8swjKBx19j4mpTWWvubX75u2a0h8mbv9ml4idbFI8Dh3MqFWpYBvHP1aoI1UqF1lN1oDTVktL0awfWVTCtZ6d4irNBPESOJeEZtv5uhrUkLm_oXhIRtB2s-ky0pgVnABv1z4B7DEdVgiVix7Z2hix-7PGhPfnZv2kIWciG0rBCwNInswuPyZ-Zpa0UdMyro-trpVHunHb1zO_h7dmRU5iBeLi2nThPzsKj3p1ym2p5hIgG7zyJ4_qAeoXmHrpQtEZLyxoE4DhnPeJoLC1HUmHgA78m26ivaK3ygv6xBAE0gNoYeurLkbl23LjvXebk6Ys0G5ljL61iw2QylFZSXAs6K5KsrBX1iO6ccDxQm0SrSv-aFD05WiEJqmFvSQLHPLZoqj4cBvfKpVMYo7_5zfij7I0fiBrf3i4SOVwo4V0dDEzfzAz9Fyzk3BVFEuYKTJyqu8_c-HtG9N3KipZ6y37utGNT5AsvtzFSKVX0snhJSQwni5hsKOVNx32Rkofo1V0OBn6gGogbGmPIWtOC1EwDFpPr2lcYvxWXJNeu_OxaYnYneQsnYbckI1fmjobAEVvPz92IYb0795PMcDBX3FilXTS0aTPGZaSent1jWzBW32H1t_FbdR-IViIS4lyQ4GARJFlXAJHxPPNDQ-UqH5QlcfNwlD9ErMQlU3KDCwZlMDrdZ0wb1XVcJo4brbPM2XA1zZXTBFjJZyFIM-cUCxY1fDCmdBypToy5ccUuJS96wFG3KlpjPddodHQXhecUcRfZ0VHDSJmhsNnlItwk6xGMrw1XFa-DqWW0uuVhzum1IiFct-zufuWqGCAiUaxNLa4OtbHw5S660nL693uQFLBqhkRsyLVR2qRgMaLYfBlCnhc0ngBnUyPnFnSGiX07pMiggiYf92-OrVcnxPVQp9e789KQzwpGHYbA4naS_nYn0k6f24gSzwcVh-uHqvHCaZfMOzXTPv58zmhiUl9c8wVf4deixeMJvJ6FganDoeqW395dhI0cHV8ZWTyYtQHBTj2H6tfYpvWMZ3AiIMWk0kN8VoPKARyjdMHn2-gmI-dIZSCkybS-npGLOKNECSewwIyPj6qISuiDwRh4T9cJtTuq06_rYqn8yAszrn5WLjcFIoK_ziqqcKP7YuKYWnl5YqcZ7kCtboy2g6haTvzyyYTaDDkJzsdaU3h-cAg0AEhAMcstSKPUL06HvwU4AkLBlp-Or61aHKS6EIAUa9_agUdML9Y6UCLKWLr_4chTkTs_Y4EmKttCGuqj0GunUawH_oCCBK1InFxgSMRA2oT_YnO4fQXHfq8an7PRMiY_Ma4jpyAez9ZctCjeCi_3zW_-DokLPvazpHfHJ0xg-jINQYd43mVDCQPg8g1KiGWwVYsjmF9Ww1ccqtcZwXhmKAvr8VkF1XxH-y35R8M24mXW7U69cWPmVUkk4ELeZxx64T6J6bs4Q7vt3_WXmams6F1WFKkUPJZ0WxArOLD_3DtB-rp3-hBf_lHCh6VUHdy-nhATvKmN_z-8hDNU0JAzuf22DK3gNpFtEQlsElJ9hATdyq5qhvyf-Dnlvnjt1L7LYwIIJXLhQJxx3-tzcYwfy7fJy1QUfQPLI13DJgN8LMqHPLsVKY1EJMgf_AAOLZDSLBAiDbjrqX02UxkIi5j8TCOq67gy1mn_CxSvILWhB0YYVKFkdDdUGMLen71BnRTQcqC61Mo0CDupaB8uq5VK43xGKfPX_QA9HBdYomBGJmkqCTzONLj4GMaNiUXQAu8x7daSGwnnVsa8BtHbwMDfomVNlbNurKUoqLWEfS3IuLHzhIyD5Kv0DX_6h3cgrGDwZ4ifPAaVbmmBPPl0vUFOAh8a8wCQnY6HMrrHxbJ42WZC8FwihaO21QbPkdXOPoEsIjFdNNP40RqkHDp83nJldAdsuOggfBHhBzYcK7HFH8bbvB76eil-qMBDL7j4rLyBNML3T0zGkq9jDiLSU8ANspm86aRVL0n1HWs5I1siXG8sMwS3M_Wz33clEI1AbysSj_ACchsnWVjxenCkGYPT4aqm1uFdwCJ6v4vgzi70Z6ScOh0j1qPWYzXzTZUGC9zVlIQkn3u3OzlKkvJ4jztvrtLo334MJdk6ocijwuoKp9V6NnqsQJX0dtT-F0ddlwqP9oUlMy6mujYAupHeOcwhbsQVFv5D6t9uUXRM85U-KATvwiOnPCKSkfxJ_wLBEpiOZbbEXhhH5186S42J7HVi41sbOYXVxBvliQjqeVGMILyWYlDwY3jgpkOL3sZ2laZQdaLT6GvyFzucD2BFBWxgzfDr5ngjJoJfhVbAokvApG5RIPQCTbDBqOoDL8zCWpCf4TqOznZFKn7tgBR1QS5kbgqmiaS2ao5Iib0tD17zfHswhJ4DkJmX3TYxFtG3POlntfV8_P6-8S09SEsiANIl5FjNWgqZHvyFEEIqt8E9KHFKLo5lSMV0wZVntY4-tKRqCVgs5bsNCHznRpSjMwHklbrckAOlTwWg7gmOWTv5gALt0BrZfPrP-OSt_L8L1SOlA1080y0p3_9EO7oGwLTV2pJEjXbIlFSLhDJoOIKIUgH-ohCkFG4Cf8iWRM68i1to8z9p7I_SFrWzm0F6nwfwdQhGYOh6mjwyxiokQz7tXbBdsYVrr6G8H8PBlc1Nd-fz3EdVIricigUqLFi8pm7dZC3ZDWr8vWpXnVnBelBTW4tdSYlyCse-gXBqF4mQHiHHyJMIjvQ7TSAxj1WZ1wgYAAeHDLpHmGbQhEFSv5Nj5j012epNatN9SLMiTLOf0k2Dv6MYar4tixM087ZlF_k42yL_D930hZXQ2KHTElrgm7oVpZlV_fN5sTF6xdRNJ3s8XQ8rqpfuLGs_-hWmt5roILHTpjbsmogcR2G_VC-h7Spk_Ad7CtiC9QEajxPvt8L8cCbaALeaLJwW7vywy3CdTx-Y6ENII8T39pU2RpPFC756e4akXXpvzEgRpknuKVy5VzYzhvwZUaaZIlSQAg3bXxGk9MjCMSSGAJiW7aK2WiJW-Ira1yDKwwHPM2pkGdtrx1oJ0UPJM6VW_ySmQbC64heUhNXRNhd111_a07V0i8DKBnJcB-icr_yBeT7xui9xd-nKuHxHsRyYYBlMX2xlnH3xlBkXFbfCc4vq7y-83OfI_DGvklnrZXhU8g6RZcAq2ev0QsOyYm_scrq6VAhZ8sANSr1kM919z-RmOpsZuew7E2TfYQILu_ZzvDPdH2pNBl9ayO_C9WxHV4Wxp4vS5SZNjEpbGV2hXixMFicAd67262O3YuP-LHGSb0eqzaaf7rL6bp-T4kCeLlCDSyR7Eg577SOHKrFy9L8nVs4diibwzLgh7_52Jzjz7gWUhGQQEOPCIAf1JBMEARwifipmtQtben1UAGgA207f0wGORRqvZAWTDv44fkwZIzSNMe4xQC0F5zxa-RgWCG8MkRyt-EesQ7oMbQmEFbjxHWIeG4QX8iQauXsqdWYsUyiyMWNMM_cBeoJmqM4o8z7FWX0thQx8AF1_b7W2MeYcPz-s4DBy27UZIbg7RPyYsLx6clxNcnw1OXls222AL9TFB55OmXSpsWz2afDRMRhBlwSBQfQklXiWs9-GplGEL19XsPaTyN8BYRIrcFtC8xJzNOdiBBQIKlCyArzT4KctmGjiuQ-wXkeoC99ebeuIvJ56mSn3ZW0PaqWBidswMu6HVGXNuxEzkct8Ies9gb3HY-q-LMPpBrgQRGHUQIZfxmMvcwNnMj--MO-V2tqNiHHiXTBgnbw0hH5SpvhIJRsYnXbPjkEJ7F5j9Dhhv2_IWBwrDFnk-D0rNLQqTqIUpbLdB5NIR1No3NPhawBgvt8hFDe1WEcUAAD_dMmg6_wOZjfA_CO2HyLaCdroqHkfmEJkABFdedYjdnDuuDVh9K1EJFHNF-Z_xlidmAUT1WJwRADYv2srPYsuYfCw0PMYQs4vr3D7_XUJkIIS99Lf5vKzr8PkGXQZfoCe9-JXoRlYVO7VUcqLDEliHdvhNwMviYt9UaGqWOwjIeQBQ1byFmCojBA98ftCNuJPgZeBnmSTAZp6gFxaykt3_pKsVX0YvKPw2IDglplulvN-iSftv_53DOQZIp_4Ij_bn--yeqOQJXUmCiRDnl-8PCraK_EVnb-nt8UtRXf_uzEkMBNqPtBLyvKBeyiy39PeYqK4Lej9On9CD2Pcb7-ICPYdIS66R2-_GB5HY-7-WHqbRVQLN858mSEBByGy1meuubT7L7zkeNOQN53iZfIl1nRWo_0V8YApzAG72ofEhtO-7zPdIf6K79uLN0quxUlOxob3_hHHQasdlANKdrzyAOye9qC62e3FBYos9NX2zFJ9QOOw84gjGGhT_AF2j7yY0cc-OAyPmKngDfo90DNG7Dm3MzDf0xzdOfA43SBdlJ3s0uYtozXHpkKipKe_yRncF2kG_yNEdOq9CcAVSfiigWrnfgEy0sZUiGXU2M_DnbP7JpWdCGWlIu0_OjKwztTGUy775-KHy_yi-MBv6MY7FoazMrnhNWYpe9LTg71kFMCi-cwakuTj3otTFEko4biAZkBFcpDnITW67jXsMUnNprqbXF6FDQm6evYnosXQBt-UsoDLRzEsuESbORova--GkqY0IEF-tZoVFzRpSgS76vDKzd70kFnu_64yvEOoYI1sIOFFExWnoNtk-YE7SyVdS6tl4BMF4CYixxREKZaAyj4TSrhgYVSBI0O5blyfWba1pqzgbXiKfC3j3uVUiP16tsGQOz4JC2YIr-H85_uD2P1YLBoQZuvjpDE8q4-0528wIYCu4hOsfV8Nycr3N50X95AmY4KTb7fP-ki1sL55QiAVtu1o_Ony-UfQoj6wz-nT8klAMxEAyAJUh_vjXfHa8OVaom9b7fpt7V9N0DtTXvLimsBA3p9TEs33hjfgeIhlCg2GqG9lxaRVRdLd_ryLAOgoo555p53jE1Nx0drcJHxVT3LbHAf3aC18cNQzZ2wcL6mNY_Ctd9Yi6h31p1OoW6rJhpbgPrjDmK8Ow_-wQEQJsw1NNg_nIdoLtO5YOsXJOPpSnmLopgNDKe-gTQ1LSSgwiDeM5OrHolYGU6sRtbPHZnP-5mDkQ59Ap3j71Rsab7M5a2_Q27LJHSCMnHxOQf-vhMlgveq-j40pqWavT72yKhqUvARBvc_UNZHCjNri8ljgeTOuXFkYTIGmSu1ZNGHO74UESyX8T8_TWvY2UvPxbsrl5hZfYiQGi5j996sE0kAD3I6wrRmE6mavH36VqIqwri64Iw38M7Hbr4h5D_PKs_haYDAFU2MFWMp6wCRDzeTq7Nvq5ktynJkpyq_dSVpIJMauXpvx9aaMFnLewkeiyVPblimS5hh1VwZQAZ3Bqkt0i2AXc-b_DGbQduCC0NIPWyTwZf2oC35PgIPXLrjoRPSIbOi_2DOanTZ01GvxFgkGslvgOQznuYtQ6cTDHvdThN3i1an8SnKkTldXGT3zcJh9Rpe-_BaCrQ33pUpDUKeQVxYw_c51pGvf6IIxk7pUZtjYFhyYwN_g7ullZ2-113xpWz9iZ6lI-z_wiv3Vvi0KP2DmHilPn-V7T3C7b24VZvcC3xPUNrqFjowAjuXaAwNyc7aTlaSpYLx8J7Iszv0ZkTWsKbBQaUY_Ss0DaELxYNqbJ7-7kHe-xPFweut0JIeZD3kXC_VyCOgdOZd8YTwI793coSSrEZtB-ijX0lWcJl10aIjo11Bj-Q7DK_NtrebkXng_8d0sRBGTnRwhK7ap6fsyEG0lucReEEqYK6xNvGJEZOIg9wX81EXrZZNY4uO53DLmcd3fV2J-VZ8fK8cNYUJ5t5socfdYGmndfHzBc3avBogFZ6SixvCmcyCE9cryz_SYFoOG04Uu1PPv6V6R5j3IJ45_XhWtZYqqEgArs2Fo5GH1ssJNGhOgeYkhFsssiqEXZPs7wdiSJV_LuIP80UY3DJYagOpzCq2PqmTDwBgwzoyQmvpOHkGcFnBUeeC9mol7Sknslsn-Zh0qgrR3qPbhfrpJPGwGVGMRawhz2BAt5QSXK6ezPo75MA5v3FhwRMbq8roBqNz9xg4qyXvio82VhP-eHbo5eiLwyV36r9EUbtaiReoME8ZyiXUTMvX4j5ZWhJs1qqXn-YIlzC8RP7r2ABnziTxs-eyvMMiHkBYPAIKZLCLQGLYtdnkMY128zq7X903hAUj0LV9RfI2_5COPJwE3XgHcvJKoPNslm43Q58lLJhhC2gvcc5dCagknc-dgVe_3JfELqyEXLWOyFbiwa2TVk9k-0WYGt5hLoB1lU_DnN09GIODhrZI-x2Oht48IZUe76FCeLKCE8ikR5nfJetrdvk04fna9wZ0uc52yNor8h0RGLEwsHDVLw_tbhbpmE3RPnhV1zhBNc3r9WQxtF7H-bE0EflBHbj5LypmJQxC8ogEbnqHYrD7C4C4P5k836DEFBVjK0yXxxZ3o7INxA__gkdNL1JcTrq992oJKcaa4Gs34no2O-YvqZgqUIzGSRl1mgtL4pa4rleWziECUuy9AlEgtEIKya3TNukGTuagEwcxNBSx_xsi6EYdDxgy8brMYsvjBvEgE11J3CjXVlIPxKm425ztE5m4FP_8cDCqswnkucYvYLDWNk35wfus6FXw-KN_X--GZwT-OwQ2q4ckkNGioNhD07UV0u-9MvyCa0C0dxcqKAgxwzHNEuolsDLmfnI54n6OPC_xlqPr73jzoLVvJ83_tNKI5l5j7NPz8v41ch13rNMF7VYqmq_vfl_AqUOSwb2kjCTW-HV6vrwde0SYvHy-n5AbGDXJCy16zNZHo1QBgTscPFGoL6TrCHo5TpcHAqXZOfspTlCeo2gnM62HDHopr1HCt6i6ifALWeNy1pdm9V6mQWlYDWJPq9WhMJXgoDl3m6J71rOubknoynnl65kcKHP654VwOn9GbwjQk_3UwGq6efgrFTKz5w1mK3rLV0PPHXqeUz1QPS42UAitmvxv6ZR6iQ0D-mXhj2ItgMMmQs0my_Rftin7pccmdPRkmR4nCagqa7QY2dWF1l7e8lp3OAwcUhpVSNpn4q4KwseaLYyWnQPqVWkifU4svq1Upzho5cHCaneakioEUS4ZQHF_IDBLP-bBRxm_ltnkLL92O3dCefrlCtSiULMBHG9gDkeKQsQL7wpGUc-PG1R8JodB2eaDPWN3M9rSVKR9ijq14dM4e5Q50LfByIu0UStRc2-acFy-I5ZfvIt-xylYQsS42K73Y_vMKisAXrzBTREQeMAlqcxfHh_8TKkmr77bHA6Ah2zI7RV1cOL1-qhNOKFhTvRUlKOS1LdXPq3F1fivFGl4q7z14NsqFhoPEIweP1XCMypmlBNYyrHLp_CymcVKTKUeNd01P-t8w-U-19yykjkHPTMCR2LJaIGaC2lQAC0N-tsxSQT6sOKqLBGJb4hNVLhG-nOsQoOr4KSP14e7fNmpA0scHoq2V1BqwcUaqaN2BsAFVb9OM56UWQlRElMhPFsuXwwoa2E05DvZe9BoiJkHzVOqHkxvbDlgXhAFGTnlkQKf7WGlJniZBWL1el1ieyDp4Zo9_8lHY1apSu50Lp5OIIAC2gNtRgoP3K91hls57qNReXExr7zMH-LsooIzNTXkrx4ZHo6uBKlCon-vUB4WRS382hkcKd3ETd4waFbfXnN_jW4r4yGnww5jK4yipQdA24C2PUvoFcF2ClWRwQ4oH1bozgSSbkwV6z3lUyRMXsTwjdlN0WgHXG7HOuaO67xvlRNVhvAQPFu-xPCRpmtA2Z4ULU8jDlXi82l3ZqFNqWvXd5FxIu4kfQGX7Mm7JKfnoFjGNh3wIttbK8AgArMz8fNBBltj2Zvjz-gBMEH9KjCqACm0SI1K2ADHdJ-I7n3lUHptmNqfFJtPRVYcZtwsxjNMv4LOtHNgpp4AGBRAendDhXMH4XxgM7R3PhUsHPlfQxIx85Iw1uaIVQR-05oMBGEHO7G0fMrve-kQbPlQcmg710yGq0_xth17g809VZmTTLp4IndyJ0YLSw11hrpnYhctASLqyBmjAizbasn5f4BjdwW66jmmJZYjFj_QLmHZW1Vx_QYaj2EGFIr7Rd9-MC7H_6vpU1yhiLVQA48SdIOJC59jqoJZEFUVLxtq8od-y99YVLxW0zqRtLEPeghwXo7Iime5m5WaZfOqvq5otuIBeIECvesTZEnaIlWw7Oj9pTKMwCJo6RZfifZror4c452ggeCd0HPzjQ5cPqstsT9YSs4oHOsSwDC9m8ieC-BJzBVdzz5vtUPQQIzYi3249WL0Fk2oJjUMjm1i30WLIZThU2zUYhVFw-7ZULnrgUyv5P_UmIM4BM21cfwavuLI3QoPT_icHUGOWtVvzrtHK8AFsBDkelGYuRrKMsDhAytxAsSLzZWnuLxyH2fNFBMd8pVzLtMe1oj1wrbVaPB0A-WEBtak7HxuEysirT5duQAoJQumcY-5B1WHbpUPxgKNgoAU7-NAIee_WLAZ2cqd1P_PBt5S1hUBL6Vad-DjwuG05Uu4BVgaUGqibrB87BHe-6pvKcYt248HWhZnmiJDg5zKrmgY_C6zmqcbSfxaPVXr6NZ4fiKzPvUoWsXUXK_UrKC7Kfqm0ZbwjMrE0NCJGSg33t7VpTh1kQ59TDI7zzNUKujAL38FVGJg5aKMDvmmSF2PFAY51nkS5LTGXj28hS3k38m3-6ICnw9DD1xssUvFdOXmfT8bC-dazFkr8Y9upg4tWvJ7bw3YuoUWsN_kFzQv6p_Gxsu2dPpOIwh-yd5uAFzyO8ahKq0wEsas86QPnEr21aRBBCEPxb3FCmE8oqZQcx2NOAOFbflmfRCQfYpzETHBb3ISEUbpac9sv_8f3Z6t1UjDmyIPo6c97f2XWybyyb_w8Qya7bRjrF88wF3QI6IyXPr8gZCdrw0Odm1QNEJExhzBvK5hLulgToLCH-HkpeCsksrRyf6Sd6cCIyP4tBH4PgFJ6vOa7XlQVFOuzwWXMBaBxfCD4YN3yrvLLi0FdrwykHHk2i6k333cF_3LWTeSaf3e74fgrOPHqrUPYBd04RX5DhTHbZA0H6oO5-tBLJuQ_YmXXOpnviuy2utMelMu0QirA_AtdjrsafVAUSIA_vkA8pUg0zo4WJ4MKNI_AD5uWUlR-udHG_5M8DGJxNkq6lpFWAOb1cFiQzrnwPs3IFT0bLcX58ACrNqc86kdkGhoeioF3JDUDhGClGatwl5GXq0THQrHhCNqNcI2PTWYF0ED03A38R7cfl8onvtXmZ1bE_uYxr8eTUc9AbIkPSQ2GL9cGfnaLcxNioflsKWCF9xgf4nZXzGmDpoK08ATddbDpogJo5xvhY8IlHyfT4umrZv1BGYG0SrKSVSYucLSb_tKyXJRFfLFQ5RBSQQUxlevNwVtKA3Gfn2blFdF0dgYARLLty67u2AvevBOAJciCsuooLxxv3YJ2hrpBY8uunoHsSvU2YeuoDeIlpUk3kda_ffzD6SE9Ro4TIkLJ0xerPCP-yqKhpARYd4Il0L_KcK3Cqm80lmeL0gqVPnFN517Bg9gqQ8RV4HFWnZexJiKGoYbARjKMNI4tnXnNOgxUoLltwHZx0pFaG2_pdfmk250oQOSdE8ug4iNb4fNPtodEcclLyiNejh73eXFfP67TqfKNffDzuvx9NJo2ynZTNvNMb8Zs1vjhWNn0V8muS6IAsAxcSlvdkTgOWrWAOkyGarc6Gt59-GBS1Xu5-HFW2Y4u-zlDmDtOpGBkCQmKoK97jHJb_2UBaSl40pSCCWxrgm0vG3fF5-7sg_GKr4KxeuKkqISreb080KH48h4xD4K3hCHdK8--BJAb82KN4SoI4YbkURQX4mxw2UEweOpKxLvXHVZ4GEECFHO3iJMUbZcxgjnniaB04HFX6lJLRarajq00A_UI94ty3JdFh2tQv7eNOt-hjykPkVJa5IrjiUIMSnDmzwi2TUOhrLSLapxh5WNC8_yTEewilqWRTWDSNaK7U2ahTRzLrhcTU702h3acg2WiKfJ-0vLsTd0iEG0-zu9izE6yKZNtXp8vT9uE_wNRZ_qrD7pi2Fya49moiEUZssp1P7teIgmjyR1dWmUlrSRE7jSYG-4nqMl_sfHWrJfEpdL87xEPF4LNSEA_mbGocL0s900vDxQTQiIiCzblCxb8SUrju86NvB3zVYVWR742jwhzuIouPmuTa1t9UrA9j9KOFhPGqtrlHppXa1sHxHwX-wnkkL8jbJKrmQEA0x9pMtAZnqgcoyytacS0L6DKGwiXoyfQ45Q75-CUjPUJlSWSz-_m7Mb06ui_8vjS7teJMgsSkjuXjxZXAE6egRcOpJooXsQg4HgSZXOgnVtO2PSQLPRqVvJru71vLoJxrPNbAcXBVFhhDElPfH-rglS0cM-TKvebfwWm5r7toUAknM9z8dWk4DsYFpNZZKLKp9mT2cm5o2kd3IUbWmtLZIGeh-xy9CPMdvTlct6Wn9Cnax8IRBL-e-07GI-DV2yptcVLBarV_kn5Mjce1r1lCF28vdyg5fqg8Sxh9tm_FDRlWGUPU1tNfNOiOE38Q4td1jE7s4qlgbOBlegdyH2jNP4XN9XM0oLXjAX3JwyuWISb_KU6UsdYnwH9X9KQ7CGC6sCvcRM4uT7iXkxUCB_2oJCVvcak6Gobmyjsfce13bWv48zFHfd3GIPBTw0ZP-DO-UPyk4FuzEmi2lVSg_UTA7jX-35pGY7aUwp1IBjStO2zFPpdnLxIb1IHHEYURwtNghKVc49DDdF7-7tAjYbM3u0qWK29I0Ps-D7u_QazhigVhGjam6ICXh-jlI1wguFkUdn0TtQSB-Y4JbR8OqqF1ow4naPQhC6m0ekTbSUJOrDdwDFhTGCiWOt48z_jCMs3ANDDB_cb2TkLU-PlD7aq-fDiUHJsuSZAyIPos2o9RqMmIY0GHHFThX1Uf0jMDa588xj4lGh2wTibYfA0TtQXgZT4Gq-jJYvOLmJaxSPCesCkxh4s1GeHKxwIMEt3iHq558U7eCq4D65UjMKx75Xqaa1W49PqBaYSYTHqqwxj00I03pL0QFCw0WRaWVopVQtQjv5cReTWZIpNE4zViHZv2iLBGkRPC8XsSxCqtnzoHTMetVNkCAov5p3tM-n4Hod7kr-roRBPWgwqIIXW8-o4YovFl_hRy3iGeRIgzMiZ-sKue6BT4lhxzD0qPGx7tHdPXdRWlWqYegZTamtL3Pc6ebu_g0fmwdLUtQ51-R8m4l-4GaRKcZSr8ljaRI8DbRg11_tVMl7CU3d6YdciYVERzRjnIoL6fCw3e4jKjeG13nrAXRvsSxwaKt4EoHwZjqBHypj3HRG5zFoSCMTPVh__qkhkhv7tbBdJS7m4TiCIArqVQUX_TUVYJ6N-l9hi9L_kjIW1vMIxvqwhd2sHO_miR3QbCU2Au601jgB2-fxdyEEpLcW-vj2nCKRy-Kh8pCrmQxlOEaYFuFm_Q6Y-e0YhEPjwe0_eKd_WSGG9QVmAfSeYxH0NNevCBaqqfQi-H5Gmzl3HAd5PAP--Vzpu89hQm1Jca9XdXfeMMAF7kQsyTC8lOttRpYZxxALw5bcPrVjXm9LDKufbWNw1tWJV8DS-ocaxX3cum6gr3DLZTYilZaSQF5LyIv2gYBeAvgyN7AJe7HyddOySBvUqlqLApfRTgWMQyHPiTxZCSFinWyXCFsfnAP_m0-0l_UsKTsMNhq1NNsDZwrFPLUip7e0WEi1spY1KXUL8QA5zxEM8f8hmUC4feQXcQ09rbC6ZRj-VdDqekt10LUc7NmBQLwKVnIOqyt2AYhDxUrMz2FVYj2nTmtbbYaWCV7EXQDWCMz1Pa6_u_spTqFkdjQ9NL6qJV886y0abn8BZ6qJy562Kaln5_fmbEDxMGICefcEv6X1jXPTVEIF1Ai3VgtYpJjqlNLCzefnOvC1jNI_DFfWsX3Gr3ooOe2umQRfKLjissyN2tCOs_2YjLPsJeC_J8fB6bJ1_EntTUHDWLyQRViTTv5EaiEoSeDLIbSDCYUMHmMKCP39EEcQO4uFVyOUoQ3xP4mXpQRx5bz4ut9heiYzYkQ6cEimz3UCtpqQp7g0yDFngGVx5N3raEJQlOUojfb8V7y9VVMLKbAx7WOqdvm_jD3TelpKEryrlbLjpq_Uk3CDfZHdQb7V7rgFhBhvKK1aNBSlOyq9gcIYnTzJWEt7SfRRWbz98bWWuEvUSUqaMoInOnPjZKXgWXyi3iRI121Er3Oi3maOsjwanhakBoPb-KtKhJmgbCoHi_0zzfKYI6RafYJeYc4IczSNxAYP0FjMa1SXT2ad6wPizBZbSe2WcAtq2_OIXpywzZbCbI5KzfkJlOlGGXAtrsiz99sIGDK6VIcbOeFxBxFSytKUuungfemC75LvEzdOsbKHayHjRwiDYHDttEf05O3AyYz1gKlQby6yz2IA_rpclqZFfazlIIUD2L9E0RPggrIUNuDZsy15gyGi6Bw04quLCeQQqe75stXwpnyDChhm-b4Bd-dM5sWtCIi7tRoFoAtSJkUxOl_ZJBE3jX-qWkE2os_EGrS-TJiP1Jv4_0rD6XBp_CkkFLpGeKRFHHV-CVtmp4yhPNSpMN4akT6vgbU72kVQfdlL3nqxgI56T0_-kU7Ah_l2WdjwlpvKWqviTzUsHSS5yfjFSYIduscRpBZ_Gn1_3EWhQqytqyhtJAtzOzrpMCDX8hFwovLUoLjoNrsjtaaEn3IuJTLFEi98J-4LXIi_3Cq_zsvVkxGJkg8M7PUvBwGnXAoEP5Seby8cV81YjKEghgkq9pCJfmRovTE_P6TH-tExTSqQocMpBlSj80pGwPri1YAnYZDXcnu97XkqOLlCFSbvgJJv2JnYvmS-nUVP2EIqK4YRo6zYgOzEl9XqfZz71Rx7jV7HyI3hr8HRQp2Xvf4h4xadMhJG1FgVt7mmYa9uFNe_Wq9x_v87LVbwTBjx0pBAeau0Y_l7Cbsplw3XuB31d93vK_7Jl2PIObaAICSsr_0raGBtDaoG7SWuJPL-vlBOMF7IQSn5Pelu4wg6ppKlY5axEkwG6SAW4CQWuGD5unk1I2fceKjiinfNZRW5GE8FXP0lai6DMmpYKPBpHaDjC5VdB-WOCXJhdgQoI61j22bIMk4NshKZNGDiQzMu8QxtNN3r19r2afWL3VSpuxTh5pOGtpodqXoQfW9bFkQM96cC9I3c_W9FvBY9uH2fDbGO1xWuf2_gi7VB0vmPm3XRHNf5ANQFunau1l_ek86L7a9j8Nv9AAN4HXrjEVL4HbVWUeCaTjrhqOdm22ET1ErbJiaZud4AcY9TmJVVhFEvREcGLtGW86YVQyK67DWy9vB-876zefE7wGYUV0V1xXxIBQTS9O8NP-FLCtaSPNPLdh8CecZGup2ZFH9oMssFAu_J6WJMg1hPaVNo8OVTQkPl5MTKYtq6LqVcNIuSP9uLFonljEDnIoX3sHqcLvPaILLcKtl_ce6I5UJQ9sdDlSNF__XHsWgv25eySiEyrBDLH9NXVUoQBgpLQ2afDwPoriizbTLUM4JdOulneytvGapi2HmCHUvIBpWlCkXCYxB2ZEjLuQEFd4OWqG44UgsWPjCeNTKLoAYF_oNS7RnoRAx03ge5AgAbDn2S9qoiIsaLy1v35RSz_qwApF_BT_esDGqsFu1tqv2WldXTV8Vhj7Dmy1y5hCM2yN5z-BjVm8MXJQRpvFRVRVUV8fAt6oVI7swHniH3pzFiYP9cWICcXfT11S4EgPX43zzB2semhGGb0dtzykZlwK8thDvsNKSKhRCpABz3SVpQXpyY8OYCwQSL6c70jV7dea05JhtOPYEXuCsleA9Mvp10PlSxpDZH1UYqG1-ZgZTni4t9Pk-X2W1sUybKdntPR4GNm9vET8x7NvURnlYiQm-Qy1sf-8GlkbDjo0UanHLt6vw5xWOXl1DJeK7SxAlAE8l3uWc4DHXMRLmmAXfjM3vQMJcGnTZ-31mSWFJP0eB9GEkmrjpYn261frIuCXJUdzQjC776xb7ESPLPeF-gLib0ICOQZK9wZ4OLM-NxGVvj6Kwugsf1GGZkZe17DXbGPFd-LacC4LK1elUiVphE7GXfTpAmGViZynHuBMF6ebiVJdYqVfHmKpLrxiuGHvpwTfijY1UIwBT5RJkc8XbKegFgVN31-3j1eD5q_YaAroYxcy_fuf9s-6HLyhFvY-iTnKAgDymVKf-6aFTxT9iq9bn6UPtxpl1OEnuavxWskq8ke1RpJUJKyX1CtapVD3G-Oz1xyxN76hV9VievXrPQW8EiIzm0zuodVmF1d9y3r5pwR6_HpOrHigKnnbGiLODjVZmL0aaCmD2WB9N4m9iSJI6bR1wcGPw0fSI5EixKdvHt5mRiHMf5euLAwTKaihMUG5gxO8-wp2TvJdoLDXAMG3GG0QI42amOQwkUTVBhtxwLQO30ruOEneb95_HnsnSQflWWaw6LhIEPXEy2E4h4xldv0hCPVEsMFNELyqpI2IAxmpqPJm5sHXM9dPoIOJg6NqOK7jl_C8Jf7riMiCYGeKgqfQweoGFvkFSVQhL7XVjEKzBrbT6Yn258j2qUbv370DTYyPJPablY4NBIzG290uLgjTf1iyok25Ia3TI_Pt_5AQ-quDfrIyafqbPiilIQnPn3V5CdIoZK3Iz4_1W0WkE3sMPQgwMdVgwJHq82i94Q1ykkvzJi42Rs01OwQX79g2c2mULG8CS3WF1W5tFsenbk6p372PYElz5JlXRgGb8fFv3ZXNcnXBPSWaGZlgykRH_3QjDX3dIxsaI9GGrs5Se--wUD8e9a9KATrrPC10yTiCM4mzHhteqX8bb4Kx9DWis0dQFdC7VB448zoj3Vy-aXBWcoLa9s4zesgIlHE9o2YlQv387GwHtTBJAaItD18WiZb1clrUYcWzYk-5bBULkTLHZR1v62iSyZM3A1vEZYlziC3qtU2HsnYzjh5ICCzYEgqSKenX2pi84XJ5VIZVmEsxG663ZlMTq6_FhqFigD3_jBCVR2TPb14mFA6jGMUutWez4MT3c3CdUM69K0zYUdYZG3hgiPYclavNd4N_oMzc3ckeAD6t2b81SYJWpA5DFIa0NpDDaBTnZH8WGuV-v2l9qTaBOnCCNPgktFc0HzFCXqXNv_AXBw_Tt9WxBY5qJsp6aM8DgcQhg8-Ceyj7z55KXWG8V7NE8edLb5nd42GTpY4q5_YaqQI9tW4Yu_QyIP3QYAVR7fY6mimVxmpsczEmXyv4sBYpCYa9U5UI_B2McShq4dbOADydegWK4XLQFo7rLTr2HMhMmvlgACo0m2zcMdFUeLh-BmuZPevkKmrA9zEGuWus9pV1zw_Ko1bqw1pbIh2GQTnjGZaPF-E2TpPhwGcJw08vcvndoPwQ5C2mDKsBStl8oVGFJ-8G4eXaejj1IxS7nMp9_-AA0YppRRpjrOf2OQqHLN-C3XlP8cVUNex23M4g1P6GCaRVD9ayQnLFvN40SO9gGvIEqbGEL3hesYkIJVnvsttNj6RGCIHuYAVmgQyZwm9WbFa8mLNqnVrrWtIp2BDniXZJNEHpOZND0ihvwRgrA5hrxkJ6mewvaX1wSNwL91fXWirbDmhTQ4hOqy6MWpcs3hOoWHtWGKbJnZu7Ih5GmMF2uMawIrjcbD-i7xvA2402MLiGl699lR296Hb5wvZE7cmkqo4dsZMKHU3NkaJUF24LL88u0CdK257naaq9D8lxwu6UNJcQDJvcUfcsNOmp-USM77yjlutkKMSYLgEG2s-CnYL18cFos1MGwlWQYQNPmDZBL0HNiO0BUNXV2uJZ-Ytn3OV8GI7qt5B3utdzzFWP_pPkR2u9q-wOYxPnAfEAQHKX4mQ_jca9vzauLKG9vrUfXxOxts81qWJjVblCqjIlJaHG3o4qif2AmiN6qtCm7LdE-7oufqXE5DwmZWeRwn41LHXFTyHyv8gjFvLO5YXa3KjkTh0ThZSWLKHKScp7jp9gTRxN0NnWqHBQDXQRf3iHFyt383I8HmQUnOrjd9ieoY9h5qSeTgIGG_yw8yaf8QU0KE1_RSwmqpyc5npQDlCCjvE1dUY1Msz5VOtxsY7liJ5aqK7MXp3ijP_QP5hvYN5KWpELDavec7m2wEuCucj-fts4xELIcurrHucI-EXUXJrEX_9MnneHrG3RoMIWf7hB1pdT8-qO3Qm71JtSKOXkmpQxhL0XhlcdRKjo21NPKSLkUtOcHb8U-FFsHZVXdMqixFP1QcSfjpffXVdq942iPeYzcEbobhT69hVsxvkARw1wlX7ScjCH9shvN-n3UnpjhY8ICAT8fCzemmxaCirAUlrX8ONHP3tdKQ5Q3PKJXu27KclMOhiRYYGl6EWKjeBjhUUSo36JcQCGLnotZ4_MvgfMnQYZKuDqZ-xoam9Y3CZ_5PWM794IY6KJxjQzu4FmEwWQwZbM9hgoEg-siBGqSgmnxOgue_MRnoPq_jdcRVUHQnWSTfT-ZAuD3COSq58OueuyKoyPeIttawMwjq8oDj1ZlY06D4ciqrXheKxHvLv0aPSzqTM-YVaNAwOJ9t4meYiHV_YDDEV0QfzJsTsvcCCEFNkN5h7g60ugyWBzqO47s0D4C5CfNZg5UoHbO8cf8Mid_y9v6Hkxk_qmztNL_it7qttgTeTKcv3Y0kWXOfrP3HXrQRSDw1KmEtUYZhFKQO7l0bAshYW5CmEeW8F4HzSiVxGlswxX9TQvpPDNdiiHMebQKop3Hv0dqF7GlFjRZlcFyYxkKn2zNaxhAajvGBKk5KMAF_jjdaZhiCxroLJi98NNRxteDi_1PFg-PI9hkz1El747bYH5nLCZyrfbDoRtb9moW0hwU1tqOCkMpCEE1XjpBiASj8UjY3iyRvopp2WbTUfyNk_sH8woCawXO8u0hjMjrQzDtK3_SXjCX9UEwp4XTCa8mpbaxPiPFKRfK1lPUIUtROTVE7GQ6XfebLlLbOZ0-XuGzoW1iLDvb-MLfqeZ8SFc3q_W06yzwUigYOdkZkwnt9pk0G4KPlbQGjgkXvlhXcp61_cg2V7YniJclxxXtA9M3iL5q-71VI2Sqf0C63vT9f5v8j2HnsElcJtZvb23jQCtddKkxY2RK-LnG71fPXEkiqRvbC3dnrsoTWl1GixAu-tCW880ZrevZxdMk-mLfO-ERhC1uQWldmX8nJyDZioVTGSDFHsjkBYmtyg3vyeu7J2h1rEWRQ8PU3GjIKR0xhZ1kAjqnBxTUqASfMcY4BEXceXXSPHzubHyLBnY4eqNwj0KZ-s6x3Xn1bHybRyw7SjBZzUF26Xx0wisj9Qi6S_SiMgy5EK7hCVF04TTVyGyb6MAg2SOd2neHzWvDWDcrCfUJFepwgg4s77KCfxcPOJSPGqNjlgzjInb7tQNvPsthx4nziJ6k---MlISyXEQ5LJOYpIknnIQK--_z9A3Jvw5bFuvtCNjCtg0qArKnYpqjJbV9RdGk1uOS8FzEh14DI0b4ygMVNB0ZRPmX34OSuFVd3Zd5uVOJYi9eE7F-t5rThP8XCS71J4CECjdrgeP6Em4M7zhhj602JMbkaOQxpuRUGRBFxOv_9ugMvDueVBpJjT3AGhcGWsM5x045RIApXGgK8v0zNcSp2penv5JGZlkemp0uNTcs-8Ii7QOCLNCpAz_ucuuF7TjeQ7CgtB4-pl8YgzTwIG65wpZXs3Oxcr9toi8Tgg2Ld6U4I7zgbGVyxkYvMOCqPtl5kiTIyhuLhcyMicrZ7Kl4F7uVfolRxZowdKjJ79SCOrP73tZjTvtqui_mWfonJRK9V5bWadUNNPFpokq1ErhuPa5mx_b2qQj3OolIputbXgJ3m_cnmm8FFW-zW9wTRSs09f1KT1eyvXj9L3i3Xbl0Ty_pndGjZm-PqzVSsB5wdgOLOMhCq4iA38_Yx4x0tyQfoxc123BcKSmQPZdgbyrMOh57CWtsKyrsJ-W0-_nKxQjpfAbS4NJxtFfMJov4jIG5UJhmNGm-sGLyZy_1kOu7yx7ERz4EiFJUplAZTNOJYUwh9BY0FgH1yNE_-y3rfQqp5UXAYdrC_tPWTZKMmL0yjyrE6DDSHgkzWVNkvOiSCHcI966GbAWkS2URSd1LgV-z9EMkQ9bccEI7me-gMd6CxU8aaI53zjV4Nqn4zg5zEgOVwy23UyQW84R2DkMho-fhlTp4JtfCjV_h-QT85zcZnpxh25pt4R-dmFXv_71bcrn5HiAnmeUaFzET0nO_KU4sBe5OTy6CrCzkv_PLZalvHN4fyp5c3D93pEl0ZeUQMRr4v-5uEbAPLYfbDQc4TC5FzyTZUb953PtcE3Gc6M0BB640WoIa05-9_pYpeaUiic0nB5T4tFVvvlwRtVt40t9KBjC9WwnDN7btRyXe5C3Bj9dv-c8bO7FYQbfOf90Wp0QmdsrqxxQLR4NGndeYczaEH7e_olnVdqQY3fpOO8W-qIm4XeZCFf_J91uzkG_cJaLJMO9JmH8L6skO_PwDqdIdJWt-NL6wvNKx9us1e3VUWJMpjeXqp1WybxFRKVb6Vu-IHiDvksRfm4xfEC0R1lAh3DC0JIGaXqmHtoVV91J-1YWc9jEkJU52HHIT_luPfIyYSB7N5NnWGpAGW8fVFDVCl285_G_w0yWNoh0FnsZgXnVNJ8_t_P8DvyfmCHDB2cZ2XmTuzmuRikFnjlhRWL535oMwYhu6uJaXsqoHNHBw_CNoW2_54G7qLMfr-O94Q1iE8jYMV7LNYn-D3KN4l6HnIAhfCqrIsnhSkI5iva_tyhE0gotUT7SetSNCQOxczdQlRd4EaVBW9_oYSkC_14uic5S_olUXikehEBC8Cc29AOVvHfktTAkaL_dh1DWlwY1DN5jIwwCW6Bls0K2UqkxM0e9h_kXRdQonYlLAaNBf9ljUEXO75E-Hy1tkihcwoMATCkKV9iAoLorFJFurQ54Wqx2qZ-KOD6pbRbWZ5ouAG4H_R339FJ9U_OcK5Lqc19qsjRWBnHymtGE5T9M9xnfqELvHINxLounhFUgptR_fT5d43naX7EnYaE0nDmHTZgPdtXE4LhTNmkSc3A3qMjC8jB4dyIi-P2ZNe4Oh_Esie4r9zg4xKNhTfSfH4CkaU0qWMLiw3W_G9hyniH3KcLqWBwHfP817kVQk7U8HKNYELenBiJoqEm_07lCZ1lCcwj4bgP3EgxgEyCImXaTzhSQ4QLUHvYnmUAJRHH92zKWphsx4LYWHtKBqbnkRo_Z37fXgo0MqL1EVb8sxT6-_BQSe5rTLzxJFOiePdwtc_eY4Uei0WM5tvrCZv_tg7ThBFpPjB_mS2rMbfVFVttm6vZnpcs-qetMyKtjU_BDTUkuwnw7XrduQixFwMADQw2Mgqb1DZ_Lur8bm09OTnVxzmsCQx5JvY4UdzpMQO-R0CYhXQqmBGgyjWkhM_cxQ2ooMByJsDG5B-fy7TmqJojlbFUaBeG9tMN2885uQ1L1n2fF6nIlebzED6LiOu1Nxa2x8ONgPj7TCM23K1IbiNHFHsjSwUnh7xaR_L0kPhIl5rcqjdeCA2esWFhnG6WL0MUv5uf69behnq5b4QpXKzdNkSczFpdbthrzRrqemmhI8Srd-A8BE3Fa1i85yO-DuD6zlWcrY1CiVlrya0UqPtZOQqzc9maaWU2R7EfpOZ_0ZVcEvG1vhrKo-XfsQ5doPpegZqFN3kq-Nu3CT1AzGaHWkTvc74fr2NuGfHg_1URk05lSBUr0QlPVwdrEUVZNIk_jWwtQ16gFBusa4-5Hxa5WNR_MroIiLmBbhllV2MPIX2_-a3AJdVJciaztIDaE074QSujS6WEbEHKzWtnMO5Nx5D7wYXhaIwUILk0P289VpXvMcLPWxXOc4i4Dct9U_SmCpGTDwJ0XeGO-5bluiuhLZ3j69IyahD12PA0aDPtBW37gy6YP8VYxn1aWaBzQ1jUkDkdomFdksbcvaKJZQRcp2-4q1s4SvroGc6y0p9Vdd6SDaLeh8s8f7MQuIgyZ9aADvWTYHkh0X5X9MFezZJnRs4fchCgJFvqsds56WcCF282_it402njJUbFqh-xjgkhFNOogs7kRMWcXTuKXMHg1QuRxZg_2srHd8IKSEub65qavrCS4hJp9PR70jB9cgsVrVjHSGlcnmPiFxXjhobS6feH5DxLuebVi7uqF3bYTL6-FVI8Tz1MHz0QKxVGEfNy7V856NyFmUzp7l7dF5pVaHFDG3r7D4LUqdYhdbqWHMz9OHRGHvN2F7CjK2lROAPF__kpDQ9OD3qMp1qfPU4q9S0GhkH_37CKSLR6Fo39nlNpBM3Cr0qQeeciKk2ag0pujH8m6iE7AwMpqWOacnP6usXUMzXIZ5OvcfxWvkT6V6zwJI1QHMRobcO-nOVXsStx7V-E_JOJ3xK9cvmjkr6WeoUm7oRQvAflJx_yzQpXCAwpAi_mFfEM_iWiv23G9VttJtzx_arm9Jsze6zLe2LT2P7sU0QjZ7pT9wbZvieF9Xlk0EpjRle0dZ9dXp1K5NxseWot8f9w1Db1KpcbRMP2wHpsmTkKxlCdaFt___jwnnGT1zntCgeGZ3NxRYjFOyw-nBtmWVXt0AK4Dp3qG6DGqRIwXje7q0CHlYFI565MjSl7EBWjhfa1ntsmuEsyy8KZtKClwYrK_OmR8aDA7wYd1HkEo3XpBRE-tuWZVr6kwyiac4jhkIsTp3OgZ8iS35nk8oqmrbHvrfuFb4k__vAnb2EB1AiAg9msKsye5TqRvvaK93CloN0VWltDE_bnrSglrUdhElQZgaBejn2jsK5JLwSeKy-9Svs0T8e7u67KnvX46NRKf_-K2hUQaVhIfa9IRQTk7fvv2EGQy3fh7jUmUzxkqSTcZsLJUjOhokc83aSebwEtQRSQ1hcbNLiephHMJ3cPjSgnovyWF6_OLaO-nuqCcYOW8e5rv-9PA_IW01zdrmDo_INJdbWDe952FE3h3c8GdOL_TzdQ3Stugec4DHwACJICpSKoeRsEa1u8vaEISC0AF86T2NTpPlvEc5TxCB2AXaASg1KPPDF-si027tUqY7s-e7sM5-PReZTSHsaBo3X8DvgqV8_A7U8rPTFAlD2_Y1HMCgTshKopFuewEqSPI9kpkgOTPaoVfwKOiOCYK6KUk-JCDZRC5uf2kFvpbgvK89hqckms2-6ps4EpJGjdfZgPE1Nwwn2J41v0WkzBqOnQ_YH7vYF1U1FgK_jQZ-ZpWXI_dO5_uOBFLj8uPlQNy5U2ibS4L_vKMDVahfdd5qjyRY0AKTOfIq_r1KuKA5Q0le7qez8YhP7Lql99VQRRSpDM-zUKFtZK5CT2o0d0DVjdXtno0tvrPPqnu7g29koU4RuxlAA6KR5zjalWQo-ADLdkay8mcIfG3I2JM-5W7T20nblhXHilvPbnp7eCDdzS6JuVbjxn73GkjKs9yQTjthErhDy12RFZNMho18D4DwHj8fnw1B0wzMTSebi9PG7UyIsPAc89C56ocvS_fL1XMGTTMejUJFkj9bgSfh66ZJXPUraaxlX8ltKmcmKTzuB_GcGNpV4RYDdMZ0Aomavq8aJO7TyVOso0dggICiKdXL-qpsG0c6NYDk5hzXnoCR9WaLwDqOwCBzl3ZUz7pMDK6AmTV7hpEhwmk9nSVjQ4yyqCjh_LMM8A76rRekSZKNxtxFlMLHmGlUp33QxvoM5-lSdQwmEGu1GIfoA9KmKEjV_Xvw55r8cidjkvkU98t8Lh_wJwUB06TVerA5B05cl3le98z70WxFUCqDZvPBArmjGFhIA05oO3v9hR2HJ7yCrwFBVG2TEZ_hlS1KcLDP5grftKr_3osleTbhkQmZWLkT3Tbj0lvlQMpyrNQ0YluC7Q9bqsbIu_GwWQJdSZaPvGHjdT_Ezw1I1Et5a7UaVFg_-wcyvaDywvj-uaqV7wVY2mOdbnumYsSDFqPb-8C7kDVW_aQy45rfNQFF25aHC_eSAYb54TCZapVJutl4aMEFGMKaV4RGtDsRZP_bhGwCH8_iSX3AUgmpPUMplYqHrJrikyRjVcvz82hvVdxBl9XV7eSm_MWD07bC20VE6Y_TPxMxjFGTCAZS4kJIqVg4LyBZTJCFjgcgIJEwDX2Lm2P82h4SGjgilNoE4AfoQ4NMH7n5fZPqsaCHitkxTARBf2iv7xrQ2L7mtedJeurKkYSAzmVD5bQq8G-jexY8ytkSu0c5pRLd9LMv6fAU4rMc7DMg2DsIRku2gOMDkkwPH-M2c8MI5984ISNHCzABHGlzYFlZAkuuVp_blHi8kSHEfzBcO9pBT4UYOb9JHT-ECTq-tBzoETn_okCjQvBvQssO1oiJHh4eH-UucvtYmh6dyv0NUDy6qXlImz19CVQYwKCOzYId2JijR8kb_FO66_iUFPSZJ-nTm8RfvKbDpw8y0-MaxPSLO1RhpRrjjrrJWn_7lg_uKdTGkCU422UioN5obHmSqq15iWj0-sOwkEovXdNsSMnLm03W2JRq824CTbS_kJbwpWJ2TeLUlI7r23GOkSM1c3qH4I8uiFcnGNxiXpCXINrT-eOqUFO98gaYm2TFM6fRMhIjn5ChrPb0TPxVwwfeocby5TiTkKvylEDu_8z9jhtT8YML_0OaSvXcCg9bSDm1iioKv7mFtC8PrH4ge6UgI8yCcLEiYmO5y28jWNWFWT-s4U3dWrOEaEd_uj2GXXqlZ3BBsKuRHBlWaz8Ttm8ocOxF6tULbqGzzvp94Kw2D5QExE2a35tHLZlL6L80R6VsgPGAjY888wsTs8dZitO4P6K8KY9G3atLKZJ8SGgPW02_Sx2vTuaOUHn9DTVmLeHJJZO2oOyHSXd03GMMqHDlhT2NyrOgmp1ONCnckLzbSv9ToGCFXat231dP8j4L0lfh3gu3rfqlcvN83FL5UfBga3aqo4i9V9C3q-QftlGH4B9U0QjC9HYMLoxyPGY5d0Ayvo5DI-kHbfdvB8OrJwegU2hVChIfQMq23YsmKkQ5wPInhae3t5nmm1N7ribTbAqhH2dz36BSbP40rS_2VWvTDMUkp8zeCybVDhm-v0AEhAQ6XgBFwUYjsgLH3iK2etcCsG_-rPAKt0s22eK-bvVBgha-3VRnRJhkreXiVUCd0z-o6-h4gYiJtIZ4dpGxFh5ifRBGY0iyiu88XYaWYQUX60FcGywMA8j25s2z405eo8pBk6OtmuidEWfPKzAD795JXxJxd_nkuE8uhF4iPveFVyA7YXsRRAruohQ5wh_ZGAD5wf361oyFnhANCpmvCEbpAMj6MnfkLRZVHOnS5I-RYw3GE3UnN7zspWBWdaXIGRl6dN3LeFNt_z_sdma-1-fecp_UFcMww1q0UyHxQXyqXpFtrbNFan54lNqJZ0jin1H1jA7wk0hSYpFols3vBSOGQUdC2ZhoF3KX_uTTAwFmsFyGmQNXz3fd8Wx37Rdt4DUCHnWYUA9QFHsCQJg3tAS6RgDR502kVxH84vYf9U8YKVoCMJ4mqOxDZEiAbV1ySyrZBx0fo7E1ChVrlNlKi52K8o7HWwoiT0a8wEpgoFY0ZJ4jtyGwdvzg2PtNzDwNM0ULnVFB4eE9kArdNH11SLnzOhQK4q0e6TOHMU1g9G2R1vV-Zeo6BT5J2BJH0y-O9krlic0NcBZmosvAvT0GPux1fl7OkApwGf9rJWOV3RkqH4zUZIrbc1j7z7PGlZf29GrM2FMIVggTh63qrYwAWcIXjpDdHoz0VOmPyC_4MnrbvoW_9nrhFHvSsH0GERl3BkejC7ohEcQalhDmxxWFgDoB1GFgXGN05yGjcjmm-d8i70J-vMR9Al4Vv64Ls2BtUON4_AI7Xgq5R6MQn9IlBLPQ_271apMwZK9Rrj47VtdmmWUd5IEXstj1U5Sqmoh306VTfvT7KFFgP8s6KXV1LAmlXSuvJX07Y97KtXlGISX0LrsoDF62MwV2Mr7ZpCNR4EUYVRgeqU5uyUz1hKaNk75P0t4y__-SSSfwGTdSjjmqWyHwUOIJnqRh6YA8Fdm0ZEPrLc0_DPMGfyWbi4GxllKNkH2jTM_xwXx0IOQ_UGdHV6EiJKQAZurYuqZfVVzOgXdKQMLGi_QGZ6cK8D1fql0h_xBSMZ-sVLdejXCNLe3LqZ0DL6oH0NtUsLTS5otEytE-XjYi2U5pQ7VBpkKAZ_EnuH9o4_1OLc1tzPbVkK4i70yAClR43Pac01-Eh3AY70i7mTC8f3SLd-ruuwhm9TkInQIHQPlaX7EaNzE9T6gbDo7exp0zBCWlB4l57vs_RbNGfr2dXyFSpcmPtlOzo5U6BZvbsINE0yw9i73KqUONNAQhH9ghE3gSRxuN-JdLahr9C-PMHs6kFJGzo63IuSxrfyVVSx7EtXTV8ULIEIK4k6ojhCTmXmTHHbeXCQwHsfqsNDWfoZksssMc29_SV0D-KCTLj8O0A7-yWs43SB-Tu1u_5JVTD8BV9s9z2M70IJ5HB4FhZLo4EGQEz1VUAC5XCZydFRLeCia91M7r39qZVg8YzfmhupaHTTzUHP4U-XUJ-26BZgrDDtWfL-5vi2psSTebNX6xIHX9am9puTHQMXObNjROF-bXqpnj48KUUoBo1P9-_Dl1CvMdpY7bqWEty9EHhzXZYy8rjUEiqSZYZ2fsuZyZTiFfvNoXxclQgEuDgKzvhaO2EnWoOL0HajtPA2_jhUnplpPoUOFlomoVQPLDHenMX3CNXyQO3xi-phs9Vvp6PWS44beeWALKt0onbGyvpY7EaOHQ3WCoceYMkiqpZ95pzCnNiSU_2j-6m1wLvB4lG6qp69shLJcmj0dyPJ1vmU-zeLNd5uPfOL_PtK2uWa31kPq1Frq21KslOvJG7fqI1PUI-qsfroq-AtUdqo7L8Uyemh6Ze5Hdlj47jkJj-N4qE-nn5_4H9PoRNjKULa2ftOSbtyWej910-_J_ajMJ5iPlIyyPzC1Pyb7JwRc80XQfx_yzfmH9TfzPLpifxjDxwCv0uvHFpKw9QopDAlrTjkElzpsXi8hxV1dRZa5XWUJoI-G5wC7Wj1EHpi6SzmO0hm_pQYmv7f3CjHuoKFw3oO3BoW9_L-E3Hd7Bio1MTaVBbyKktuHoSbXvGCo_jdhVtMDTbL9lJuDbe1sX-SjBf6Gpdgvt8qI-DnpcKwDI06atKirJ3m06sjUqYlj9ljuskHLZVLWdTYnGsMGNCVUKz1ld_TkIoijTsG3T05pLXDaqx8eazdu6sil41Qkq5dPKUVtv4K_YT9l4OKKkLfa4rldqlYLIK-i9y8LwKBUNQD0EEiNpFB03fHSdIcsYu-75x2hbTLpyotNKa6h84AdfsZlX5kt-cxKGt3zNjfi81zhtkq4QkGSeJAznDgVERHmc5MHCnNEzdbITScElNkajxEKOXJmwf5i2MglnIx6VCg_VwCgP_cuwgCldaauUboJg1wOYPAMsQjkJgg8t7N0jxDCLb0O9pQXlY02b06Qhi4yjST4sbj0FKNity3p2cyzxaJY-bf8zP40mp8YY_AP2z54CllaNFnu-5dYdyRz0vuNc39XDAhWZT8OBXD8mpiTetW9Itb7uF9couXp2gLcnZbNbj7M6Detx_U9GkSz3LG2tbNzSgrtCeH0Zo4YG3gOlDefRdLwfdfD4MYL6bbDMZ7U85lS-b9KkNTAMUqetueyB1eFkgiXj7XXJro7bF-aXIr3aXuPmOv66cvMDN1B4Gvqg1LBn8miPbwAa8kH2fkxuoAfNCfuUq1FInLIk1KS77SvOSUbbH2WubSg_p8Dw3ZluoGpRfoCUqbt6blEx2j2h_alRiblo86mqbfPyO-HhSplqEPAEg44UimAoUr0GLuLNzkAqWHXstqHkqxzmfGgxCkITp2cRNv1UwNHn5NTDZspdBvq13AyZfSTL6-BfRXlv9lv53uIyDxjhcq0KJ29XqZUfzkWA0uXNf8tyNmmKpRnHyBmg29pcaQK4hc8FnATUfh2YEUHF9J7rtynMUXBmehX-YGykvGwkEYGoqhiaX-I94lF4VSfD3PvJRwgOJh1iQkOF9igmgZNX06X4xJ9R4CoSUybfZP9BobwE0JkUZ0Ov_PDxERpGNYKZwFiOwwUhwrgfl6-9TDpwOmpVp3HxCzdWHGpps2oSXgpBj0p6WnYzBAojkqZd1DAQZxKLJdYzQoezIGYe"
+      }
+     ],
+     "role": "model"
+    },
+    "finish_reason": "STOP",
+    "index": 0
+   }
+  ],
+  "model_version": "gemini-4-hydrogen",
+  "response_id": "oT34as65GpX4xN8Pu6e2kAE",
+  "usage_metadata": {
+   "candidates_token_count": 2340,
+   "candidates_tokens_details": [
+    {
+     "modality": "TEXT",
+     "token_count": 2340
+    }
+   ],
+   "prompt_token_count": 3390,
+   "prompt_tokens_details": [
+    {
+     "modality": "TEXT",
+     "token_count": 3390
+    }
+   ],
+   "thoughts_token_count": 6167,
+   "total_token_count": 11897
+  },
+  "automatic_function_calling_history": [],
+  "parsed": {
+   "items": [
+    {
+     "key": "a55fda220d",
+     "translation": "symptom-based operating models"
+    },
+    {
+     "key": "4fb934fe2b",
+     "translation": "Outpatient health care visits are not included in the data."
+    },
+    {
+     "key": "52702612ee",
+     "translation": "to clinical examination alone, such as imaging, in approximately 20%"
+    },
+    {
+     "key": "d05b5f39fb",
+     "translation": "standardised referral criteria"
+    },
+    {
+     "key": "ed5c8f9e1e",
+     "translation": "referral criteria for primary health care"
+    },
+    {
+     "key": "16bbe89acf",
+     "translation": "recommended time limits"
+    },
+    {
+     "key": "b33cf7fb59",
+     "translation": "Patients access treatment within the target times"
+    },
+    {
+     "key": "a0188a52c0",
+     "translation": "stage at diagnosis is missing for nearly half of new patients"
+    },
+    {
+     "key": "1912106c90",
+     "translation": "Specialised medical care procedures are entered into HILMO only from direct patient contacts, so the obtained data do not comprehensively describe the extent of multidisciplinary review."
+    },
+    {
+     "key": "7f4f1654a0",
+     "translation": "on recording and coding practices"
+    },
+    {
+     "key": "6580a75101",
+     "translation": "National clinical guidelines and care pathways guide equitable, prompt and effective care"
+    },
+    {
+     "key": "ba9452634a",
+     "translation": "Finland does not have a uniform national system to guide the preparation of cancer-specific clinical guidelines and the implementation and monitoring of care pathways based on them (quality and effectiveness targets/indicators, including access to care as well as cancer-specific and generic PROM well-being measures). Existing clinical guidelines and care pathways as well as monitored targets and indicators are not coordinated at the national level. This maintains regional inequality in the availability and effectiveness of cancer care."
+    },
+    {
+     "key": "1c1be976b3",
+     "translation": "Measure 3.1.2 Prepare cancer-specific care pathway descriptions, and regional care pathways adapted on their basis, as well as a mechanism for their maintenance and management"
+    },
+    {
+     "key": "52b774720f",
+     "translation": "National care pathways are described utilising models developed in the Nordic countries. These include Denmark's Kræftpakkeforløb, Sweden's standardiserade vårdförlopp (SVF) and Norway's Pakkeforløp - kreft, in which national clinical guidelines and standardised care pathways form a uniform, nationally led entity."
+    },
+    {
+     "key": "25c23c79c1",
+     "translation": "The pathways define and agree on, among other things, the division of labour between different actors, target times for access to care, key quality and effectiveness indicators, and recording and coding practices."
+    },
+    {
+     "key": "21992ba8c0",
+     "translation": "2026–2028: National care pathway descriptions completed for five cancers and cancer-specific access-to-care times have been defined."
+    },
+    {
+     "key": "3628c1bf68",
+     "translation": "Indicator: Patients access treatment within the target times."
+    },
+    {
+     "key": "0dcb2cc6bd",
+     "translation": "Measure 1.2.3 Create an operating model and guidelines on the model of a designated employee responsible for coordinating cancer care"
+    },
+    {
+     "key": "5567b70c0a",
+     "translation": "The most important thing is that the patient knows who has the overall picture of their care, and how they can contact the treating unit as needed."
+    },
+    {
+     "key": "4615277457",
+     "translation": "The study maps out at which stage of care and to which patient groups it would be most important to target the employee responsible for care coordination."
+    },
+    {
+     "key": "a5cf219277",
+     "translation": "2026–2028: Guidelines on the model of a designated physician, nurse or special worker responsible for coordinating cancer care. 2029–2031: Wellbeing services counties have adopted these guidelines."
+    },
+    {
+     "key": "c18f888c28",
+     "translation": "during treatments and in rehabilitation"
+    },
+    {
+     "key": "c389f0263a",
+     "translation": "Monitoring access to care in cancer treatment"
+    },
+    {
+     "key": "7ddcbfad15",
+     "translation": "access-to-care times"
+    },
+    {
+     "key": "5263b117f5",
+     "translation": "Strategic objectives"
+    },
+    {
+     "key": "96b459ae68",
+     "translation": "Ensure equitable and effective cancer care"
+    },
+    {
+     "key": "1f2d71a61f",
+     "translation": "*** THL (Ohjaus 21/2016). Monitoring access to care in cancer treatment."
+    },
+    {
+     "key": "c044f94a6b",
+     "translation": "Monitoring access to care in cancer treatment (THL 2016)"
+    },
+    {
+     "key": "06408732f5",
+     "translation": "Support a smooth transition to specialised medical care by defining standardised referral criteria included in national care pathways, upon the fulfilment of which patients suffering from possible cancer symptoms are rapidly referred to the necessary diagnostic examinations"
+    },
+    {
+     "key": "04e018dea2",
+     "translation": "2026–2028: Standardised referral criteria and symptom-based operating models included in the national care pathway descriptions of at least the five most common cancers."
+    },
+    {
+     "key": "6ea58cdf91",
+     "translation": "A national cancer care quality register is established in connection with THL's Cancer Registry."
+    },
+    {
+     "key": "92241d8241",
+     "translation": "The quality register's data base (incl. stage information) enables reliable evaluation and comparison of quality and effectiveness (data base coverage 90%)"
+    },
+    {
+     "key": "ad29e0c31a",
+     "translation": "The purpose of the programme is not to act as a clinical guideline, but to create an action plan to prevent lung cancer and improve the care received by the patient and its timeliness."
+    },
+    {
+     "key": "3efe5e6d90",
+     "translation": "cover the entire lung cancer care pathway from initial symptoms to palliative care"
+    },
+    {
+     "key": "734014da72",
+     "translation": "Finland has common guidelines for the diagnostics of lung cancers, but regional variation in the speed of diagnosis, the organisation of treatment responsibility, or the number of surgeries is large. Nationally, there have been no precise uniform guidelines on the schedule within which the different sub-areas of diagnostics should be completed."
+    },
+    {
+     "key": "70c20248fe",
+     "translation": "Lung cancer. Current Care Guideline."
+    },
+    {
+     "key": "a49e219e8a",
+     "translation": "Lung cancer symptoms and referral criteria are discussed in more detail in the diagnostics guideline, which will be published later as a separate section."
+    },
+    {
+     "key": "3f23e6ecdc",
+     "translation": "As one measure of this programme, a national guideline on the diagnostics of lung cancers will be produced. It also includes referral criteria for primary health care and recommended time limits for specialised medical care for the different stages of the diagnostic pathway."
+    },
+    {
+     "key": "fcf8fef3d1",
+     "translation": "The interim evaluation will be carried out in 2030, halfway through the programme, and the final evaluation in 2036. Guidelines for the different sub-areas will be implemented before the interim evaluation."
+    },
+    {
+     "key": "c570abe61f",
+     "translation": "work has already begun on the lung cancer diagnostics guideline"
+    },
+    {
+     "key": "f957228551",
+     "translation": "There is no quality register for lung cancer or other cancers in Finland."
+    },
+    {
+     "key": "42d4272483",
+     "translation": "As part of the National Lung Cancer Programme, a member of the working group participates as an expert in a study on a cancer quality register administered by the Cancer Registry, THL and FICAN. The aim of the study is to investigate and evaluate, first, the implementation of lung cancer treatment and treatment outcomes."
+    },
+    {
+     "key": "8c220fff68",
+     "translation": "Currently, the reporting, collection and storage of data related to lung cancer are deficient."
+    },
+    {
+     "key": "f4601f7c63",
+     "translation": "It is important to ensure uniform recording instructions across the entire country and their use"
+    },
+    {
+     "key": "bafe4a49b4",
+     "translation": "The achievement of the objectives is monitored annually with clear indicators, and examined in an interim evaluation conducted halfway through the programme as well as at the end of the programme."
+    },
+    {
+     "key": "120c1c85bb",
+     "translation": "sample survey to hospitals treating lung cancer at the beginning and end of the programme"
+    },
+    {
+     "key": "9a3cca623d",
+     "translation": "Registry data are utilised, among other things, to monitor the number of lung cancers, prognosis, and treatment effectiveness data."
+    },
+    {
+     "key": "c08f579b2d",
+     "translation": "Registry data on 1- and 5-year survival rates"
+    },
+    {
+     "key": "71b1ebcf3c",
+     "translation": "Equitable and effective care for everyone regardless of place of residence"
+    },
+    {
+     "key": "8eeb0d6c6e",
+     "translation": "Survey to hospitals treating lung cancer at the beginning and end of the programme"
+    },
+    {
+     "key": "88299fc81a",
+     "translation": "Access to care; availability of guidelines and pathways; nationally uniform targets and effectiveness monitoring indicators have been defined"
+    },
+    {
+     "key": "0347dc9c1c",
+     "translation": "Access to care"
+    },
+    {
+     "key": "b9ef3f199f",
+     "translation": "regional variation in the speed of diagnosis, the organisation of treatment responsibility, or the number of surgeries is large."
+    },
+    {
+     "key": "6de246c3ca",
+     "translation": "in the speed of diagnosis"
+    },
+    {
+     "key": "e4562354ce",
+     "translation": "in the number of surgeries"
+    },
+    {
+     "key": "4bf19c2bb6",
+     "translation": "in the organisation of treatment responsibility"
+    },
+    {
+     "key": "097d26e06e",
+     "translation": "the patient is referred for further examinations to a specialised medical care unit in accordance with their own local guidelines"
+    },
+    {
+     "key": "ffd9e24160",
+     "translation": "Practices for organising care vary by wellbeing services county"
+    },
+    {
+     "key": "d7947cbd72",
+     "translation": "including access to care"
+    },
+    {
+     "key": "7f57210847",
+     "translation": "cancer-specific access-to-care times"
+    },
+    {
+     "key": "51c83af338",
+     "translation": "Nationally, there have been no precise uniform guidelines on the schedule within which the different sub-areas of diagnostics should be completed"
+    },
+    {
+     "key": "9a659fd4b0",
+     "translation": "recommended time limits for specialised medical care for the different stages of the diagnostic pathway"
+    },
+    {
+     "key": "8188d51025",
+     "translation": "at which stage of care … it would be most important to target"
+    },
+    {
+     "key": "41758b5d4d",
+     "translation": "…does not comprehensively describe the extent of multidisciplinary review"
+    },
+    {
+     "key": "2c4563fd3a",
+     "translation": "incl. stage information"
+    },
+    {
+     "key": "eee590bf24",
+     "translation": "uniform recording instructions"
+    }
+   ]
+  }
+ }
+}

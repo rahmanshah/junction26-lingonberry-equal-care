@@ -24,11 +24,18 @@ def model_name(env_var: str) -> str:
     return name
 
 
+_CLIENT: genai.Client | None = None
+
+
 def client() -> genai.Client:
-    key = os.environ.get("GEMINI_API_KEY")
-    if not key:
-        raise SystemExit("GEMINI_API_KEY missing from .env")
-    return genai.Client(api_key=key)
+    """One client per process (a temporary client is closed when garbage-collected)."""
+    global _CLIENT
+    if _CLIENT is None:
+        key = os.environ.get("GEMINI_API_KEY")
+        if not key:
+            raise SystemExit("GEMINI_API_KEY missing from .env")
+        _CLIENT = genai.Client(api_key=key)
+    return _CLIENT
 
 
 def structured_call(model: str, system: str, prompt: str, schema: type[BaseModel], tag: str,
