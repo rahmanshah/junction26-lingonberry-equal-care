@@ -52,5 +52,5 @@ Procedure codes for each category: Liite, Taulukko 13.
 - **24%** = 3584 / 14 873 = 24.1%: patients whose *first* treatment was curative. "Hoitopolkuanalyysissä ensivaiheen hoitomuoto oli parantava 3584 potilaalla (24 %)" (4.2.2, Taulukko 12).
 - The difference, 425 patients, had another treatment first and curative treatment later.
 - The summary rounds the figure in words: "Parantavaa hoitoa … sai runsas neljännes potilaista" and "vain noin neljännes potilaista ohjautui parantavaan hoitoon" (1).
-- **Assumption:** the saved HTML has no cover page with numbers. The only "24 %" in its visible text is the one in 4.2.2. The backup PDF (Malila 2024) cover does not show 24% either.
+- **Confirmed:** the report's cover image reads "Ensivaiheen hoitomuoto, Parantava 24 %". That is the §4.2.2 first-treatment measure. The saved HTML does not include the cover.
 - **For county comparisons, use 27.0% as the national benchmark.** It is the "any curative record" figure, which is how Table 11 counts curative treatment.
