@@ -84,7 +84,7 @@ ci = df.apply(lambda r: wilson(r["n"], r["total"]), axis=1, result_type="expand"
 df["ci_low"], df["ci_high"] = ci[0].round(2), ci[1].round(2)
 
 nat = national_counts()
-nat_share = {k: round(n / tot * 100, 2) for k, (n, tot) in nat.items()}
+nat_share = {k: round(n / tot * 100, 4) for k, (n, tot) in nat.items()}  # 4 dp so 26.954 displays as 27.0
 print("National shares (%):", nat_share)
 df["national_share"] = df["treatment"].map(nat_share)
 df["ci_contains_national"] = (df["ci_low"] <= df["national_share"]) & (df["national_share"] <= df["ci_high"])
