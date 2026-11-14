@@ -28,6 +28,13 @@ Build checklist: PLAN.md (tick tasks when done).
   Saved copy: data/raw/keuhkosyoparaportti_2019_2023.html (live site returns 403 to scripts).
   Cite as the live URL, "retrieved 14 Nov 2026".
 - Backup source: Malila et al. 2024, "Keuhkosyöpä Suomessa" (2018–2022), data/raw/lung_report_2024.pdf
+- Policy PDFs (data/raw/): strategy_2026_2035_fi.pdf (64 pp), roadmap_2026_2031_fi.pdf (111 pp),
+  source_list_fi.pdf. Printed page = PDF page index in both. WARNING: strategy_2026_2035_en.pdf and
+  background_pack_fi.pdf are byte-identical copies of the Finnish strategy; re-download them.
+  Verified quotes and page numbers: docs/source_verification.md.
+- Background brief (Hellu): docs/pathway_brief.md. Claim statuses: "verified locally",
+  "verified by Hellu, read 14 Nov", "preliminary" (MOT delays), "mentor insight (name)".
+- docs/blind_spots.md (from src/build_blind_spots.py), docs/recommendations.md (DRAFT).
 - src/read_factsheet.py: all HTML tables -> data/processed/factsheet/table_XX.csv
 - src/clean_county.py: table 10 (treatment type by county) -> data/processed/county_treatment.csv
   - level = county (22 counties incl. Helsingin kaupunki), area (5 collaborative-area

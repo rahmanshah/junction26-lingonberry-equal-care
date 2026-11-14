@@ -13,7 +13,9 @@
 - [x] Digitise Kuva 16 curative, 3 demo counties + national line (src/digitise_kuva16.py)
 - [ ] Digitise rest of Kuva 16, Kuva 7, Kuva 13 only if needed
 - [x] Blind-spot table v1 from the report (src/build_blind_spots.py, docs/blind_spots.md)
-- [ ] Blind-spot table: add strategy/roadmap evidence and mentor insights
+- [x] Blind-spot table: add strategy/roadmap evidence, MOT delays, regional pathways, mentor insights
+- [x] Verify strategy p.33, roadmap 3.1.2, named contact, THL 21/2016 (docs/source_verification.md)
+- [x] Draft 3 recommendations (docs/recommendations.md)
 - [ ] Choose gap metric and demo county (sync 12:00)
 
 ## 2. Claim ledger (Sat 12:30-14:00)
