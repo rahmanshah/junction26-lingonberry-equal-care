@@ -1,7 +1,7 @@
 {
  "county": "Vantaa ja Kerava",
- "brief_generated_at": "2026-11-14T12:56:50+00:00",
- "reviewed_at": "2026-11-14T12:57:23+00:00",
+ "brief_generated_at": "2026-11-14T13:38:26+00:00",
+ "reviewed_at": "2026-11-14T13:38:39+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,13 +10,6 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_vantaa-ja-kerava_20261114T125650802446Z.json",
- "flags": [
-  {
-   "location": "how_sure_are_we.headline",
-   "sentence": "County treatment shares are crude, lacking age adjustment and stage adjustment, while public registry data omit pathway timestamps from symptom onset and primary care through treatment start.",
-   "problem": "None of the claims cited in this sentence mention that county treatment shares are crude or lack age adjustment (which come from the county treatment and Kuva 16 claims not cited here); additionally, bs:coverage:Diagnosis states that curative shares cannot be stage-adjusted, rather than county treatment shares in general.",
-   "severity": "low"
-  }
- ]
+ "raw_response": "data/processed/gemini_raw/review_vantaa-ja-kerava_20261114T133826019834Z.json",
+ "flags": []
 }

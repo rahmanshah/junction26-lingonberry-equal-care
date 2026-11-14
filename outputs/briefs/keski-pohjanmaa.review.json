@@ -1,7 +1,7 @@
 {
  "county": "Keski-Pohjanmaa",
- "brief_generated_at": "2026-11-14T13:08:04+00:00",
- "reviewed_at": "2026-11-14T13:08:39+00:00",
+ "brief_generated_at": "2026-11-14T13:51:46+00:00",
+ "reviewed_at": "2026-11-14T13:52:10+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,37 +10,6 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_keski-pohjanmaa_20261114T130804391533Z.json",
- "flags": [
-  {
-   "location": "how_sure_are_we.details[0]",
-   "sentence": "County figures, like the crude 22.3% (95% CI 16.3–29.7; n=33/148) curative share versus 27.0% (4009/14873) nationally, are not age-adjusted—age-adjusted values exist only from Kuva 16 for curative treatment by sex, with digitised national lines of 26.7% for men and 26.9% for women at ±0.5 percentage points—and separately cannot be stage-adjusted with stage missing for about 48% of patients.",
-   "problem": "The cited claims state that Kuva 16 covers age-adjusted curative treatment by sex, not that age-adjusted values exist only in Kuva 16.",
-   "severity": "low"
-  },
-  {
-   "location": "how_sure_are_we.details[2]",
-   "sentence": "Public report data do not measure symptoms, referral dates, specialist visit timing, or treatment start dates; primary care visits are not included in the report's data, occupational health is not mentioned at all, and imaging appears only indirectly as the clinical basis of diagnosis in about 20% of patients.",
-   "problem": "The cited claims state that diagnosis is based on clinical examination or findings alone, such as imaging, in about 20% of patients, rather than imaging specifically being the basis in all 20%.",
-   "severity": "low"
-  },
-  {
-   "location": "what_to_do_first.details[0]",
-   "sentence": "Given Keski-Pohjanmaa's crude multidisciplinary team recording share of 1.4% (95% CI 0.4–4.8; n=2/148) versus 6.0% (893/14873) nationally and 48% missing stage nationally, the team recommends publishing county recording completeness for stage, drug treatment, and multidisciplinary coding, aligning with the STM roadmap's measure 3.2.1 plan for a quality registry decree by 2026–2028 and 90% coverage by 2029–2031.",
-   "problem": "The cited claims state that measure 3.2.1 plans annual reports for at least five cancers by 2029–2031 and mentions 90% data coverage, but do not state that 90% coverage is scheduled specifically by 2029–2031; also states 48% missing stage without the qualifier 'about' or 'nearly half'.",
-   "severity": "medium"
-  },
-  {
-   "location": "what_to_do_first.details[1]",
-   "sentence": "Because the Health Care Act sets no maximum time for a cancer suspicion and national monitoring is lacking, the team recommends reporting access times and flagging stalled handovers using THL Ohjaus 21/2016 definitions for 16 cancers, while the STM roadmap's measure 3.1.2 plans national pathway descriptions and access times by 2026–2028 and for all significant cancers by 2029–2031.",
-   "problem": "Omits the scope caveat that measure 3.1.2's 2026–2028 milestone covers only five unnamed cancers, not national pathways and access times in general.",
-   "severity": "medium"
-  },
-  {
-   "location": "what_to_do_first.details[3]",
-   "sentence": "Because no reviewed regional pathway document names a diagnostic-phase contact person, the team recommends naming a contact from referral to diagnosis, alongside the STM roadmap's measure 2.5.2 plan for standardised referral criteria and symptom-based models by 2026–2028 and measure 1.2.3 plan for named care-coordinator guidance by 2026–2028 and county adoption by 2029–2031.",
-   "problem": "Omits the scope caveat that measure 2.5.2's 2026–2028 milestone applies to the national pathways of at least the five most common cancers (with all significant cancers by 2029–2031).",
-   "severity": "medium"
-  }
- ]
+ "raw_response": "data/processed/gemini_raw/review_keski-pohjanmaa_20261114T135146397184Z.json",
+ "flags": []
 }

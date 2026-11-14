@@ -1,7 +1,7 @@
 {
  "county": "Keski-Suomi",
- "brief_generated_at": "2026-11-14T12:59:44+00:00",
- "reviewed_at": "2026-11-14T13:00:20+00:00",
+ "brief_generated_at": "2026-11-14T13:41:26+00:00",
+ "reviewed_at": "2026-11-14T13:41:57+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,13 +10,6 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_keski-suomi_20261114T125944285693Z.json",
- "flags": [
-  {
-   "location": "how_sure_are_we.headline",
-   "sentence": "Registry diagnosis concordance is about 90%, but county treatment shares are crude, unadjusted for age or stage, and public data omit key pathway dates and pre-referral steps.",
-   "problem": "None of the claims cited for this sentence mention that county treatment shares are crude or unadjusted for age (only stage adjustment is supported by bs:coverage:Diagnosis); the crude and age-adjustment claims are cited in details[0] rather than here.",
-   "severity": "low"
-  }
- ]
+ "raw_response": "data/processed/gemini_raw/review_keski-suomi_20261114T134126225595Z.json",
+ "flags": []
 }

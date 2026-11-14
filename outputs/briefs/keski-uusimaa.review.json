@@ -1,7 +1,7 @@
 {
  "county": "Keski-Uusimaa",
- "brief_generated_at": "2026-11-14T12:49:27+00:00",
- "reviewed_at": "2026-11-14T12:50:17+00:00",
+ "brief_generated_at": "2026-11-14T13:30:50+00:00",
+ "reviewed_at": "2026-11-14T13:31:37+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,30 +10,24 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_keski-uusimaa_20261114T124927400274Z.json",
+ "raw_response": "data/processed/gemini_raw/review_keski-uusimaa_20261114T133050111814Z.json",
  "flags": [
   {
-   "location": "where_we_lag.headline",
-   "sentence": "In crude county shares, Keski-Uusimaa lags the national benchmark only in recorded MDT meetings at 0.0% (95% CI 0.0–0.8; n=0/481) versus 6.0% (893/14873) nationally.",
-   "problem": "The claim that Keski-Uusimaa lags the national benchmark only in recorded MDT meetings is not supported by the two cited claims, which cover only MDT recording and provide no information about other treatment categories or indicators.",
-   "severity": "medium"
-  },
-  {
    "location": "how_sure_are_we.headline",
-   "sentence": "A journal article shows high diagnosis concordance, but crude county treatment shares lack age and stage adjustment, and public registry data do not measure pathway waiting times.",
-   "problem": "None of the cited claims mention age adjustment or that county treatment shares are crude, and bs:coverage:Diagnosis states only that curative shares cannot be stage-adjusted rather than all treatment shares.",
-   "severity": "medium"
-  },
-  {
-   "location": "what_to_do_first.details[1]",
-   "sentence": "Because Finland lacks a national system monitoring access to care, the team recommends reporting referral-to-treatment access times using THL guidance Ohjaus 21/2016 definitions for 16 cancers and flagging stalled handovers while STM roadmap measure 3.1.2 plans national cancer-specific pathway descriptions and access times by 2026–2028 and for all significant cancers by 2029–2031.",
-   "problem": "Omits that the 2026–2028 milestone in STM roadmap measure 3.1.2 covers only five unnamed cancers, which makes the 2026–2028 target appear broader than the cited claims support.",
+   "sentence": "Diagnosis concordance in HILMO is about 90% for most cancers, but county treatment shares are crude and public data omit key pathway stages and timestamps.",
+   "problem": "Claim fig:age_adjusted_only_kuva16 states that county-level age-adjusted treatment shares do appear in Kuva 16 (by sex, as a PNG figure) and that only the county table (Taulukko 11) gives crude shares only; saying 'county treatment shares are crude' without specifying Taulukko 11 slightly overgeneralizes.",
    "severity": "low"
   },
   {
-   "location": "what_to_do_first.details[2]",
-   "sentence": "As mentor insight notes a weak referral gets a lower urgency rating and regional pathway documents show only KYS provides a referral template and a clear-X-ray persistent-symptoms rule, the team recommends adopting that template and rule while the Filha programme's diagnostics recommendation (referral criteria and time limits) is to be carried out before the 2030 mid-term evaluation.",
-   "problem": "Stating that regional pathway documents show only KYS provides these features omits the scope caveat in reg:only_kys_xray that only 5 regional pathways were reviewed, not all 22 areas.",
+   "location": "what_to_do_first.headline",
+   "sentence": "The team recommends publishing how stage, drug therapy, and MDT meetings are coded, reporting THL 21/2016 access times with handover alerts, and standardising referrals and diagnostic-phase coordination.",
+   "problem": "Claim rec:3 recommends publishing per county how completely stage, drug treatment, and MDT meetings are recorded (recording completeness), whereas 'how stage, drug therapy, and MDT meetings are coded' imprecisely shifts the focus from recording completeness per county to coding methods.",
+   "severity": "low"
+  },
+  {
+   "location": "what_to_do_first.details[3]",
+   "sentence": "The team's recommendations bridge the gap while the Filha programme's national diagnostics recommendation with primary-care referral criteria and recommended time limits is to be carried out before the 2030 mid-term evaluation, and while the STM roadmap plans national pathways and referral criteria (measures 3.1.2 and 2.5.2) and care-coordinator guidance (measure 1.2.3) by 2026–2028 for county adoption by 2029–2031.",
+   "problem": "Overreaches on STM roadmap measures 3.1.2 and 2.5.2: the cited claims specify that in 2026–2028 they cover only five (unnamed) cancers (3.1.2) or at least the five most common cancers (2.5.2), and that the 2029–2031 milestone for those two measures is extending them to all significant cancers; 'county adoption by 2029–2031' is stated in the cited claims only for measure 1.2.3 (care-coordinator guidance).",
    "severity": "medium"
   }
  ]

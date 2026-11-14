@@ -1,7 +1,7 @@
 {
  "county": "Varsinais-Suomi",
- "brief_generated_at": "2026-11-14T13:04:03+00:00",
- "reviewed_at": "2026-11-14T13:04:27+00:00",
+ "brief_generated_at": "2026-11-14T13:48:08+00:00",
+ "reviewed_at": "2026-11-14T13:48:51+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,12 +10,24 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_varsinais-suomi_20261114T130403212691Z.json",
+ "raw_response": "data/processed/gemini_raw/review_varsinais-suomi_20261114T134808580995Z.json",
  "flags": [
   {
-   "location": "what_to_do_first.details[1]",
-   "sentence": "Because the Health Care Act sets no legal maximum time for a cancer suspicion and Finland lacks national pathway monitoring, the team recommends reporting access times from referral to specialist visit, diagnosis and treatment start using THL guidance Ohjaus 21/2016 definitions (covering 16 cancers) and flagging stalled handovers while the STM roadmap (measure 3.1.2) plans national pathways by 2026–2028.",
-   "problem": "Overreaches the cited STM roadmap claims (q:ed87906241, q:0c7bf2dacb) by stating measure 3.1.2 plans national pathways by 2026–2028 without noting that the 2026–2028 target applies only to five unnamed cancers, while pathways for all significant cancers are planned for 2029–2031.",
+   "location": "how_sure_are_we.headline",
+   "sentence": "Diagnosis concordance in HILMO is well supported, but county treatment tables are crude, stage is often missing, and public data omit pre-diagnostic pathways and care timestamps.",
+   "problem": "The claim that public data omit pre-diagnostic pathways (plural) goes beyond the cited claims: only bs:coverage:Referral is cited for the pre-diagnostic phase, without citing bs:coverage:Symptoms or bs:coverage:Primary_care_occupational_health.",
+   "severity": "low"
+  },
+  {
+   "location": "how_sure_are_we.details[2]",
+   "sentence": "Public report data cannot show where delays occur: symptoms and referrals are unmeasured, primary care visits are not included in the report's data, occupational health is unmentioned, imaging appears only as clinical diagnosis in about 20% of cases rather than wait times, and specialist visits (93.6% within 12 months) and treatments lack timestamps.",
+   "problem": "Minor imprecision: bs:coverage:Imaging and q:5eb155decc state that about 20% of patients are diagnosed on clinical findings/examination alone (such as imaging), not specifically that imaging appears as clinical diagnosis in about 20% of cases.",
+   "severity": "low"
+  },
+  {
+   "location": "what_to_do_first.details[2]",
+   "sentence": "The team recommends a KYS-style referral template, referring persistent symptoms after a normal X-ray (featured only in KYS's pathway document), and a named diagnostic-phase contact (absent in reviewed regional pathway documents), since mentor insight notes weak referrals receive lower urgency and STM roadmap measure 1.2.3 plans care-coordinator guidance by 2026–2028 for county adoption by 2029–2031.",
+   "problem": "Overreach / missing scope caveat: saying the normal X-ray rule is featured 'only in KYS's pathway document' omits that only 5 regional pathways were reviewed (not all 22 areas), as noted in reg:only_kys_xray ('scope: the named region's own document only; not evidence about any other county; 5 regional pathways reviewed, not all 22 areas').",
    "severity": "medium"
   }
  ]

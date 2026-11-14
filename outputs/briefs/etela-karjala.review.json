@@ -1,7 +1,7 @@
 {
  "county": "Etelä-Karjala",
- "brief_generated_at": "2026-11-14T12:51:44+00:00",
- "reviewed_at": "2026-11-14T12:52:21+00:00",
+ "brief_generated_at": "2026-11-14T13:33:34+00:00",
+ "reviewed_at": "2026-11-14T13:34:10+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,25 +10,19 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_etela-karjala_20261114T125144986665Z.json",
+ "raw_response": "data/processed/gemini_raw/review_etela-karjala_20261114T133334194761Z.json",
  "flags": [
   {
-   "location": "how_sure_are_we.details[3]",
-   "sentence": "Preliminary, unpublished national figures from a Yle MOT study report an average of 155 days from first symptoms to treatment in Finland (56 days patient delay, 41 days in primary care, and 58 days in specialist care) versus 107 days in Sweden and 67 days in Denmark, but no county-specific wait times exist.",
-   "problem": "Overreach: the cited Yle MOT claims state that the figures are national averages and not county-specific, which does not support the universal claim that no county-specific wait times exist.",
-   "severity": "medium"
+   "location": "what_to_do_first.headline",
+   "sentence": "The team recommends auditing stage, drug treatment, and MDT recording completeness, tracking access times using THL 21/2016 definitions with handover alerts, and standardising referrals and diagnostic coordination.",
+   "problem": "Cited claim rec:3 recommends reporting and publishing recording completeness per county for stage, drug treatment, and MDT coding, rather than auditing it.",
+   "severity": "low"
   },
   {
-   "location": "what_to_do_first.details[2]",
-   "sentence": "Because referrals follow local instructions, treatment responsibility organisation varies regionally, and mentor insight notes that a weak referral gets a lower urgency rating in specialist care, the team recommends adopting a KYS-style referral content list and template, referring patients with persistent symptoms after a normal X-ray to a pulmonologist, and naming a diagnostic-phase contact person.",
-   "problem": "Unsupported statement: the cited claim [q:1b9eaf2217] only translates the phrase 'in the organisation of treatment responsibility' ('hoitovastuun järjestämisessä') and does not state that treatment responsibility organisation varies regionally.",
-   "severity": "medium"
-  },
-  {
-   "location": "what_to_do_first.details[3]",
-   "sentence": "The team's recommendations prepare for national plans: the STM roadmap plans pathway access times and coding practices (measure 3.1.2), referral criteria (measure 2.5.2), care-coordinator guidance (measure 1.2.3, adopted by 2029–2031) and a quality registry (measure 3.2.1, 90% coverage by 2029–2031) by 2026–2028, while the Filha programme's diagnostics recommendation is to be carried out before the 2030 mid-term evaluation.",
-   "problem": "Misstated milestones and missing scope caveats: under measure 3.2.1 ([q:f07a34a300], [q:4a856bd695]), only the registry decree is scheduled to be updated by 2026–2028 (not the quality registry itself) and the 2029–2031 milestone is annual reports for at least five cancers (no timeframe is given for 90% coverage); additionally, measures 3.1.2 and 2.5.2 in 2026–2028 apply only to five cancers (unnamed or most common), not all cancers.",
-   "severity": "high"
+   "location": "what_to_do_first.details[0]",
+   "sentence": "Given Etelä-Karjala's crude 42.8% (95% CI 37.8–48.0; n=152/355) versus 27.5% (4089/14873) no-treatment-record and 0.0% (95% CI 0.0–1.1; n=0/355) versus 6.0% (893/14873) MDT shares across overlapping treatment categories, plus 48% missing stage, the team recommends publishing county recording completeness for stage, drug treatment, and MDT coding while the STM roadmap (measure 3.2.1) plans a quality registry (decree update by 2026–2028; 90% coverage indicator).",
+   "problem": "Cited claims bs:coverage:Diagnosis and q:7885b0974f report that stage at diagnosis is missing for nearly half (~48%) of new patients nationally, whereas writing 'plus 48% missing stage' immediately after Etelä-Karjala's county shares omits the approximation ('about'/'~') and does not clarify that the figure is national.",
+   "severity": "low"
   }
  ]
 }

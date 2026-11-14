@@ -1,7 +1,7 @@
 {
  "county": "Kymenlaakso",
- "brief_generated_at": "2026-11-14T12:53:21+00:00",
- "reviewed_at": "2026-11-14T12:53:51+00:00",
+ "brief_generated_at": "2026-11-14T13:36:57+00:00",
+ "reviewed_at": "2026-11-14T13:37:27+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,19 +10,6 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_kymenlaakso_20261114T125321124935Z.json",
- "flags": [
-  {
-   "location": "what_to_do_first.details[0]",
-   "sentence": "The team recommends reporting lung cancer access times (referral, specialist visit, diagnosis, treatment start) using THL guidance Ohjaus 21/2016 definitions for 16 cancers and flagging stalled handovers, as Health Care Act §52 sets no legal maximum time for a cancer suspicion and the STM roadmap's measure 3.1.2 plans national pathway descriptions and target access times by 2026–2028.",
-   "problem": "The cited claims for STM roadmap measure 3.1.2 state that national pathway descriptions and cancer-specific access-to-care times by 2026–2028 are planned only for five (unnamed) cancers (with all significant cancers by 2029–2031), so omitting that scope overreaches by implying general or lung-cancer target access times by 2026–2028.",
-   "severity": "medium"
-  },
-  {
-   "location": "what_to_do_first.details[2]",
-   "sentence": "Given Kymenlaakso’s 0.5% (95% CI 0.2–1.5; n=3/591) crude MDT share versus 6.0% (893/14873) nationally and stage missing for about 48% of patients, the team recommends publishing county recording completeness for stage, drug treatment and MDT coding as data-quality signals while the STM roadmap's measure 3.2.1 plans a quality registry with 90% coverage including stage by 2029–2031.",
-   "problem": "The cited claims state that under measure 3.2.1 annual reports for at least five cancers are planned by 2029–2031 and that the planned registry has an indicator of 90% coverage including stage, but do not state that 90% coverage will be achieved by 2029–2031.",
-   "severity": "low"
-  }
- ]
+ "raw_response": "data/processed/gemini_raw/review_kymenlaakso_20261114T133657099428Z.json",
+ "flags": []
 }

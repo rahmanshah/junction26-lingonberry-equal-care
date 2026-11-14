@@ -2,7 +2,7 @@
  "county": "Varsinais-Suomi",
  "county_full": "Varsinais-Suomen hyvinvointialue",
  "status": "validated",
- "generated_at": "2026-11-14T13:04:03+00:00",
+ "generated_at": "2026-11-14T13:48:08+00:00",
  "model": "gemini-4-argon",
  "thinking_level": "HIGH",
  "attempts": 2,
@@ -10,17 +10,18 @@
  "brief": {
   "where_we_lag": {
    "headline": {
-    "text": "Varsinais-Suomi's crude, overlapping curative, life-prolonging and symptomatic treatment shares lag behind national values, while its crude share with no treatment record within 12 months is higher.",
+    "text": "Varsinais-Suomi lags national benchmarks across overlapping crude treatment categories and crude multidisciplinary team recording, while a larger crude share of patients has no treatment record within 12 months.",
     "claim_ids": [
      "cty:curative:Varsinais_Suomen_hyvinvointialue",
      "cty:life_prolonging:Varsinais_Suomen_hyvinvointialue",
      "cty:symptomatic:Varsinais_Suomen_hyvinvointialue",
-     "cty:no_treatment_record:Varsinais_Suomen_hyvinvointialue"
+     "cty:no_treatment_record:Varsinais_Suomen_hyvinvointialue",
+     "cty:mdt_recorded:Varsinais_Suomen_hyvinvointialue"
     ]
    },
    "details": [
     {
-     "text": "In overlapping treatment categories, crude county shares are below national values, as each 95% confidence interval excludes the national benchmark: curative treatment is 24.3% (95% CI 22.1–26.6; n=349/1437) versus 27.0% (4009/14873), life-prolonging is 9.7% (95% CI 8.3–11.4; n=140/1437) versus 30.4% (4522/14873), and symptomatic is 30.8% (95% CI 28.5–33.3; n=443/1437) versus 39.5% (5871/14873).",
+     "text": "In overlapping treatment categories where a patient can have several, crude county shares are below national benchmarks, with 95% confidence intervals excluding national values: curative 24.3% (95% CI 22.1–26.6; n=349/1437) versus 27.0% (4009/14873), life-prolonging 9.7% (95% CI 8.3–11.4; n=140/1437) versus 30.4% (4522/14873), and symptomatic 30.8% (95% CI 28.5–33.3; n=443/1437) versus 39.5% (5871/14873).",
      "claim_ids": [
       "cty:curative:Varsinais_Suomen_hyvinvointialue",
       "nat:curative",
@@ -31,8 +32,9 @@
      ]
     },
     {
-     "text": "In figures digitised from Kuva 16 (precision ±0.5 percentage points), the curative gap holds after age adjustment for men at 22.7% versus 26.7% nationally (with the 95% CI bar hidden inside the dot, half-width < ~3.3 percentage points), while women are at 27.4% (95% CI 23.1–31.8) versus 26.9%, where the 95% CI includes the national value.",
+     "text": "In values digitised from Kuva 16 (about ±0.5 percentage points), the curative gap holds after age adjustment for men at 22.7% versus 26.7% nationally—with the confidence interval bar hidden inside the dot (half-width < ~3.3 percentage points) so it could not be read—but not for women at 27.4% (95% CI 23.1–31.8), as the 95% confidence interval includes 26.9%.",
      "claim_ids": [
+      "fig:age_adjusted_only_kuva16",
       "k16:curative:men:Varsinais_Suomen_hyvinvointialue",
       "k16:curative:men:national",
       "k16:curative:women:Varsinais_Suomen_hyvinvointialue",
@@ -40,132 +42,139 @@
      ]
     },
     {
-     "text": "Among these overlapping categories, the crude share with no treatment record within 12 months—which mixes untreated patients and unrecorded treatment—is 43.1% (95% CI 40.5–45.6; n=619/1437), with its 95% CI excluding the 27.5% (4089/14873) national value, and crude recorded MDT meetings are at 1.6% (95% CI 1.1–2.4; n=23/1437) versus 6.0% (893/14873) nationally, though MDT records measure recording practice, not care.",
+     "text": "The crude share with no treatment record within 12 months is 43.1% (95% CI 40.5–45.6; n=619/1437) versus 27.5% (4089/14873) nationally; this category mixes untreated patients and unrecorded treatment, and because its 95% confidence interval excludes and is above the national value, low crude treatment shares may partly reflect unrecorded treatment.",
      "claim_ids": [
       "cty:no_treatment_record:Varsinais_Suomen_hyvinvointialue",
       "nat:no_treatment_record",
-      "bs:coverage:Treatment_start",
+      "bs:coverage:Treatment_start"
+     ]
+    },
+    {
+     "text": "A multidisciplinary team meeting is recorded for a crude 1.6% (95% CI 1.1–2.4; n=23/1437) of patients versus 6.0% (893/14873) nationally, with the 95% confidence interval excluding the national value, though this measures direct-contact recording practice in HILMO rather than multidisciplinary care itself.",
+     "claim_ids": [
       "cty:mdt_recorded:Varsinais_Suomen_hyvinvointialue",
       "nat:mdt_recorded",
-      "bs:coverage:MDT"
+      "bs:coverage:MDT",
+      "q:39e6ba43a9"
      ]
     }
    ]
   },
   "how_sure_are_we": {
    "headline": {
-    "text": "A journal article shows high diagnosis concordance, but Varsinais-Suomi's crude no-treatment-record share suggests low crude overlapping treatment shares partly reflect unrecorded treatment, and pathway timing data are missing.",
+    "text": "Diagnosis concordance in HILMO is well supported, but county treatment tables are crude, stage is often missing, and public data omit pre-diagnostic pathways and care timestamps.",
     "claim_ids": [
      "lit:hilmo_90",
-     "cty:no_treatment_record:Varsinais_Suomen_hyvinvointialue",
-     "bs:coverage:Treatment_start",
-     "bs:coverage:Referral"
+     "fig:age_adjusted_only_kuva16",
+     "bs:coverage:Diagnosis",
+     "bs:coverage:Referral",
+     "bs:coverage:Treatment_start"
     ]
    },
    "details": [
     {
-     "text": "A journal article indicates HILMO diagnoses match the Cancer Registry for about 90% of most cancer types, which concerns diagnosis concordance only, whereas because Varsinais-Suomi's crude no-treatment-record share of 43.1% (95% CI 40.5–45.6) has a 95% CI above the 27.5% national value, low crude overlapping treatment shares may partly reflect unrecorded treatment.",
+     "text": "The county shares in Taulukko 11 are crude and have separate limitations: they are not age-adjusted (county-level age-adjusted shares appear only in Kuva 16), and separately they cannot be stage-adjusted because stage at diagnosis is missing for about 48% of patients.",
+     "claim_ids": [
+      "fig:age_adjusted_only_kuva16",
+      "bs:coverage:Diagnosis",
+      "q:7885b0974f"
+     ]
+    },
+    {
+     "text": "A 2019 Lääkärilehti journal article shows that HILMO diagnoses match the Cancer Registry for about 90% of most cancer types, which supports diagnosis concordance only and says nothing about treatment, referral, or multidisciplinary team recording, while lung cancer data reporting, collection, and storage remain incomplete and Finland lacks a cancer quality registry.",
      "claim_ids": [
       "lit:hilmo_90",
-      "cty:no_treatment_record:Varsinais_Suomen_hyvinvointialue",
-      "nat:no_treatment_record",
-      "bs:coverage:Treatment_start"
+      "q:950a2f797b",
+      "filha:registry",
+      "q:47c7e11303"
      ]
     },
     {
-     "text": "The crude county shares (such as curative treatment at 24.3%, 95% CI 22.1–26.6) have separate limitations: they are not age-adjusted (an age-adjusted value exists only from Kuva 16 for curative treatment by sex), and separately they cannot be stage-adjusted because stage at diagnosis is missing for about 48% of patients.",
-     "claim_ids": [
-      "cty:curative:Varsinais_Suomen_hyvinvointialue",
-      "k16:curative:men:Varsinais_Suomen_hyvinvointialue",
-      "bs:coverage:Diagnosis"
-     ]
-    },
-    {
-     "text": "Public report data do not measure symptoms or referrals, primary care visits are not included in the report's data, occupational health is not mentioned, imaging appears only indirectly as the diagnosis basis in about 20% of patients without wait times, and HILMO shows whether specialist visits (93.6%) and treatments occur within 12 months, not when.",
+     "text": "Public report data cannot show where delays occur: symptoms and referrals are unmeasured, primary care visits are not included in the report's data, occupational health is unmentioned, imaging appears only as clinical diagnosis in about 20% of cases rather than wait times, and specialist visits (93.6% within 12 months) and treatments lack timestamps.",
      "claim_ids": [
       "bs:coverage:Symptoms",
-      "bs:coverage:Referral",
       "bs:coverage:Primary_care_occupational_health",
       "q:323de0d90d",
       "bs:coverage:Imaging",
       "q:5eb155decc",
+      "bs:coverage:Referral",
       "bs:coverage:First_specialist_visit",
       "bs:coverage:Treatment_start"
      ]
     },
     {
-     "text": "Finland lacks a cancer quality registry, and only preliminary, unpublished national averages—not county figures—estimate the pathway from symptoms to treatment at 155 days in Finland (56 days patient delay, 41 days in primary care, and 58 days in specialist care) versus 107 days in Sweden and 67 days in Denmark.",
+     "text": "Preliminary, unpublished national averages (not county-specific) indicate that lung cancer takes 155 days from symptoms to treatment in Finland versus 107 in Sweden and 67 in Denmark—with 56 days of patient delay, 41 days in primary care, and 58 days in specialist care—while the Health Care Act (§52) sets no legal maximum time for a cancer suspicion.",
      "claim_ids": [
-      "q:47c7e11303",
       "mot:total_fi",
+      "mot:total_se",
+      "mot:total_dk",
       "mot:patient",
       "mot:primary",
       "mot:specialist",
-      "mot:total_se",
-      "mot:total_dk"
+      "law:no_max"
      ]
     }
    ]
   },
   "what_to_do_first": {
    "headline": {
-    "text": "Given Varsinais-Suomi's 43.1% (95% CI 40.5–45.6) crude no-treatment-record share and unmeasured waits, the team recommends reporting recording completeness, tracking THL guidance 21/2016 access times, and standardising referrals and coordination.",
+    "text": "The team recommends auditing recording completeness given Varsinais-Suomi's 43.1% crude share with no treatment record within 12 months, reporting THL 21/2016 access times, and standardising referrals and coordination.",
     "claim_ids": [
-     "cty:no_treatment_record:Varsinais_Suomen_hyvinvointialue",
-     "bs:coverage:Referral",
-     "thl:21_2016",
      "rec:3",
      "rec:1",
-     "rec:2"
+     "rec:2",
+     "cty:no_treatment_record:Varsinais_Suomen_hyvinvointialue",
+     "thl:21_2016",
+     "reg:kys_template"
     ]
    },
    "details": [
     {
-     "text": "The team recommends publishing county recording completeness for stage, drug treatment and MDT meetings and reading gaps as data-quality signals, since in overlapping categories Varsinais-Suomi's crude no-treatment-record share is 43.1% (95% CI 40.5–45.6) and crude MDT share is 1.6% (95% CI 1.1–2.4), stage is missing for about 48% of patients nationally, and national lung cancer data reporting is incomplete.",
+     "text": "The team recommends publishing county recording completeness for stage (missing for about 48% of patients), drug treatment, and multidisciplinary coding, reading Varsinais-Suomi's overlapping crude shares—43.1% with no treatment record within 12 months, 9.7% life-prolonging treatment, and 1.6% multidisciplinary coding—as data-quality signals first, since lung cancer data reporting is incomplete and uniform recording instructions must be ensured.",
      "claim_ids": [
       "rec:3",
-      "cty:no_treatment_record:Varsinais_Suomen_hyvinvointialue",
-      "cty:mdt_recorded:Varsinais_Suomen_hyvinvointialue",
       "bs:coverage:Diagnosis",
-      "q:950a2f797b"
+      "q:7885b0974f",
+      "cty:no_treatment_record:Varsinais_Suomen_hyvinvointialue",
+      "cty:life_prolonging:Varsinais_Suomen_hyvinvointialue",
+      "cty:mdt_recorded:Varsinais_Suomen_hyvinvointialue",
+      "q:950a2f797b",
+      "q:82d365cd2c"
      ]
     },
     {
-     "text": "Because the Health Care Act sets no legal maximum time for a cancer suspicion and Finland lacks national pathway monitoring, the team recommends reporting access times from referral to specialist visit, diagnosis and treatment start using THL guidance Ohjaus 21/2016 definitions (covering 16 cancers) and flagging stalled handovers while the STM roadmap (measure 3.1.2) plans national pathways by 2026–2028.",
+     "text": "The team recommends reporting access times from referral to first specialist visit, diagnosis, and treatment start using THL guidance Ohjaus 21/2016 definitions (covering 16 cancers) with handover alerts, since national pathway monitoring is lacking and the Filha National Lung Cancer Programme's diagnostics recommendation with recommended specialist-care time limits is to be carried out before the 2030 mid-term evaluation.",
      "claim_ids": [
       "rec:1",
-      "law:no_max",
-      "q:4e702a20fe",
       "thl:21_2016",
-      "q:ed87906241",
-      "q:0c7bf2dacb"
+      "q:24169121a4",
+      "q:4e702a20fe",
+      "q:20d6ca414e",
+      "q:432c0e51d6",
+      "q:614febebf2",
+      "q:14dff3e002"
      ]
     },
     {
-     "text": "The team recommends a standard referral content list and template and referring persistent symptoms after a normal X-ray to a pulmonologist, since referrals follow local instructions, mentor insight notes weak referrals get lower urgency ratings, and the Filha programme's diagnostics recommendation with referral criteria is to be carried out before the 2030 mid-term evaluation.",
+     "text": "The team recommends a KYS-style referral template, referring persistent symptoms after a normal X-ray (featured only in KYS's pathway document), and a named diagnostic-phase contact (absent in reviewed regional pathway documents), since mentor insight notes weak referrals receive lower urgency and STM roadmap measure 1.2.3 plans care-coordinator guidance by 2026–2028 for county adoption by 2029–2031.",
      "claim_ids": [
       "rec:2",
-      "q:556431a0c2",
+      "reg:kys_template",
+      "reg:kys_persistent",
+      "reg:only_kys_xray",
+      "reg:named_contact",
       "mentor:kaisa_referral",
-      "q:8f358a9de6",
-      "q:614febebf2"
-     ]
-    },
-    {
-     "text": "Finally, the team recommends naming a contact person for the diagnostic phase from referral to diagnosis, as the STM roadmap (measure 1.2.3) plans guidance on a named care-coordinator model by 2026–2028 for counties to adopt by 2029–2031, but still maps out which stage of care to target.",
-     "claim_ids": [
-      "rec:2",
       "q:fc81032a80",
       "q:abcbb06ae3",
-      "q:e31448e9c9"
+      "q:050ee09ebe"
      ]
     }
    ]
   }
  },
  "raw_responses": [
-  "data/processed/gemini_raw/brief_varsinais-suomi_attempt1_20261114T130024322935Z.json",
-  "data/processed/gemini_raw/brief_varsinais-suomi_attempt2_20261114T130329594693Z.json"
+  "data/processed/gemini_raw/brief_varsinais-suomi_attempt1_20261114T134424690333Z.json",
+  "data/processed/gemini_raw/brief_varsinais-suomi_attempt2_20261114T134730975763Z.json"
  ],
  "provided_claim_ids": [
   "bs:coverage:Diagnosis",
@@ -181,6 +190,7 @@
   "cty:mdt_recorded:Varsinais_Suomen_hyvinvointialue",
   "cty:no_treatment_record:Varsinais_Suomen_hyvinvointialue",
   "cty:symptomatic:Varsinais_Suomen_hyvinvointialue",
+  "fig:age_adjusted_only_kuva16",
   "filha:registry",
   "k16:curative:men:Varsinais_Suomen_hyvinvointialue",
   "k16:curative:men:national",
@@ -420,6 +430,26 @@
    "quote_lang": null,
    "quote_en": null
   },
+  "fig:age_adjusted_only_kuva16": {
+   "claim_text": "In the 2019–2023 report, county-level age-adjusted treatment shares appear only in Kuva 16 (a PNG figure, by sex, with 95% CIs); the county table (Taulukko 11) gives crude shares only",
+   "status": "verified locally",
+   "method": "assessed",
+   "source_doc": "docs/chart_data.md",
+   "location": "Summary table; section 'Kuva 16 in detail'",
+   "quote": null,
+   "quote_lang": null,
+   "quote_en": null
+  },
+  "filha:registry": {
+   "claim_text": "No lung cancer or other cancer quality registry; Cancer Registry, THL and FICAN are assessing one, starting with lung cancer",
+   "status": "verified locally",
+   "method": "quoted",
+   "source_doc": "docs/pathway_brief.md",
+   "location": "3. National level: a programme, but no pathway or time targets",
+   "quote": "Finland has no lung cancer or other cancer quality registry. The Cancer Registry, THL and FICAN are assessing what registry is needed, starting with lung cancer.",
+   "quote_lang": "en",
+   "quote_en": null
+  },
   "k16:curative:men:Varsinais_Suomen_hyvinvointialue": {
    "claim_text": "Varsinais-Suomen hyvinvointialue: age-adjusted curative treatment share, men, 22.7%",
    "status": "verified locally",
@@ -600,15 +630,45 @@
    "quote_lang": null,
    "quote_en": null
   },
-  "q:0c7bf2dacb": {
-   "claim_text": "p.56, content of pathways: > “Ketjuissa määritellään ja sovitaan mm. työnjaosta eri toimijoiden välillä, tavoitelluista > hoitoonpääsyajoista, keskeisistä laatu- ja vaikuttavuusindikaattoreista sekä kirjaamis- ja > koodistokäytännöistä.”",
+  "q:050ee09ebe": {
+   "claim_text": "Guidance on a named worker coordinating cancer care by 2026–2028, adopted by counties by 2029–2031; the care phase is left open (“missä hoidon vaiheessa … olisi tärkeintä kohdentaa”)",
    "status": "verified locally",
    "method": "quoted",
    "source_doc": "data/raw/roadmap_2026_2031_fi.pdf",
-   "location": "p.56",
-   "quote": "Ketjuissa määritellään ja sovitaan mm. työnjaosta eri toimijoiden välillä, tavoitelluista hoitoonpääsyajoista, keskeisistä laatu- ja vaikuttavuusindikaattoreista sekä kirjaamis- ja koodistokäytännöistä.",
+   "location": "p.32",
+   "quote": "missä hoidon vaiheessa … olisi tärkeintä kohdentaa",
    "quote_lang": "fi",
-   "quote_en": "The pathways define and agree on, among other things, the division of labour between different actors, target times for access to care, key quality and effectiveness indicators, and recording and coding practices."
+   "quote_en": "at which stage of care … it would be most important to target"
+  },
+  "q:14dff3e002": {
+   "claim_text": "Policy evidence for pathway stage 'Referral'",
+   "status": "verified locally",
+   "method": "quoted",
+   "source_doc": "data/raw/filha_lung_programme_2026_fi.pdf",
+   "location": "PDF p.7 (unnumbered); p.15; p.17; p.20; p.21; p.23; p.24",
+   "quote": "toteutetaan",
+   "quote_lang": "fi",
+   "quote_en": "is implemented"
+  },
+  "q:20d6ca414e": {
+   "claim_text": "“Valtakunnallisesti ei ole ollut tarkkaa yhtenäistä ohjeistusta siitä, millä aikataululla diagnostiikan eri osa-alueet tulisi olla tehtyinä”; regional variation in diagnostic speed is large. The programme itself sets no day-based targets",
+   "status": "verified locally",
+   "method": "quoted",
+   "source_doc": "data/raw/filha_lung_programme_2026_fi.pdf",
+   "location": "p.4",
+   "quote": "Valtakunnallisesti ei ole ollut tarkkaa yhtenäistä ohjeistusta siitä, millä aikataululla diagnostiikan eri osa-alueet tulisi olla tehtyinä",
+   "quote_lang": "fi",
+   "quote_en": "Nationally, there have been no precise uniform guidelines on the schedule within which the different sub-areas of diagnostics should be completed"
+  },
+  "q:24169121a4": {
+   "claim_text": "Strategy p.5 (= PDF p.5), “Strategiset tavoitteet”, indicator under “Varmistetaan yhdenvertainen ja vaikuttava syövänhoito”: > “Potilaat pääsevät hoitoon tavoiteaikojen puitteissa” > “ THL (Ohjaus 21/2016). Hoitoonpääsyn seuranta syövän hoidossa.”",
+   "status": "verified locally",
+   "method": "quoted",
+   "source_doc": "data/raw/strategy_2026_2035_fi.pdf",
+   "location": "p.5",
+   "quote": "*** THL (Ohjaus 21/2016). Hoitoonpääsyn seuranta syövän hoidossa.",
+   "quote_lang": "fi",
+   "quote_en": "*** THL (Ohjaus 21/2016). Monitoring access to care in cancer treatment."
   },
   "q:323de0d90d": {
    "claim_text": "Report evidence for pathway stage 'Primary care / occupational health'",
@@ -619,6 +679,26 @@
    "quote": "Avoterveydenhuollon käyntejä ei ole mukana aineistossa.",
    "quote_lang": "fi",
    "quote_en": "Outpatient health care visits are not included in the data."
+  },
+  "q:39e6ba43a9": {
+   "claim_text": "Report evidence for pathway stage 'MDT'",
+   "status": "verified locally",
+   "method": "quoted",
+   "source_doc": "data/raw/keuhkosyoparaportti_2019_2023.html",
+   "location": "§3.3 Menetelmät",
+   "quote": "Erikoissairaanhoidon toimenpiteet viedään HILMO:on vain suorista potilaskontakteista, joten saatu tieto ei kuvaa kattavasti moniammatillisen käsittelyn laajuutta.",
+   "quote_lang": "fi",
+   "quote_en": "Specialised medical care procedures are entered into HILMO only from direct patient contacts, so the obtained data do not comprehensively describe the extent of multidisciplinary review."
+  },
+  "q:432c0e51d6": {
+   "claim_text": "The upcoming national diagnostics recommendation will include “suositellut aikarajat erikoissairaanhoitoon eri diagnostiikan polun vaiheille” (recommended time limits in specialist care), to be carried out (“toteutetaan”; may mean produced or implemented) before the 2030 mid-term evaluation",
+   "status": "verified locally",
+   "method": "quoted",
+   "source_doc": "data/raw/filha_lung_programme_2026_fi.pdf",
+   "location": "p.16",
+   "quote": "suositellut aikarajat erikoissairaanhoitoon eri diagnostiikan polun vaiheille",
+   "quote_lang": "fi",
+   "quote_en": "recommended time limits for specialised medical care for the different stages of the diagnostic pathway"
   },
   "q:47c7e11303": {
    "claim_text": "Finland has no quality registry for lung cancer or for any other cancer.",
@@ -640,16 +720,6 @@
    "quote_lang": "fi",
    "quote_en": "Finland does not have a uniform national system to guide the preparation of cancer-specific clinical guidelines and the implementation and monitoring of care pathways based on them (quality and effectiveness targets/indicators, including access to care as well as cancer-specific and generic PROM well-being measures). Existing clinical guidelines and care pathways as well as monitored targets and indicators are not coordinated at the national level. This maintains regional inequality in the availability and effectiveness of cancer care."
   },
-  "q:556431a0c2": {
-   "claim_text": "the patient is referred to specialist care according to local instructions",
-   "status": "verified locally",
-   "method": "quoted",
-   "source_doc": "data/raw/filha_lung_programme_2026_fi.pdf",
-   "location": "p.15",
-   "quote": "potilas lähetetään jatkotutkimuksiin erikoissairaanhoidon yksikköön omien paikallisten ohjeistusten mukaisesti",
-   "quote_lang": "fi",
-   "quote_en": "the patient is referred for further examinations to a specialised medical care unit in accordance with their own local guidelines"
-  },
   "q:5eb155decc": {
    "claim_text": "Report evidence for pathway stage 'Imaging'",
    "status": "verified locally",
@@ -670,15 +740,25 @@
    "quote_lang": "fi",
    "quote_en": "The interim evaluation will be carried out in 2030, halfway through the programme, and the final evaluation in 2036. Guidelines for the different sub-areas will be implemented before the interim evaluation."
   },
-  "q:8f358a9de6": {
-   "claim_text": "p.16: > “Tämän ohjelman yhtenä toimenpiteenä tuotetaan kansallinen suositus keuhkosyöpien diagnostiikasta. Se > sisältää myös lähetekriteerit perusterveydenhuollolle ja suositellut aikarajat erikoissairaanhoitoon > eri diagnostiikan polun vaiheille.”",
+  "q:7885b0974f": {
+   "claim_text": "Report evidence for pathway stage 'Diagnosis'",
+   "status": "verified locally",
+   "method": "quoted",
+   "source_doc": "data/raw/keuhkosyoparaportti_2019_2023.html",
+   "location": "§4.1.3 Levinneisyystiedon kattavuus",
+   "quote": "levinneisyys toteamishetkellä puuttuu lähes puolelta uusia potilaita",
+   "quote_lang": "fi",
+   "quote_en": "stage at diagnosis is missing for nearly half of new patients"
+  },
+  "q:82d365cd2c": {
+   "claim_text": "“Tällä hetkellä keuhkosyöpään liittyvien tietojen raportointi, kerääminen ja tallentaminen on puutteellista”; nationally uniform recording instructions (“yhtenäiset kirjaamisohjeet”) must be ensured",
    "status": "verified locally",
    "method": "quoted",
    "source_doc": "data/raw/filha_lung_programme_2026_fi.pdf",
-   "location": "p.16",
-   "quote": "Tämän ohjelman yhtenä toimenpiteenä tuotetaan kansallinen suositus keuhkosyöpien diagnostiikasta. Se sisältää myös lähetekriteerit perusterveydenhuollolle ja suositellut aikarajat erikoissairaanhoitoon eri diagnostiikan polun vaiheille.",
+   "location": "p.21",
+   "quote": "yhtenäiset kirjaamisohjeet",
    "quote_lang": "fi",
-   "quote_en": "As one measure of this programme, a national guideline on the diagnostics of lung cancers will be produced. It also includes referral criteria for primary health care and recommended time limits for specialised medical care for the different stages of the diagnostic pathway."
+   "quote_en": "uniform recording instructions"
   },
   "q:950a2f797b": {
    "claim_text": "Reporting, collection and storage of lung cancer data is currently incomplete.",
@@ -699,26 +779,6 @@
    "quote": "2026–2028: Ohjeistus syövän hoidon koordinaatiosta vastaavan nimetyn lääkärin, hoitajan tai erityistyöntekijän mallista. 2029–2031: Hyvinvointialueet ovat ottaneet tämän ohjeistuksen käyttöön.",
    "quote_lang": "fi",
    "quote_en": "2026–2028: Guidelines on the model of a designated physician, nurse or special worker responsible for coordinating cancer care. 2029–2031: Wellbeing services counties have adopted these guidelines."
-  },
-  "q:e31448e9c9": {
-   "claim_text": "The review will map at which phase of care, and for which patient groups, a care coordinator is most important.",
-   "status": "verified locally",
-   "method": "quoted",
-   "source_doc": "data/raw/roadmap_2026_2031_fi.pdf",
-   "location": "p.32",
-   "quote": "Selvityksessä kartoitetaan, missä hoidon vaiheessa ja mille potilasryhmille hoidon koordinaatiosta vastaava työntekijä olisi tärkeintä kohdentaa.",
-   "quote_lang": "fi",
-   "quote_en": "The study maps out at which stage of care and to which patient groups it would be most important to target the employee responsible for care coordination."
-  },
-  "q:ed87906241": {
-   "claim_text": "p.56, heading: > “Toimenpide 3.1.2 Laaditaan syöpäkohtaiset hoitoketjukuvaukset, ja niiden pohjalta sovelletut > alueelliset hoitoketjut, sekä mekanismi niiden ylläpitoon ja hallintaan”",
-   "status": "verified locally",
-   "method": "quoted",
-   "source_doc": "data/raw/roadmap_2026_2031_fi.pdf",
-   "location": "p.56",
-   "quote": "Toimenpide 3.1.2 Laaditaan syöpäkohtaiset hoitoketjukuvaukset, ja niiden pohjalta sovelletut alueelliset hoitoketjut, sekä mekanismi niiden ylläpitoon ja hallintaan",
-   "quote_lang": "fi",
-   "quote_en": "Measure 3.1.2 Prepare cancer-specific care pathway descriptions, and regional care pathways adapted on their basis, as well as a mechanism for their maintenance and management"
   },
   "q:fc81032a80": {
    "claim_text": "Measure 1.2.3: Create an operating model and guidance for a named worker responsible for coordinating cancer care.",
@@ -760,6 +820,46 @@
    "quote_lang": null,
    "quote_en": null
   },
+  "reg:kys_persistent": {
+   "claim_text": "KYS: refer persistent unexplained symptoms even if the X-ray is clear",
+   "status": "verified by Hellu",
+   "method": "quoted",
+   "source_doc": "docs/pathway_brief.md",
+   "location": "6. Regional pathways compared",
+   "quote": "persistent unexplained symptoms → refer for pulmonologist assessment even if the X-ray is clear",
+   "quote_lang": "en",
+   "quote_en": null
+  },
+  "reg:kys_template": {
+   "claim_text": "Only KYS lists required referral content and provides a referral template",
+   "status": "verified by Hellu",
+   "method": "quoted",
+   "source_doc": "docs/pathway_brief.md",
+   "location": "6. Regional pathways compared",
+   "quote": "KYS is the only region that lists what a referral must contain (history, medications, pack-years, asbestos exposure, functional capacity, what the patient has been told) and provides a referral template.",
+   "quote_lang": "en",
+   "quote_en": null
+  },
+  "reg:named_contact": {
+   "claim_text": "No region names a contact person for the diagnostic phase",
+   "status": "verified by Hellu",
+   "method": "quoted",
+   "source_doc": "docs/pathway_brief.md",
+   "location": "6. Regional pathways compared",
+   "quote": "no region names a contact person for the diagnostic phase. HUS assigns a nurse at the first visit",
+   "quote_lang": "en",
+   "quote_en": null
+  },
+  "reg:only_kys_xray": {
+   "claim_text": "Only KYS tells primary care what to do with a normal X-ray and continuing symptoms",
+   "status": "verified by Hellu",
+   "method": "quoted",
+   "source_doc": "docs/pathway_brief.md",
+   "location": "6. Regional pathways compared",
+   "quote": "Only KYS tells primary care what to do when the X-ray is normal but symptoms continue.",
+   "quote_lang": "en",
+   "quote_en": null
+  },
   "thl:21_2016": {
    "claim_text": "THL Ohjaus 21/2016 defines how cancer access times are recorded, for 16 cancers",
    "status": "verified by Hellu",
@@ -773,7 +873,7 @@
  },
  "review": {
   "file": "outputs/briefs/varsinais-suomi.review.json",
-  "flags": 1,
+  "flags": 3,
   "note": "Flags are for human review only; they never change the brief's status or approve it."
  }
 }

@@ -1,7 +1,7 @@
 {
  "county": "Länsi-Uusimaa",
- "brief_generated_at": "2026-11-14T12:54:06+00:00",
- "reviewed_at": "2026-11-14T12:54:31+00:00",
+ "brief_generated_at": "2026-11-14T13:36:48+00:00",
+ "reviewed_at": "2026-11-14T13:37:19+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,6 +10,6 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_lansi-uusimaa_20261114T125406340135Z.json",
+ "raw_response": "data/processed/gemini_raw/review_lansi-uusimaa_20261114T133648976406Z.json",
  "flags": []
 }

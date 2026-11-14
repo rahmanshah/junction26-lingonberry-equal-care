@@ -1,7 +1,7 @@
 {
  "county": "Lappi",
- "brief_generated_at": "2026-11-14T13:20:48+00:00",
- "reviewed_at": "2026-11-14T13:21:19+00:00",
+ "brief_generated_at": "2026-11-14T13:51:49+00:00",
+ "reviewed_at": "2026-11-14T13:52:30+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,19 +10,13 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_lappi_20261114T132048194843Z.json",
+ "raw_response": "data/processed/gemini_raw/review_lappi_20261114T135149195716Z.json",
  "flags": [
   {
-   "location": "what_to_do_first.headline",
-   "sentence": "The team recommends auditing recording completeness for Lapin hyvinvointialue's crude shares across overlapping categories, tracking access times using THL 21/2016 definitions, and standardising referrals and diagnostic coordination.",
-   "problem": "Team recommendation 3 ([rec:3]) recommends reporting and publishing county-level recording completeness for stage, drug treatment, and MDT coding, not auditing recording completeness for crude treatment shares.",
-   "severity": "low"
-  },
-  {
-   "location": "what_to_do_first.details[0]",
-   "sentence": "Because Lapin hyvinvointialue has a 33.8% (95% CI 30.4–37.4) crude no-treatment-record share and a 3.0% (95% CI 1.9–4.5) crude MDT-recorded share among overlapping categories alongside incomplete national data and 48% missing stage, the team recommends reporting county recording completeness for stage, drug treatment and MDT coding while THL, FICAN and the Cancer Registry assess a lung cancer quality registry.",
-   "problem": "The cited claims ([bs:coverage:Diagnosis] and [q:7885b0974f]) state that stage at diagnosis is missing for 'nearly half' (~48%) of new patients, whereas '48% missing stage' omits the approximation.",
-   "severity": "low"
+   "location": "what_to_do_first.details[3]",
+   "sentence": "As the team recommends, naming a diagnostic-phase contact person and standardising referrals act early while the STM roadmap plans guidance on a named care-coordinator model by 2026–2028 for county adoption by 2029–2031 without specifying the care phase (measure 1.2.3) and plans standardised referral criteria and symptom-based models by 2026–2028 (measure 2.5.2).",
+   "problem": "For STM roadmap measure 2.5.2, the cited claim notes specify that standardised referral criteria and symptom-based models are planned in the national pathways of at least the five most common cancers by 2026–2028 (and for all significant cancers by 2029–2031). Omitting this scope qualifier overstates what is planned by 2026–2028.",
+   "severity": "medium"
   }
  ]
 }

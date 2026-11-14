@@ -1,7 +1,7 @@
 {
  "county": "Itä-Uusimaa",
- "brief_generated_at": "2026-11-14T12:49:26+00:00",
- "reviewed_at": "2026-11-14T12:49:58+00:00",
+ "brief_generated_at": "2026-11-14T13:30:31+00:00",
+ "reviewed_at": "2026-11-14T13:31:08+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,30 +10,12 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_ita-uusimaa_20261114T124926533820Z.json",
+ "raw_response": "data/processed/gemini_raw/review_ita-uusimaa_20261114T133031066526Z.json",
  "flags": [
   {
-   "location": "what_to_do_first.headline",
-   "sentence": "The team recommends auditing stage, treatment, and MDT recording completeness, reporting access times using THL 21/2016 definitions, and standardising referrals and diagnostic-phase care coordination.",
-   "problem": "Claim rec:3 recommends publishing/reporting per-county recording completeness for stage, drug treatment, and MDT coding—not 'auditing', and specifically 'drug treatment' rather than 'treatment' in general.",
-   "severity": "low"
-  },
-  {
-   "location": "what_to_do_first.details[0]",
-   "sentence": "Given Itä-Uusimaa's 0.0% crude recorded MDT share vs 6.0% nationally and about 48% missing stage nationally, the team recommends publishing county recording completeness for stage, drug treatment, and MDT coding as data-quality signals; meanwhile, the STM roadmap (measure 3.2.1) plans updating the quality-registry decree by 2026–2028 and annual reports targeting 90% coverage by 2029–2031.",
-   "problem": "Under STM roadmap measure 3.2.1, the 2029–2031 milestone is annual reports for at least five cancers, whereas the 90% data coverage indicator applies to the quality registry's data base rather than the annual reports.",
-   "severity": "low"
-  },
-  {
-   "location": "what_to_do_first.details[1]",
-   "sentence": "Because the Health Care Act sets no maximum time for a cancer suspicion, the team recommends reporting access times using THL 21/2016 definitions for 16 cancers with handover alerts; meanwhile, the STM roadmap (measure 3.1.2) plans cancer-specific access times by 2026–2028, and the Filha programme's diagnostics recommendation with time limits is to be carried out before the 2030 mid-term evaluation.",
-   "problem": "STM roadmap measure 3.1.2 plans cancer-specific access times only for five (unnamed) cancers by 2026–2028 (with all significant cancers following by 2029–2031); omitting this scope restriction overstates what is planned by 2026–2028.",
-   "severity": "medium"
-  },
-  {
-   "location": "what_to_do_first.details[2]",
-   "sentence": "As referrals follow local instructions and a mentor insight notes weak referrals get lower urgency, the team recommends a KYS-style referral template, a persistent-symptoms rule, and a named diagnostic contact; the STM roadmap plans referral criteria (measure 2.5.2) and coordinator guidance (measure 1.2.3) by 2026–2028, while the Filha programme's referral criteria are to be carried out before the 2030 mid-term evaluation.",
-   "problem": "STM roadmap measure 2.5.2 plans standardised referral criteria for at least the five most common cancers by 2026–2028 (and all significant cancers by 2029–2031), rather than for all cancers by 2026–2028.",
+   "location": "how_sure_are_we.details[2]",
+   "sentence": "Public report data do not measure symptom onset or referrals, primary care visits are not included in the report's data, occupational health is not mentioned at all, and imaging appears only indirectly as the diagnosis basis in approximately 20% of patients without imaging dates or waits.",
+   "problem": "The cited claims (bs:coverage:Imaging, q:5eb155decc) state that approximately 20% of patients are diagnosed on clinical examination or findings alone (such as imaging), not that imaging specifically is the diagnosis basis in approximately 20% of patients.",
    "severity": "low"
   }
  ]

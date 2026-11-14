@@ -1,7 +1,7 @@
 {
  "county": "Pohjois-Savo",
- "brief_generated_at": "2026-11-14T13:03:58+00:00",
- "reviewed_at": "2026-11-14T13:04:30+00:00",
+ "brief_generated_at": "2026-11-14T14:03:04+00:00",
+ "reviewed_at": "2026-11-14T14:03:30+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,19 +10,13 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_pohjois-savo_20261114T130358019897Z.json",
+ "raw_response": "data/processed/gemini_raw/review_pohjois-savo_20261114T140304178947Z.json",
  "flags": [
   {
-   "location": "how_sure_are_we.headline",
-   "sentence": "Public data support relatively complete treatment recording in Pohjois-Savo, but county shares are crude and key pathway stages remain unmeasured.",
-   "problem": "Overreach: the cited claim (cty:no_treatment_record:Pohjois_Savon_hyvinvointialue) only shows that Pohjois-Savo's crude share with no treatment record within 12 months (19.3%, 95% CI 16.5–22.6) is lower than the national share (27.5%). Because 'no treatment record' mixes untreated patients and unrecorded treatment, a lower share relative to the national benchmark does not directly establish 'relatively complete treatment recording' as a supported finding rather than a cautious inference.",
+   "location": "how_sure_are_we.details[0]",
+   "sentence": "Mixing untreated patients and unrecorded treatment, the crude share with no treatment record within 12 months is 19.3% (95% CI 16.5–22.6; n=124/641), its 95% confidence interval lying below 27.5% (4089/14873) nationally; as an inference, not a finding, this is consistent with relatively complete treatment recording, so a low curative share is less likely to be only a recording artefact.",
+   "problem": "The cited claims do not mention curative treatment shares or recording artefacts for curative treatment, and in Pohjois-Savo the curative treatment share (24.5%, 95% CI 21.3–28.0) is not distinguishable from the national share (27.0%), making the reference to 'a low curative share' unsupported by the cited claims and potentially misleading.",
    "severity": "medium"
-  },
-  {
-   "location": "what_to_do_first.details[0]",
-   "sentence": "With Pohjois-Savo's crude recorded MDT share at 0.2% (95% CI 0.0–0.9; n=1/641) versus 6.0% (893/14873) nationally despite weekly KYS regional-pathway MDT reviews, and stage missing for about 48% of patients, the team recommends publishing county stage, drug and MDT recording completeness; the STM roadmap (measure 3.2.1) plans a quality registry decree update by 2026–2028 and 90% stage coverage by 2029–2031.",
-   "problem": "Minor imprecision: the cited STM roadmap claims attach the 2029–2031 timeline to annual reports for at least five cancers rather than specifying 2029–2031 as the deadline for the 90% coverage indicator, and the 90% target refers to the registry's overall data coverage (including stage) rather than stage coverage alone.",
-   "severity": "low"
   }
  ]
 }

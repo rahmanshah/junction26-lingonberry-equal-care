@@ -1,7 +1,7 @@
 {
  "county": "Pirkanmaa",
- "brief_generated_at": "2026-11-14T13:12:54+00:00",
- "reviewed_at": "2026-11-14T13:13:18+00:00",
+ "brief_generated_at": "2026-11-14T13:56:51+00:00",
+ "reviewed_at": "2026-11-14T13:57:23+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,19 +10,19 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_pirkanmaa_20261114T131254422346Z.json",
+ "raw_response": "data/processed/gemini_raw/review_pirkanmaa_20261114T135651846934Z.json",
  "flags": [
   {
    "location": "where_we_lag.headline",
-   "sentence": "Pirkanmaa's crude curative treatment share of 31.9% exceeds the 27.0% national level, yet the county does not monitor whether its stated pathway target times are met.",
-   "problem": "Overreach: claim reg:not_monitored states that no region says in its pathway document whether it meets its stated times, which shows a lack of public reporting rather than proving that the county does not monitor target times internally.",
+   "sentence": "Pirkanmaa's overlapping crude treatment shares exceed national values, so its pathway gaps are unmonitored times and missing diagnostic contacts in regional pathway documents rather than low recorded treatment.",
+   "problem": "Overreach: exceeding national crude treatment shares (which are not age- or stage-adjusted, and without citing no-treatment-record data) does not establish that Pirkanmaa's pathway gaps are solely the two documentation omissions in regional pathway documents, as actual waiting times and other pathway stages are not covered by the cited claims.",
    "severity": "medium"
   },
   {
-   "location": "where_we_lag.details[2]",
-   "sentence": "In Pirkanmaa's regional pathway document, referral handling in 1–2 working days, invitations in 3–4 working days, CT most often within a week, and bronchoscopy results in 3–5 days are unmonitored targets rather than commitments, and no diagnostic-phase contact person is named.",
-   "problem": "Overreach: calling the stated times 'unmonitored targets' goes beyond claim reg:not_monitored, which only supports that no region says in its pathway document whether it meets its stated times.",
-   "severity": "medium"
+   "location": "what_to_do_first.headline",
+   "sentence": "The team recommends reporting access times using THL Ohjaus 21/2016 guidance, standardising referrals and diagnostic contacts from regional pathway documents, and publishing stage, drug, and MDT recording completeness.",
+   "problem": "Minor imprecision: the cited claims do not support standardising referrals and diagnostic contacts 'from regional pathway documents'—reg:named_contact states that no region names a diagnostic-phase contact person in its pathway document, and rec:2 models the referral template on KYS rather than drawing it from regional pathway documents.",
+   "severity": "low"
   }
  ]
 }

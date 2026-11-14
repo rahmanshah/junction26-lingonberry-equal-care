@@ -1,7 +1,7 @@
 {
  "county": "Kanta-Häme",
- "brief_generated_at": "2026-11-14T13:13:33+00:00",
- "reviewed_at": "2026-11-14T13:14:08+00:00",
+ "brief_generated_at": "2026-11-14T13:57:01+00:00",
+ "reviewed_at": "2026-11-14T13:57:36+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,13 +10,25 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_kanta-hame_20261114T131333866371Z.json",
+ "raw_response": "data/processed/gemini_raw/review_kanta-hame_20261114T135701674493Z.json",
  "flags": [
   {
+   "location": "where_we_lag.details[2]",
+   "sentence": "Because the treatment categories overlap, Kanta-Häme's crude curative treatment share of 23.4% (95% CI 20.1–27.2; n=128/546) versus 27.0% (4009/14873) nationally and crude life-prolonging treatment share of 32.2% (95% CI 28.4–36.3; n=176/546) versus 30.4% (4522/14873) nationally have 95% confidence intervals that include the national values.",
+   "problem": "Unsupported causal claim: the sentence states that the 95% confidence intervals include the national values 'Because the treatment categories overlap', whereas the overlap of treatment categories does not cause the confidence intervals to include the national values.",
+   "severity": "medium"
+  },
+  {
    "location": "how_sure_are_we.headline",
-   "sentence": "A journal article shows about 90% diagnosis concordance in HILMO, but table treatment shares lack age and stage adjustment, and public data omit pathway timestamps.",
-   "problem": "The cited claims ([lit:hilmo_90], [bs:coverage:Diagnosis], [bs:coverage:Treatment_start]) support diagnosis concordance, missing stage (~48%, preventing stage adjustment of curative shares), and missing treatment start dates, but none of the cited claims state that table treatment shares lack age adjustment or that pathway timestamps beyond treatment start are omitted.",
+   "sentence": "Public data report crude county shares without age or stage adjustment, reflect recording practices for treatments and MDT meetings, and omit pathway waiting times.",
+   "problem": "Slight overstatement: according to fig:age_adjusted_only_kuva16, county-level age-adjusted treatment shares do appear in Kuva 16 (as a PNG figure by sex); only the county table (Taulukko 11) lacks age adjustment.",
    "severity": "low"
+  },
+  {
+   "location": "what_to_do_first.details[3]",
+   "sentence": "The team recommends these local steps while the STM roadmap plans standardised referral criteria and symptom-based models under measure 2.5.2 and national pathway descriptions with access times under measure 3.1.2 by 2026–2028 (all significant cancers by 2029–2031), plus measure 1.2.3 guidance on a named care-coordinator model by 2026–2028 for county adoption by 2029–2031.",
+   "problem": "Missing scope caveat for the 2026–2028 milestone: measures 2.5.2 and 3.1.2 cover only at least the five most common cancers (2.5.2) and five unnamed cancers (3.1.2) by 2026–2028, before expanding to all significant cancers by 2029–2031.",
+   "severity": "medium"
   }
  ]
 }

@@ -1,7 +1,7 @@
 {
  "county": "Pohjois-Pohjanmaa",
- "brief_generated_at": "2026-11-14T13:10:14+00:00",
- "reviewed_at": "2026-11-14T13:10:39+00:00",
+ "brief_generated_at": "2026-11-14T13:53:24+00:00",
+ "reviewed_at": "2026-11-14T13:53:51+00:00",
  "note": "Flags are for human review only; they never change the brief's status or approve it.",
  "rule_problems": [],
  "model": "gemini-4-hydrogen",
@@ -10,13 +10,13 @@
   "seed": 20261114,
   "thinking_level": "model default"
  },
- "raw_response": "data/processed/gemini_raw/review_pohjois-pohjanmaa_20261114T131014194892Z.json",
+ "raw_response": "data/processed/gemini_raw/review_pohjois-pohjanmaa_20261114T135324826343Z.json",
  "flags": [
   {
    "location": "how_sure_are_we.headline",
-   "sentence": "HILMO diagnosis concordance is about 90% in a 2019 journal article, but public report data lack age and stage adjustments (about 48% missing stage) and pathway wait timestamps.",
-   "problem": "The claim that public report data lack age adjustments is not supported by any of the cited claims (which cover diagnosis concordance, stage missingness, referral, and treatment start only), and overreaches since Kuva 16 of the public report does include age-adjusted curative treatment figures by sex (though not county values for Pohjois-Pohjanmaa).",
-   "severity": "medium"
+   "sentence": "Public registry data show crude 12-month treatment shares with 95% confidence intervals, but lack county age-adjusted tables, stage for about 48% of patients, and pathway wait times.",
+   "problem": "The cited claims do not say that public registry data provide 95% confidence intervals for crude 12-month treatment shares; fig:age_adjusted_only_kuva16 states that Taulukko 11 gives crude shares only (while Kuva 16 has 95% CIs for age-adjusted shares). In addition, the cited claims only support missing treatment start dates rather than pathway wait times overall.",
+   "severity": "low"
   }
  ]
 }
