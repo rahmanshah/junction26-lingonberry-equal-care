@@ -1,0 +1,14 @@
+[project]
+name = "junction26-lingonberry-equal-care"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.12"
+dependencies = [
+    "google-genai>=3.3.0",
+    "pandas>=3.1.1",
+    "pdfplumber>=0.11.10",
+    "pydantic>=2.14.3",
+    "pypdf>=7.1.0",
+    "python-dotenv>=1.2.4",
+    "streamlit>=1.67.0",
+]
