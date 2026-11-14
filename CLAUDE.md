@@ -86,8 +86,8 @@ Build checklist: PLAN.md (tick tasks when done).
 - PIPELINE FROZEN (14 Nov, after run 3): no more prompt or validation-rule changes unless something
   is wrong. Final run: 22/22 validated; 24 review flags (0 high). History:
   outputs/briefs/flags_before_after.md (runs 1–3).
-- App branding: assets/logo.svg (favicon via set_page_config + st.logo; SVG accepted inside a running
-  app). Core message above the tabs is defined with its backing claims in src/core_message.py;
+- App branding: assets/logo.svg, used as the favicon (set_page_config; SVG accepted inside a running
+  app) and next to the "Lingonberry" sidebar title. No st.logo. Core message above the tabs is defined with its backing claims in src/core_message.py;
   check_claims.py fails if any part is not backed by citable claims.
 - Deployment (Streamlit Community Cloud, main file src/app.py): view-only without secrets; the
   Regenerate button appears only if GEMINI_API_KEY, MODEL_REASON and MODEL_EXTRACT are set (.env or

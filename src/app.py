@@ -23,9 +23,9 @@ import streamlit as st  # noqa: E402
 
 LOGO = ROOT / "assets" / "logo.svg"
 # First Streamlit call. Inside a running app Streamlit turns a local .svg path into an SVG data URI for
-# both the favicon and st.logo (checked in the test harness), so no PNG is needed.
+# the favicon (checked in the test harness), so no PNG is needed. The logo is shown only next to the
+# sidebar title, not with st.logo.
 st.set_page_config(page_title="Lingonberry", page_icon=str(LOGO), layout="wide")
-st.logo(str(LOGO), size="large", icon_image=str(LOGO))
 
 import base64  # noqa: E402
 import hashlib  # noqa: E402
