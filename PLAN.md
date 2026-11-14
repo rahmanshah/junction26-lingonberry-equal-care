@@ -44,12 +44,12 @@
 - [x] Limitations panel; "How we verified this" (status counts, check_claims, validate_brief)
 - [x] "Regenerate with Gemini" runs brief + validate + review live
 - [ ] First end-to-end demo by 18:00 (app runs; demo with the team still to do)
-- [ ] Saved briefs for the other 20 counties (only Kymenlaakso and Varsinais-Suomi so far)
+- [x] Saved briefs for the other 20 counties (all 22 via src/generate_all.py)
 
 ## 5. Polish and deploy (Sat evening)
-- [ ] Deploy; README with run steps and sources
+- [x] Deploy; README with run steps and sources
 - [ ] Clarity test with an outsider
 
 ## 6. Submit (Sun before 10:00)
 - [ ] Demo recording and 2-minute pitch video
-- [ ] Final README, Platform fields, submit
+- [ ] Final README (done except the video link: VIDEO_URL placeholder), Platform fields, submit
