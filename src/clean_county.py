@@ -33,15 +33,27 @@ for c in ["n", "total", "share"]:
 
 
 def level(row):
+    if row["county"] == "Yhteistyöalue yhteensä":
+        return "area"          # collaborative-area subtotal row
     if row["county"] == row["treatment"] or row["area"] == row["treatment"]:
         return "national"
     if row["county"] == row["area"]:
-        return "area"
+        return "area_header"   # empty header row
     return "county"
 
 
 df["level"] = df.apply(level, axis=1)
+
+# Subtotal rows: name them after their area
+is_subtotal = df["county"] == "Yhteistyöalue yhteensä"
+df.loc[is_subtotal, "county"] = df.loc[is_subtotal, "area"]
+
+# Drop empty header rows (no counts)
+df = df[df["n"].notna() | (df["level"] == "county")]
+df = df[df["level"] != "area_header"]
+
 print(df["level"].value_counts())
+print(df[df["level"] == "county"].groupby("treatment").size())
 
 # Check: does n / total reproduce the printed share?
 df["share_check"] = (df["n"] / df["total"] * 100).round(1)
@@ -54,9 +66,17 @@ df.to_csv(OUT, index=False, encoding="utf-8")
 print("Saved", OUT)
 
 county = df[df["level"] == "county"]
-print("\nTreatment types:", county["treatment"].unique())
-print("Counties:", county["county"].nunique())
+print("\nCounties:", county["county"].nunique())
 
 wide = county.pivot_table(index="county", columns="treatment", values="share")
 print("\nShare (%) by county and treatment type:")
 print(wide.round(1).sort_index().to_string())
+
+#assert (county.groupby("treatment").size() == 22).all(), \
+#   "Expected 22 counties per treatment type"
+counts = county.groupby("treatment").size()
+print(counts)
+full = counts.drop("MDT-käsittely", errors="ignore")
+assert (full == 22).all(), "Expected 22 counties per treatment type"
+missing_mdt = sorted(set(county["county"]) - set(county.loc[county["treatment"] == "MDT-käsittely", "county"]))
+print("Counties with no MDT row in the report:", missing_mdt)
