@@ -414,8 +414,9 @@ with tab_path:
     st.caption("From symptoms to treatment. Delays are mean days from the MOT study: **preliminary, unpublished**, "
                "national averages (not region-specific).")
     groups =[("Patient delay", "mot:patient"), ("Primary care", "mot:primary"), ("Specialist care", "mot:specialist")]
-    weights = [int((bs["mot_interval"] == g).sum()) for g, _ in groups]
-    cols = st.columns(weights, gap="small")
+    # Equal widths: stages stack vertically inside each group, so weighting by stage count only squeezed
+    # the one-stage "Patient delay" column (words broke mid-word at 1440px).
+    cols = st.columns(len(groups), gap="small")
     for col, (group, cid) in zip(cols, groups):
         with col, st.container(border=True):
             days = claims[cid]["value"]
