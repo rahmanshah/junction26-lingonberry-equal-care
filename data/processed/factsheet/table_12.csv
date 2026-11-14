@@ -1,0 +1,96 @@
+Hoitomuoto,Hoidon tyyppi,Toimenpide- koodi,Toimenpide,Hoidettujen lukumäärä,Osuus hoidetuista (%),Toimenpiteiden lukumäärä,Osuus toimenpiteistä (%)
+Diagnostiikka,Diagnostiikka,Diagnostiikka,Diagnostiikka,Diagnostiikka,Diagnostiikka,Diagnostiikka,Diagnostiikka
+,MDT-käsittely,MDT-käsittely,MDT-käsittely,MDT-käsittely,MDT-käsittely,MDT-käsittely,MDT-käsittely
+,,WZC15,Diagnostiikan ja hoidon moniammatillinen suunnittelu (MDT),130,0.9,209,0.1
+,,WZC20,Moniammatillinen hoitokokous,809,5.8,1353,0.6
+Jarruttava,Jarruttava,Jarruttava,Jarruttava,Jarruttava,Jarruttava,Jarruttava,Jarruttava
+,Muu lääkehoito pl. (neo-)adjuvanttihoito,Muu lääkehoito pl. (neo-)adjuvanttihoito,Muu lääkehoito pl. (neo-)adjuvanttihoito,Muu lääkehoito pl. (neo-)adjuvanttihoito,Muu lääkehoito pl. (neo-)adjuvanttihoito,Muu lääkehoito pl. (neo-)adjuvanttihoito,Muu lääkehoito pl. (neo-)adjuvanttihoito
+,,WC105,Paikallisen uusiutuneen kasvaimen yksinkertainen solusalpaajahoito,9,0.1,13,0.0
+,,WC125,Paikallisen uusiutuneen kasvaimen vaativa solusalpaajahoito,19,0.1,43,0.0
+,,WC205,Paikallisen uusiutuneen kasvaimen yksinkertainen hormonihoito (=oraalinen),0,0.0,0,0.0
+,,WC225,Paikallisen uusiutuneen kasvaimen vaativa tavanomainen hormonihoito (=pistos),0,0.0,0,0.0
+,,WC305,Paikallisen uusiutuneen kasvaimen yksinkertainen hoito biovasteenmuuntajilla,8,0.1,14,0.0
+,,WC325,"Paikallisen uusiutuneen kasvaimen vaativa hoito biovasteenmuuntajilla, immunologiset lääkkeet",11,0.1,33,0.0
+,,WC401,Paikallisesti uusiutuneen kasvaimen yksinkertainen vasta-ainehoito,1,0.0,1,0.0
+,,WC402,Paikallisesti uusiutuneen kasvaimen vaativa vasta-ainehoito,0,0.0,0,0.0
+,,WC501,Paikallisesti uusiutuneen kasvaimen yksinkertainen entsyymi-inhibiittori- ja vastaava hoito,0,0.0,0,0.0
+,,WD105,Laajalle levinneen kasvaimen yksinkertainen tavanomainen solusalpaajahoito,809,5.8,2950,1.3
+,,WD125,Laajalle levinneen kasvaimen vaativa solusalpaajahoito,2092,15.0,9323,4.1
+,,WD205,Laajalle levinneen kasvaimen yksinkertainen hormonihoito (=oraalinen),8,0.1,14,0.0
+,,WD225,Laajalle levinneen kasvaimen vaativa hormonihoito (=pistos),16,0.1,23,0.0
+,,WD305,Laajalle levinneen kasvaimen yksinkertainen hoito biovasteenmuuntajilla sisältäen bifosfonaatti- ja muut luusto-lääkkeet,212,1.5,542,0.2
+,,WD325,Laajalle levinneen kasvaimen vaativa hoito biovasteenmuuntajilla,932,6.7,4897,2.2
+,,WD405,Laajalle levinneen kasvaimen yksinkertainen vasta-ainehoito,80,0.6,244,0.1
+,,WD415,Laajalle levinneen kasvaimen vaativa vasta-ainehoito,149,1.1,486,0.2
+,,WD505,Laajalle levinneen kasvaimen yksinkertainen entsyymi-inhibiittori- ja vastaava hoito,228,1.6,1108,0.5
+,Muu sädehoito pl. streotaktinen ja palliatiivinen sädehoito,Muu sädehoito pl. streotaktinen ja palliatiivinen sädehoito,Muu sädehoito pl. streotaktinen ja palliatiivinen sädehoito,Muu sädehoito pl. streotaktinen ja palliatiivinen sädehoito,Muu sädehoito pl. streotaktinen ja palliatiivinen sädehoito,Muu sädehoito pl. streotaktinen ja palliatiivinen sädehoito,Muu sädehoito pl. streotaktinen ja palliatiivinen sädehoito
+,,AX099,Koko keskushermoston sädehoito,0,0.0,0,0.0
+,,QX099,Koko ihon sädehoito,0,0.0,0,0.0
+,,WA010,Koko kehon sädehoito muun syöpähoidon tukihoitona,1,0.0,1,0.0
+,,WA029,Puolikehon sädehoito,0,0.0,0,0.0
+,,WF001,Sädehoito primaarikasvaimen preoperatiivisena hoitona,26,0.2,360,0.2
+,,WF003,Sädehoito primaarikasvaimen liitännäishoitona,120,0.9,1608,0.7
+,,WF029,Paikallisesti uusineen kasvaimen sädehoito,10,0.1,20,0.0
+,,WF049,Etäpesäkkeen sädehoito,2136,15.3,7904,3.5
+,,WF090,Profylaktinen sädehoito,17,0.1,130,0.1
+,,WF099,Muu sädehoito,84,0.6,357,0.2
+Oireenmukainen,Oireenmukainen,Oireenmukainen,Oireenmukainen,Oireenmukainen,Oireenmukainen,Oireenmukainen,Oireenmukainen
+,Oireenmukainen hoito,Oireenmukainen hoito,Oireenmukainen hoito,Oireenmukainen hoito,Oireenmukainen hoito,Oireenmukainen hoito,Oireenmukainen hoito
+,,Z51.51,,4906,35.2,14011,6.2
+,Oireenmukainen sädehoito,Oireenmukainen sädehoito,Oireenmukainen sädehoito,Oireenmukainen sädehoito,Oireenmukainen sädehoito,Oireenmukainen sädehoito,Oireenmukainen sädehoito
+,,WF004,Sädehoito primaarikasvaimen palliatiivisena hoitona,2003,14.4,12781,5.6
+Parantava,Parantava,Parantava,Parantava,Parantava,Parantava,Parantava,Parantava
+,Kemosädehoito,Kemosädehoito,Kemosädehoito,Kemosädehoito,Kemosädehoito,Kemosädehoito,Kemosädehoito
+,,ZX095,Yhdistetty sädehoito ja kemoterapia,134,1.0,2469,1.1
+,Leikkaus,Leikkaus,Leikkaus,Leikkaus,Leikkaus,Leikkaus,Leikkaus
+,,GBC03,Henkitorven osan poisto,4,0.0,5,0.0
+,,GBC10,Henkitorven harjun poisto ja korjaus,0,0.0,0,0.0
+,,GDB10,Keuhkon kiilapoisto,22,0.2,23,0.0
+,,GDB11,Keuhkon kiilapoisto rintaontelon tähystyksessä,131,0.9,135,0.1
+,,GDB20,Keuhkojaokkeen poisto,18,0.1,18,0.0
+,,GDB21,Keuhkojaokkeen poisto rintaontelon tähystyksessä,336,2.4,354,0.2
+,,GDB96,Muu keuhkon osan poistoleikkaus,1,0.0,1,0.0
+,,GDB97,Muu keuhkon osan poisto rintaontelon tähystyksessä,1,0.0,1,0.0
+,,GDC00,Keuhkolohkon poistoleikkaus,340,2.4,351,0.2
+,,GDC01,Keuhkolohkon poisto rintaontelon tähystyksessä,1383,9.9,1454,0.6
+,,GDC10,Kahden keuhkolohkon poistoleikkaus,56,0.4,60,0.0
+,,GDC11,Kahden keuhkolohkon poisto rintaontelon tähystyksessä,34,0.2,36,0.0
+,,GDC13,Laajennettu yhden tai kahden keuhkolohkon poisto poisto,43,0.3,45,0.0
+,,GDC20,Keuhkolohkon poistoleikkaus ja sleeveresektio,41,0.3,43,0.0
+,,GDC23,Keuhkolohkon ja -jaokkeen poistoleikkaus,13,0.1,13,0.0
+,,GDC26,Keuhkolohkon ja muun keuhkon osan poistoleikkaus,0,0.0,0,0.0
+,,GDC96,Muu keuhkolohkon poistoleikkaus,2,0.0,2,0.0
+,,GDC97,Muu keuhkolohkon poisto rintaontelon tähystyksessä,1,0.0,1,0.0
+,,GDD00,Keuhkonpoistoleikkaus,41,0.3,44,0.0
+,,GDD01,Keuhkonpoisto rintaontelon tähystyksessä,1,0.0,1,0.0
+,,GDD10,Keuhkopussin ja keuhkon poistoleikkaus,0,0.0,0,0.0
+,,GDD11,Keuhkopussin ja keuhkon poisto rintaontelon tähystyksessä,0,0.0,0,0.0
+,,GDD20,Laajennettu keuhkonpoistoleikkaus,4,0.0,4,0.0
+,,GDD23,Keuhkonpoisto ja henkitorven harjun poisto osittain,0,0.0,0,0.0
+,,GDD26,Keuhkonpoisto ja keuhkoputken tai henkitorven poisto osittain,0,0.0,0,0.0
+,,GDD96,Muu avoin keuhkonpoistoleikkaus,0,0.0,0,0.0
+,,GDD97,Muu keuhkonpoistoleikkaus rintaontelon tähystyksessä,0,0.0,0,0.0
+,Liitännäishoito,Liitännäishoito,Liitännäishoito,Liitännäishoito,Liitännäishoito,Liitännäishoito,Liitännäishoito
+,,WB103,Primaarikasvaimen yksinkertainen solusalpaajahoito liitännäishoitona,149,1.1,382,0.2
+,,WB113,Primaarikasvaimen monisolusalpaajahoito liitännäishoitona,521,3.7,2561,1.1
+,,WB303,Primaarikasvaimen yksinkertainen hoito biovasteen-muuntajilla liitännäishoitona,14,0.1,46,0.0
+,,WB323,"Primaarikasvaimen vaativa hoito biovasteenmuuntajilla, immunologiset lääkkeet",43,0.3,240,0.1
+,,WB401,Primaarikasvaimen yksinkertainen vasta-ainehoito,7,0.1,12,0.0
+,,WB402,Primaarikasvaimen vaativa vasta-ainehoito,3,0.0,12,0.0
+,Neoadjuvanttihoito,Neoadjuvanttihoito,Neoadjuvanttihoito,Neoadjuvanttihoito,Neoadjuvanttihoito,Neoadjuvanttihoito,Neoadjuvanttihoito
+,,WB111,Primaarikasvaimen leikkausta tai sädehoitoa edeltävä solunsalpaajahoito kahdella tai useammalla solunsalpaajalla,15,0.1,73,0.0
+,,WB121,Primaarikasvaimen leikkausta tai sädehoitoa edeltävä vaativa solusalpaajahoito,131,0.9,466,0.2
+,,WB131,Primaarikasvaimen leikkausta tai sädehoitoa edeltävä vaativa solunsalpaajahoito sisältäen osastolla annettavat tukihoidot,3,0.0,5,0.0
+,,WB301,Primaarikasvaimen leikkausta tai sädehoitoa edeltävä hoito yksittäisellä immuuniaktivaation vapauttajalla,3,0.0,6,0.0
+,,WB311,Primaarikasvaimen leikkausta tai sädehoitoa edeltävä monihoito biovasteenmuuntajilla,0,0.0,0,0.0
+,,WB321,Primaarikasvaimen leikkausta tai sädehoitoa edeltävä vaativa hoito biovasteenmuuntajilla,3,0.0,10,0.0
+,,WB501,Primaarikasvaimen yksinkertainen entsyymi-inhibiittori- ja vastaava hoito,14,0.1,24,0.0
+,,WB600,Primaarikasvaimen leikkausta tai sädehoitoa edeltävä hoito vasta-aineella,3,0.0,9,0.0
+,,WB610,Primaarikasvaimen leikkausta tai sädehoitoa edeltävä vaativa hoito vasta-aineella,2,0.0,7,0.0
+,,WB700,Primaarikasvaimen leikkausta tai sädehoitoa edeltävä hoito CDK4/6-kinaasin estäjällä,0,0.0,0,0.0
+,,WB702,"Primaarikasvaimen leikkausta tai sädehoitoa edeltävä hoito vasta-ainekonjugaattilääkkeellä (antibody-drug conjugate, ADC)",0,0.0,0,0.0
+,,WB703,"Primaarikasvaimen liitännäishoito vasta-ainekonjugaattilääkkeellä (antibody-drug conjugate, ADC)",0,0.0,0,0.0
+,Stereotaktinen sädehoito,Stereotaktinen sädehoito,Stereotaktinen sädehoito,Stereotaktinen sädehoito,Stereotaktinen sädehoito,Stereotaktinen sädehoito,Stereotaktinen sädehoito
+,,WF002,Radikaali primaarikasvaimen sädehoito,1607,11.5,23060,10.2
+,,ZX050,Stereotaktinen sädehoito,195,1.4,619,0.3
+1Oireenmukaisen käynnin ICD-10 -koodi,1Oireenmukaisen käynnin ICD-10 -koodi,1Oireenmukaisen käynnin ICD-10 -koodi,1Oireenmukaisen käynnin ICD-10 -koodi,1Oireenmukaisen käynnin ICD-10 -koodi,1Oireenmukaisen käynnin ICD-10 -koodi,1Oireenmukaisen käynnin ICD-10 -koodi,1Oireenmukaisen käynnin ICD-10 -koodi

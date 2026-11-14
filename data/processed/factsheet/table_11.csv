@@ -1,0 +1,15 @@
+Ensivaiheen hoito,Viimeisin hoitomuoto,Potilaiden lukumäärä,Osuus ensivaiheen hoidon mukaan (%),Osuus kaikista potilaista (%)
+Parantava,Parantava,2722,75.9,18.3
+Parantava,Jarruttava,312,8.7,2.1
+Parantava,Oireenmukainen,107,3.0,0.7
+Parantava,Kuolema,443,12.4,3.0
+Jarruttava,Parantava,110,3.3,0.7
+Jarruttava,Jarruttava,1086,32.6,7.3
+Jarruttava,Oireenmukainen,353,10.6,2.4
+Jarruttava,Kuolema,1781,53.5,12.0
+Oireenmukainen,Parantava,8,0.2,0.1
+Oireenmukainen,Jarruttava,93,2.4,0.6
+Oireenmukainen,Oireenmukainen,472,12.2,3.2
+Oireenmukainen,Kuolema,3297,85.2,22.2
+Ei hoitotietoa,Ei hoitotietoa,845,20.7,5.7
+Ei hoitotietoa,Kuolema,3244,79.3,21.8
