@@ -57,21 +57,28 @@ exactly as given. Do not cite anything that is not in the list.
 2. Copy every number exactly as it appears in a cited claim, at the same precision. Do NOT calculate new \
 numbers (no differences, ratios or percentage-point gaps): state the county value and the national value \
 side by side instead. Spell out no numbers in words.
-3. State uncertainty. Give 95% confidence intervals where the claim has one. Say that the county shares \
-are crude (not adjusted for age or stage). Where an age-adjusted value exists (Kuva 16, digitised from a \
-figure, about ±0.5 percentage points), use it to say whether a gap holds after age adjustment, and say \
-it is digitised.
+3. State uncertainty. Give 95% confidence intervals where the claim has one. Never say "certain": say \
+the 95% confidence interval excludes (or includes) the national value. Say that the county shares are \
+crude (not adjusted for age or stage). Where an age-adjusted value exists (Kuva 16, digitised from a \
+figure, about ±0.5 percentage points), use it to say whether a gap holds after age adjustment, say it is \
+digitised, and pass on any caveat in the claim's notes (e.g. a confidence interval that could not be read).
 4. The treatment categories overlap (a patient can have several); never add them up or present them as \
 a breakdown. "No treatment record within 12 months" mixes untreated patients and treatment that was not \
 recorded; never call it "untreated" or "missing data". MDT records measure recording practice, not care.
-5. Label status in the sentence itself: a sentence citing a claim with status "preliminary" must say \
+5. Read the no-treatment-record share as a data-quality signal. If it is at or below the national value, \
+recording looks relatively complete, so a low curative share is less likely to be a recording artefact; \
+do not cite a low no-record share as a reason to fix recording. If it is above national, a low share of \
+a treatment type may partly reflect unrecorded treatment.
+6. Label status in the sentence itself: a sentence citing a claim with status "preliminary" must say \
 "preliminary" (e.g. "preliminary, unpublished figures"); one citing "mentor insight" must say \
-"mentor insight". Claims "verified by Hellu" come from a teammate's reading of regional documents.
-6. "where_we_lag": where this county's pathway lags national values (3–5 sentences). \
-"how_sure_are_we": what is certain, what is uncertain and what public data cannot show (3–5 sentences). \
-"what_to_do_first": the first steps, drawn from the team's draft recommendations and suited to this \
-county's data, each backed by evidence claims (2–4 sentences).
-7. Plain, direct English. No claims about other counties. No headings or numbering inside sentences."""
+"mentor insight". Claims "verified by Hellu" were read in full by a teammate in documents we do not \
+hold locally (regional pathway documents, the Health Care Act, THL guidance, a journal article); \
+describe them by what they are, not as regional documents unless they are.
+7. "where_we_lag": where this county's pathway lags national values (3–5 sentences). \
+"how_sure_are_we": what is well supported, what is uncertain and what public data cannot show \
+(3–5 sentences). "what_to_do_first": the first steps, drawn from the team's draft recommendations and \
+suited to this county's data, each backed by evidence claims (2–4 sentences).
+8. Plain, direct English. No claims about other counties. No headings or numbering inside sentences."""
 
 
 def load(statuses=ledger.CITABLE) -> list[dict]:
@@ -110,6 +117,9 @@ def render_claim(c: dict) -> str:
             line += f" | translation: {c['quote_en']}"
     src = (c.get("source_doc") or "").split("/")[-1]
     line += f" | source: {src}, {c.get('location')}"
+    # County share notes only repeat the claim text; other notes carry caveats the model needs.
+    if c.get("notes") and not c["id"].startswith("cty:"):
+        line += f" | notes: {c['notes']}"
     return line
 
 

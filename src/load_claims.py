@@ -127,7 +127,7 @@ def national_claims() -> list[dict]:
     rows = []
     for fi, (n, table) in counts.items():
         slug, label = TREATMENT[fi]
-        share = round(n / n_all * 100, 2)
+        share = round(n / n_all * 100, 4)  # 4 dp: 26.95 would print as 26.9; 26.9549 prints 27.0 as in the report
         how = ("all patients minus patients with any lung cancer procedure"
                if fi == "Ei hoitotietoa" else "count from the table's total row")
         rows.append({

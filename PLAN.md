@@ -26,9 +26,15 @@
 
 ## 3. Gemini pipeline (Sat 13:00-16:00)
 - [ ] Extract actions from strategy + roadmap PDFs with verbatim quote and page (Hydrogen)
-- [ ] Code check: quote appears on cited page; failures = draft
-- [ ] Draft 3 recommendations with Argon, each linked to sources
-- [ ] Save all raw model responses to disk
+      (policy quotes so far verified by hand: docs/source_verification.md)
+- [x] Code check: quote appears on cited page (src/check_claims.py)
+- [x] Translate Finnish quotes with Hydrogen, stored next to the quote (src/translate_quotes.py)
+- [x] County briefs with Argon (thinking HIGH): 3 sections, every sentence cites ledger IDs (src/brief.py)
+- [x] Validator: IDs, statuses, numbers vs cited claims, preliminary/mentor labels; 1 retry, else DRAFT
+      (src/validate_brief.py)
+- [x] Save all raw model responses to disk (data/processed/gemini_raw/)
+- [x] Briefs for Kymenlaakso and Varsinais-Suomi (outputs/briefs/)
+- [ ] Semantic review of briefs: the validator checks numbers and IDs, not meaning
 
 ## 4. App (Sat 16:00-18:00)
 - [ ] Streamlit: county picker, three questions (where we lag / how sure / what first)
