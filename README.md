@@ -219,6 +219,25 @@ Finnish strategy itself (`strategy_2026_2035_fi.pdf`).
 The Finnish strategy and roadmap are listed with both their official STM link and the copy the
 challenge supplied. Verified quotes and page numbers: `docs/source_verification.md`.
 
+## Design history
+
+After Junction 2026 had ended, a Google DeepMind mentor gave feedback on the project. They said it was
+done well and well integrated with Gemini, and that to improve its chances of winning, the UI should be
+easier to understand: people should be able to see where to start and where to go next.
+
+We redesigned the app's layout in response. The data, the claim ledger, validation and the Gemini
+pipeline did not change. What changed:
+
+- A header row with the Region picker and a validation popover, replacing the sidebar.
+- A verdict headline and a region-versus-Finland chart at the top of the Brief.
+- Brief sections collapsed, so only the first is open.
+- Evidence behind toggles: claim sources, detail sentences and the full list of limitations.
+- A ranked dot plot for comparing regions.
+- A pathway view with one evidence panel for the selected step.
+- A simpler verification tab: three check cards, with the technical details in an expander.
+- Start-here and next-step cues: a line under the header and a link to the next tab at the bottom of
+  each tab.
+
 ## Licence and team
 
 Code: [MIT](LICENSE).

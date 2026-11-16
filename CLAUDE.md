@@ -109,6 +109,8 @@ Build checklist: PLAN.md (tick tasks when done).
     for show/hide inside one.
   - Needs Streamlit ≥ 1.56 (tested 1.56–1.67 with AppTest; 1.55 lacks segmented_control(required=),
     ≤1.54 lacks popover(key=)). requirements.txt pins 1.67.0.
+- Design history: after Junction 2026 ended, a Google DeepMind mentor said the UI should make it easier to see
+  where to start and where to go next; the layout redesign responded (README "Design history"). Docs only.
 - Deployment (Streamlit Community Cloud, main file src/app.py): view-only without secrets; the
   Regenerate button (in the header popover) is disabled, with a view-only note, unless GEMINI_API_KEY,
   MODEL_REASON and MODEL_EXTRACT are set (.env or st.secrets). Without data/raw/ the app shows
