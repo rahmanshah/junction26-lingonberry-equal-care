@@ -225,7 +225,8 @@ cty = ct[ct["level"] == "county"]
 # Plain-language definitions for non-expert readers. Based on docs/definitions.md (report §3.3, §4.2);
 # they are explanations, not ledger claims, so they carry no figures.
 GLOSSARY = {
-    "pp": "Percentage points: the plain difference between two percentages (27.0% − 19.3% = 7.7 pp).",
+    "pp": "Percentage points: the plain difference between two percentages. For example, if one rate is 30% "
+          "and another is 25%, the gap is 5 percentage points.",
     "95% CI": "95% confidence interval: the range the true share is likely to lie in, given how many patients "
               "a region has. If a region's range includes Finland's value, the data cannot tell them apart.",
     "Curative treatment": "Treatment that aims to cure the cancer: surgery, stereotactic radiotherapy, or "
