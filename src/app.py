@@ -66,7 +66,8 @@ div[data-testid="stButtonGroup"] div:has(> button) {flex-wrap: wrap !important; 
 .lb-verdict {margin: .6rem 0 0; font-size: clamp(1.9rem, 4vw, 2.4rem); line-height: 1.14; letter-spacing: -0.02em;
   font-weight: 600; color: #1F1B1A; text-wrap: pretty;}
 .lb-lede {margin: .9rem 0 1rem; font-size: 1rem; line-height: 1.55; color: #5A524D; max-width: 560px;}
-.st-key-go-pathway button p {color: #B3263A; font-weight: 500;}
+.st-key-go-pathway button p, [class*="st-key-next-"] button p,
+[class*="st-key-next-"] button span {color: #B3263A; font-weight: 500;}
 /* Brief sections: expander title larger, like the design's question cards */
 [data-testid="stExpander"] summary strong {font-size: 1.1rem; font-weight: 600;}
 [data-testid="stExpander"] summary {padding-top: .8rem; padding-bottom: .8rem;}
@@ -674,6 +675,27 @@ def method_bar(methods: pd.Series) -> alt.Chart:
     ).properties(height=24, background="transparent").configure_view(strokeWidth=0, fill=None)
 
 
+# ---------------------------------------------------------------- where to start, where to go next
+NEXT_STEP = {  # tab -> (button label, destination tab); the last tab leads back to the Brief
+    "Brief": ("Next: Compare regions — how does this region rank?", "Compare regions"),
+    "Compare regions": ("Next: Pathway — which steps can public data see?", "Pathway"),
+    "Pathway": ("Next: How we verified this — where does each number come from?", "How we verified this"),
+    "How we verified this": ("Back to the Brief", "Brief"),
+}
+
+
+def next_step(tab: str) -> None:
+    """Quiet link-style button at the bottom of a tab that switches to the next one."""
+    label, dest = NEXT_STEP[tab]
+    back = dest == "Brief"
+    with st.container(horizontal=True, horizontal_alignment="right"):
+        st.button(label, type="tertiary", key=f"next-{TAB_LABELS.index(tab)}", on_click=go_to_tab, args=(dest,),
+                  icon=":material/arrow_back:" if back else ":material/arrow_forward:",
+                  icon_position="left" if back else "right")
+
+
+st.caption("Start with the **Brief**: it is the summary. The other tabs hold the data behind it.")
+
 # Stateful tabs (key + on_change): st.session_state[NAV] holds the active label, so a button can switch tabs.
 NAV = "nav"
 TAB_LABELS = ["Brief", "Compare regions", "Pathway", "How we verified this"]
@@ -698,6 +720,7 @@ with tab_brief:
                 flagged_for_review(review_doc, brief_doc["brief"])
     with right:
         read_before_acting(slug)
+    next_step("Brief")
 
 # ---------------------------------------------------------------- chart
 with tab_chart:
@@ -735,6 +758,7 @@ with tab_chart:
                                          "vs_national": "vs Finland", "n": "Patients", "total": "All patients"}),
                      hide_index=True, width="stretch",
                      column_config={"Finland %": st.column_config.NumberColumn(format="%.1f")})
+    next_step("Compare regions")
 
 # ---------------------------------------------------------------- pathway
 with tab_path:
@@ -768,6 +792,7 @@ with tab_path:
     st.caption("Delays are mean days from the MOT study: **preliminary, unpublished**, national averages (not "
                "region-specific). Which pathway steps fall in which MOT interval is the team's assumption. "
                "Measured status: src/build_blind_spots.py, from the 2019–2023 report.")
+    next_step("Pathway")
 
 # ---------------------------------------------------------------- verification
 with tab_verify:
@@ -873,6 +898,7 @@ with tab_verify:
                 st.caption(f"Code rules (overclaiming words, future tense about plans): "
                            f"{len(review_doc['rule_problems'])} problem(s). Model review: {n_flags} flag(s) for "
                            "human review (see the Brief tab); flags never approve or change a brief.")
+    next_step("How we verified this")
 
 # ---------------------------------------------------------------- footer
 st.divider()
