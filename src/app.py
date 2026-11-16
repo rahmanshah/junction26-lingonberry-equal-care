@@ -521,7 +521,7 @@ def national_context(region_slug: str) -> None:
                 for i, (part, ids) in enumerate(core_parts):
                     st.caption(f"‘{part[:1].upper() + part[1:]}’: backed by")
                     claim_pills(ids, f"core-{region_slug}-{i}")
-        link.button("See the pathway →", type="tertiary", key="go-pathway", on_click=go_to_tab,
+        link.button("See the pathway →", type="tertiary", key="go-pathway", on_click=go_to_tab_and_scroll,
                     args=("Pathway",))
         if core_problems:
             st.error("The core message is not fully backed by the ledger: " + "; ".join(core_problems))
@@ -690,8 +690,9 @@ SCROLL_TO_TABS = "scroll-to-tabs"  # one-shot session flag: bring the tab bar in
 
 
 def go_to_tab_and_scroll(label: str) -> None:
-    """Next-step callback: switch tabs as usual, then ask the next run to scroll the tab bar into view
-    (the button sits at the bottom of the old tab, so the new tab would otherwise open scrolled down)."""
+    """Callback for every in-page tab link ("See the pathway →", Next, Back to the Brief): switch tabs as
+    usual, then ask the next run to scroll the tab bar into view (the links sit below the tab bar, so the
+    new tab would otherwise open with the bar scrolled out of view)."""
     go_to_tab(label)
     st.session_state[SCROLL_TO_TABS] = st.session_state.get(SCROLL_TO_TABS, 0) + 1
 
