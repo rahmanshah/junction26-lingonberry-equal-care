@@ -33,9 +33,10 @@ For every region, a one-page brief answers three questions:
 - **What to do first?** Our recommendations, tied to measures already in the national plans.
 
 Every sentence links to its ledger claims: source, location, and the original Finnish quote with an
-English translation. The app also has a **chart** (curative treatment against *no treatment record*), a
-**pathway view** (which stages public data measures, from symptoms to treatment start) and a **How we
-verified this** tab.
+English translation (behind a **Show sources** toggle). The app also has a **Compare regions** tab (a
+ranked dot plot of all 22 regions with Wilson 95% confidence intervals, switching between curative
+treatment and *no treatment record*), a **Pathway** tab (which stages public data measures, from symptoms
+to treatment start) and a **How we verified this** tab.
 
 ## Key findings
 
