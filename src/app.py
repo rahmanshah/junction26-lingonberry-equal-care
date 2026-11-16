@@ -55,7 +55,6 @@ div[data-testid="stButtonGroup"] div:has(> button) {flex-wrap: wrap !important; 
 .st-key-meta-draft button {background: #FDF4E7; border-color: #EBCF9F; color: #8A5A12;}
 /* Tabs: active tab in ink, not red; the red underline stays */
 [data-testid="stTab"][aria-selected="true"] p {color: #1F1B1A; font-weight: 600;}
-[data-testid="stTabs"] {scroll-margin-top: 4.5rem;}  /* clear of the fixed top bar when scrolled to */
 /* Pathway: stage buttons left-aligned; the selected one gets a dark border */
 [class*="st-key-stage"] button {justify-content: flex-start; text-align: left; background: #FBF9F7;
   border-color: #E9E4E0; border-radius: 8px;}
@@ -686,27 +685,30 @@ NEXT_STEP = {  # tab -> (button label, destination tab); the last tab leads back
 }
 
 
-SCROLL_TO_TABS = "scroll-to-tabs"  # one-shot session flag: bring the tab bar into view on the next run
+SCROLL_TO_TOP = "scroll-to-top"  # session click counter: scroll to the page top on the next run
 
 
 def go_to_tab_and_scroll(label: str) -> None:
     """Callback for every in-page tab link ("See the pathway →", Next, Back to the Brief): switch tabs as
-    usual, then ask the next run to scroll the tab bar into view (the links sit below the tab bar, so the
-    new tab would otherwise open with the bar scrolled out of view)."""
+    usual, then ask the next run to scroll to the top of the page (the links sit below the header and tab
+    bar, so the new tab would otherwise open with both scrolled out of view)."""
     go_to_tab(label)
-    st.session_state[SCROLL_TO_TABS] = st.session_state.get(SCROLL_TO_TABS, 0) + 1
+    st.session_state[SCROLL_TO_TOP] = st.session_state.get(SCROLL_TO_TOP, 0) + 1
 
 
-def scroll_tabs_into_view() -> None:
-    """After a next-step click: a fixed script (no user input) scrolls the tab bar into view. st.html is not
+def scroll_to_page_top() -> None:
+    """After a tab-link click: a fixed script (no user input) scrolls the page back to the top, as on first
+    load, so the header row (Region picker, brief status), start-here line and tab bar are all in view. It
+    resets every scrolled ancestor of the tab bar and the window, so no pixel offset is assumed. st.html is not
     iframed; unsafe_allow_javascript is its documented switch for running scripts. The click count goes into
     the markup so back-to-back clicks render a new element (an unchanged one is kept and its script not rerun);
-    the flag is cleared on any other rerun so unrelated interactions never scroll."""
-    n = st.session_state.get(SCROLL_TO_TABS, 0)
-    if n and st.session_state.get(f"{SCROLL_TO_TABS}-done") != n:
-        st.session_state[f"{SCROLL_TO_TABS}-done"] = n
-        st.html(f'<script data-click="{n}">requestAnimationFrame(() => document.querySelector('
-                "'[data-testid=\"stTabs\"]')?.scrollIntoView({block: 'start'}));</script>",
+    any other rerun renders nothing, so unrelated interactions never scroll."""
+    n = st.session_state.get(SCROLL_TO_TOP, 0)
+    if n and st.session_state.get(f"{SCROLL_TO_TOP}-done") != n:
+        st.session_state[f"{SCROLL_TO_TOP}-done"] = n
+        st.html(f'<script data-click="{n}">requestAnimationFrame(() => {{'
+                "for (let el = document.querySelector('[data-testid=\"stTabs\"]'); el; el = el.parentElement) "
+                "{ if (el.scrollTop) el.scrollTop = 0; } window.scrollTo(0, 0); });</script>",
                 unsafe_allow_javascript=True)
 
 
@@ -933,4 +935,4 @@ foot_left, foot_right = st.columns(2)
 foot_left.caption("Source: Finnish Cancer Registry, Keuhkosyöpä Suomessa 2019–2023")
 with foot_right, st.container(key="foot-right"):
     st.caption("Public aggregate data only · no patient-level data · Junction 2026")
-scroll_tabs_into_view()
+scroll_to_page_top()
