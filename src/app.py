@@ -48,7 +48,7 @@ div[data-testid="stButtonGroup"] div:has(> button) {flex-wrap: wrap !important; 
 .lb-brand span {font-size: .82rem; color: #6F6762;}
 .st-key-region [data-testid="stSelectbox"] {display: flex; flex-direction: row; align-items: center; gap: .5rem;}
 .st-key-region [data-testid="stSelectbox"] > div {flex: 1; min-width: 0;}
-.st-key-region [data-testid="stWidgetLabel"] {margin: 0; min-height: 0; color: #6F6762;}
+.st-key-region [data-testid="stWidgetLabel"] {margin: 0 .25rem 0 0; min-height: 0; color: #6F6762; gap: .25rem;}
 [class*="st-key-meta"] button {border-radius: 999px;}
 .st-key-meta-ok button {background: #F1F8F2; border-color: #CFE3D4; color: #1F6A36;}
 .st-key-meta-draft button {background: #FDF4E7; border-color: #EBCF9F; color: #8A5A12;}
@@ -57,6 +57,14 @@ div[data-testid="stButtonGroup"] div:has(> button) {flex-wrap: wrap !important; 
 /* Small type */
 .lb-eyebrow {font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 12px; letter-spacing: .06em;
   text-transform: uppercase; color: #8A817B;}
+/* Brief hero */
+.lb-verdict {margin: .6rem 0 0; font-size: clamp(1.9rem, 4vw, 2.4rem); line-height: 1.14; letter-spacing: -0.02em;
+  font-weight: 600; color: #1F1B1A; text-wrap: pretty;}
+.lb-lede {margin: .9rem 0 1rem; font-size: 1rem; line-height: 1.55; color: #5A524D; max-width: 560px;}
+.st-key-go-pathway button p {color: #B3263A; font-weight: 500;}
+/* Brief sections: expander title larger, like the design's question cards */
+[data-testid="stExpander"] summary strong {font-size: 1.1rem; font-weight: 600;}
+[data-testid="stExpander"] summary {padding-top: .8rem; padding-bottom: .8rem;}
 /* Footer: right part right-aligned only when the columns sit side by side */
 @media (min-width: 640px) {.st-key-foot-right {text-align: right;}}
 </style>""", unsafe_allow_html=True)
@@ -178,6 +186,44 @@ def snapshot_note(snap: dict) -> None:
 claims = load_claims(mtime(ledger.DB))
 ct = load_csv("data/processed/county_treatment.csv", mtime("data/processed/county_treatment.csv"))
 bs = load_csv("data/processed/blind_spots.csv", mtime("data/processed/blind_spots.csv")).fillna("")
+cty = ct[ct["level"] == "county"]
+
+# Plain-language definitions for non-expert readers. Based on docs/definitions.md (report §3.3, §4.2);
+# they are explanations, not ledger claims, so they carry no figures.
+GLOSSARY = {
+    "pp": "Percentage points: the plain difference between two percentages (27.0% − 19.3% = 7.7 pp).",
+    "95% CI": "95% confidence interval: the range the true share is likely to lie in, given how many patients "
+              "a region has. If a region's range includes Finland's value, the data cannot tell them apart.",
+    "Curative treatment": "Treatment that aims to cure the cancer: surgery, stereotactic radiotherapy, or "
+                          "chemotherapy and radiotherapy given before, after or together with them. A patient "
+                          "counts if they have any curative-treatment record within 12 months.",
+    "No treatment record": "No record of any lung cancer treatment within 12 months. This mixes patients who "
+                           "were not treated and treatment that was given but not recorded, so it does not "
+                           "mean ‘untreated’.",
+    "Crude share": "The plain percentage of all new patients in a region. It is not adjusted for differences "
+                   "in age or cancer stage, so a lower share is not by itself proof of worse care.",
+    "MDT": "Multidisciplinary team meeting, where specialists discuss a patient together. Only some meetings "
+           "are recorded in the national register, so MDT figures show recording practice, not how many "
+           "patients were discussed.",
+    "Ledger": "Our list of every number and quote used in this app, each with its source document, page or "
+              "table, and how it was checked (data/ledger.sqlite).",
+}
+# vs_national (src/add_ci.py): verdict headline and badge colour. "below"/"above" = 95% CI entirely below/above.
+VERDICT = {
+    "below": ("A smaller share of patients here receives curative treatment than across Finland.", "red"),
+    "above": ("A larger share of patients here receives curative treatment than across Finland.", "green"),
+    "not distinguishable": ("Curative treatment here is not clearly different from Finland.", "gray"),
+}
+LINGON, FINLAND_GREY, TRACK = "#B3263A", "#B9B0AA", "#F1EDEA"
+
+
+def region_measure(full_name: str, treatment: str) -> pd.Series:
+    """One row of county_treatment.csv: a region's share, 95% CI and national share for one measure."""
+    return cty[(cty["county"] == full_name) & (cty["treatment"] == treatment)].iloc[0]
+
+
+def signed_pp(v: float) -> str:
+    return f"{v:+.1f} pp".replace("-", "−")
 
 
 def clean(text: str) -> str:
@@ -199,9 +245,10 @@ def status_badge(status: str) -> None:
     st.badge(status, color=colour, icon=icon)
 
 
-def claim_card(cid: str) -> None:
+def claim_card(cid: str, key: str) -> None:
+    """One claim with its source and quote. `key` must be unique on the page (it styles the card)."""
     c = claims.get(cid)
-    with st.container(border=True):
+    with st.container(border=True, key=f"card-claim-{key}"):
         if c is None:
             st.error(f"Claim {cid} is not in the ledger.")
             return
@@ -236,20 +283,18 @@ def flag_place(location: str) -> str:
 
 
 def flagged_for_review(review: dict, brief: dict) -> None:
-    """Model review flags, shown apart from the validated text. They never change the brief."""
-    st.divider()
-    with st.container(border=True):
+    """Model review flags, shown apart from the validated text. They never change the brief.
+    Called only when there are flags; "nothing flagged" is shown in the header popover."""
+    with st.container(border=True, key="card-flags"):
         n = len(review["flags"])
         st.subheader(f":material/flag: Flagged for human review ({n})")
         st.caption("Not part of the validated brief. A second model (gemini-4-hydrogen) read each sentence "
                    "against its cited claims and raised these for a person to check. Flags never approve, "
                    "reject or change the brief.")
-        if not n:
-            st.markdown(":green[:material/check: Nothing flagged]")
         order = {"high": 0, "medium": 1, "low": 2}
-        for f in sorted(review["flags"], key=lambda f: order.get(f["severity"], 3)):
+        for i, f in enumerate(sorted(review["flags"], key=lambda f: order.get(f["severity"], 3))):
             colour, icon = SEVERITY.get(f["severity"], ("gray", ":material/help:"))
-            with st.container(border=True):
+            with st.container(border=True, key=f"card-flag-{i}"):
                 st.badge(f["severity"].capitalize(), color=colour, icon=icon)
                 st.markdown(f"**{flag_place(f['location'])}**")
                 if f.get("sentence") and f["sentence"] != "-":
@@ -257,12 +302,21 @@ def flagged_for_review(review: dict, brief: dict) -> None:
                 st.markdown(f["problem"])
 
 
-def sentence(s: dict, key: str, headline: bool = False) -> None:
-    st.markdown(f"**{s['text']}**" if headline else s["text"])
-    picked = st.pills("Claims", s["claim_ids"], key=key, format_func=short_id,
-                      label_visibility="collapsed", selection_mode="single")
+def claim_pills(ids: list[str], key: str) -> None:
+    """Claim IDs as pills; clicking one opens its claim card."""
+    picked = st.pills("Claims", ids, key=key, format_func=short_id, label_visibility="collapsed",
+                      selection_mode="single")
     if picked:
-        claim_card(picked)
+        claim_card(picked, key)
+
+
+def go_to_tab(label: str) -> None:
+    """Button callback: switch the stateful tabs (key NAV) to `label`."""
+    st.session_state[NAV] = label
+
+
+def unique(ids) -> list[str]:
+    return list(dict.fromkeys(ids))
 
 
 def finnish_order(name: str) -> str:
@@ -341,20 +395,148 @@ brief_doc, review_doc = load_brief(slug, mtime(BRIEFS / f"{slug}.json", BRIEFS /
 with h_meta:
     brief_status(brief_doc, review_doc)
 
-# Core message: the same on every region page; each part backed by ledger claims (src/core_message.py).
-core_parts, core_problems = core_message.resolve(claims)
-with st.container(border=True):
-    st.markdown(f"#### {core_message.MESSAGE}")
-    cols = st.columns(len(core_parts), gap="medium")
-    for i, (col, (part, ids)) in enumerate(zip(cols, core_parts)):
-        with col:
-            st.caption(f"‘{part[:1].upper() + part[1:]}’: backed by")
-            picked = st.pills(f"core-{i}", ids, key=f"core-{slug}-{i}", format_func=short_id,
-                              label_visibility="collapsed", selection_mode="single")
-            if picked:
-                claim_card(picked)
-    if core_problems:
-        st.error("The core message is not fully backed by the ledger: " + "; ".join(core_problems))
+# ---------------------------------------------------------------- brief tab parts
+# Limitations: the original wording, split into (bold lead, rest). The first three show by default (as in the
+# design); the delay figure is read from the ledger. "Public aggregate data only" moved to the page footer.
+LIMITATIONS = [
+    ("Crude shares.", "Regional treatment shares are not adjusted for age or stage. "
+                      "Stage at diagnosis is missing for about half of patients."),
+    ("Preliminary:", f"the delay figures ({claims['mot:total_fi']['value']:.0f} days etc.) are from an "
+                     "unpublished study via Yle MOT; national, not region-specific."),
+    ("Our recommendations", "(:material/lightbulb:) are the team's own drafts, not yet reviewed by mentors; "
+                            "each is cited together with its evidence."),
+    ("Categories overlap.", "A patient can have several treatment types; shares never add up."),
+    ("‘No treatment record’", "mixes untreated patients and treatment that was not recorded."),
+    ("MDT codes", "measure recording practice, not whether a team reviewed the patient."),
+    ("Age-adjusted values", "were read off a report figure (Kuva 16, ±0.5 pp), curative only, by sex."),
+    ("Mentor insight:", "expert views without a written source."),
+    ("Regional pathways:", "five regions' documents, read by a teammate."),
+]
+LIMITS_SHOWN = 3
+
+
+def hero_chart(region: str, row: pd.Series, nat: float) -> alt.LayerChart:
+    """Region vs Finland curative share: two bars, the region's Wilson 95% CI as a bracket, values at the end."""
+    hi = float(row["ci_high"])
+    track_end = max(40.0, -(-max(hi, nat) // 5) * 5)  # bar track, in % (0–40 as in the design, wider if needed)
+    xmax = track_end * 1.3  # the right part holds the value labels, right-aligned at xmax (fits at 390px)
+    d = pd.DataFrame({
+        "who": [region, "Finland"], "share": [float(row["share"]), nat],
+        "lo": [float(row["ci_low"]), None], "hi": [hi, None], "colour": [LINGON, FINLAND_GREY],
+        "label": [f"{row['share']:.1f}%", f"{nat:.1f}%"], "end": [xmax, xmax], "track": [track_end, track_end]})
+    y = alt.Y("who:N", sort=[region, "Finland"], title=None,
+              axis=alt.Axis(domain=False, ticks=False, labelFontSize=14, labelColor="#1F1B1A", labelPadding=10,
+                            labelLimit=140))
+    xs = alt.Scale(domain=[0, xmax], nice=False)
+    base = alt.Chart(d)
+    tip = [alt.Tooltip("who:N", title="Region"), alt.Tooltip("share:Q", title="Curative %", format=".1f"),
+           alt.Tooltip("lo:Q", title="95% CI low", format=".1f"), alt.Tooltip("hi:Q", title="95% CI high", format=".1f")]
+    track = base.mark_bar(color=TRACK, size=14, cornerRadius=3).encode(
+        y=y, x=alt.X("track:Q", scale=xs, axis=None))
+    bars = base.mark_bar(size=14, cornerRadius=3).encode(
+        y=y, x=alt.X("share:Q", scale=xs, axis=None), color=alt.Color("colour:N", scale=None), tooltip=tip)
+    ci = base.transform_filter("isValid(datum.lo)")
+    bracket = (ci.mark_rule(color="#1F1B1A", strokeWidth=1.5).encode(y=y, x=alt.X("lo:Q", scale=xs), x2="hi:Q")
+               + ci.mark_tick(color="#1F1B1A", thickness=1.5, size=22, orient="vertical").encode(y=y, x="lo:Q")
+               + ci.mark_tick(color="#1F1B1A", thickness=1.5, size=22, orient="vertical").encode(y=y, x="hi:Q"))
+    labels = base.mark_text(align="right", fontSize=16, fontWeight=600, color="#1F1B1A").encode(
+        y=y, x=alt.X("end:Q", scale=xs), text="label:N")
+    return ((track + bars + bracket + labels).properties(height=90, background="transparent")
+            .configure_view(strokeWidth=0, fill=None))
+
+
+def hero(region: str, full_name: str) -> None:
+    """Verdict headline (from vs_national) and the region-vs-Finland bar card."""
+    row = region_measure(full_name, "Parantava")
+    nat = round(float(row["national_share"]), 1)
+    gap = round(float(row["share"]) - nat, 1)  # rounded national value, so the badge matches the bars
+    verdict, colour = VERDICT[row["vs_national"]]
+    left, right = st.columns([1.15, 1], gap="large", vertical_alignment="bottom")
+    with left:
+        st.markdown(f'<div class="lb-eyebrow">{region} · new patients 2019–2023</div>'
+                    f'<div class="lb-verdict" role="heading" aria-level="1">{verdict}</div>'
+                    '<div class="lb-lede">Shares are crude, not adjusted for age or stage. Read a gap as a signal '
+                    'to investigate, not proof of worse care.</div>', unsafe_allow_html=True)
+    with right, st.container(border=True, key="card-hero"):
+        with st.container(horizontal=True, horizontal_alignment="distribute", vertical_alignment="center"):
+            st.caption("Curative treatment share")
+            st.badge(f"{signed_pp(gap)} vs Finland", color=colour)
+        st.altair_chart(hero_chart(region, row, nat), width="stretch")
+        reach = ("It overlaps the national value." if row["ci_contains_national"]
+                 else "It doesn't reach the national value.")
+        st.caption(f"The black bracket is the 95% confidence interval ({row['ci_low']:.1f}–{row['ci_high']:.1f}%). "
+                   f"{reach} Source: report Taulukko 11 (region), Taulukko 6 (Finland).")
+
+
+def national_context(region_slug: str) -> None:
+    """The core message as one strip; its backing claims behind a toggle. Same on every region page; each part
+    is backed by ledger claims (src/core_message.py)."""
+    core_parts, core_problems = core_message.resolve(claims)
+    with st.container(border=True, key="soft-context"):
+        label, text, link = st.columns([1.1, 6, 1.5], vertical_alignment="top")
+        label.markdown('<div class="lb-eyebrow" style="padding-top:3px">National context</div>',
+                       unsafe_allow_html=True)
+        with text:
+            st.markdown(core_message.MESSAGE)
+            n = len(unique(i for _, ids in core_parts for i in ids))
+            if st.toggle(f"Show {n} sources", key=f"core-src-{region_slug}"):
+                for i, (part, ids) in enumerate(core_parts):
+                    st.caption(f"‘{part[:1].upper() + part[1:]}’: backed by")
+                    claim_pills(ids, f"core-{region_slug}-{i}")
+        link.button("See the pathway →", type="tertiary", key="go-pathway", on_click=go_to_tab,
+                    args=("Pathway",))
+        if core_problems:
+            st.error("The core message is not fully backed by the ledger: " + "; ".join(core_problems))
+
+
+def section_summary(section: str, sec: dict, full_name: str) -> str:
+    """One-line expander summary, computed from the data (never model text)."""
+    if section == "where_we_lag":
+        r = region_measure(full_name, "Parantava")
+        return f"Curative share {r['share']:.1f}% vs {r['national_share']:.1f}% nationally"
+    if section == "how_sure_are_we":
+        r = region_measure(full_name, "Ei hoitotietoa")
+        return f"Recording check: no treatment record {r['share']:.1f}% vs {r['national_share']:.1f}% nationally"
+    sents = [sec.get("headline") or {}] + (sec.get("details") or [])
+    n = len({c for s in sents for c in s.get("claim_ids", []) if c.startswith("rec:")})
+    return f"{n} recommended action{'s' if n != 1 else ''} (team drafts)"
+
+
+def brief_sections(doc: dict, region_slug: str, full_name: str) -> None:
+    """The three brief sections as expanders (first open). Sentences are shown verbatim; details and the claim
+    pills sit behind toggles (no expander may be nested in another)."""
+    for k, s in enumerate(SECTIONS):
+        sec = doc.get(s) or {}
+        head, details = sec.get("headline"), sec.get("details") or []
+        label = f":gray[0{k + 1}]  **{TITLES[s]}** :gray[· {section_summary(s, sec, full_name)}]"
+        with st.expander(label, expanded=k == 0):
+            body = st.container()
+            with st.container(horizontal=True, gap="medium"):
+                show_details = bool(details) and st.toggle(
+                    f"Show {len(details)} detail{'s' if len(details) != 1 else ''}", key=f"det-{region_slug}-{s}")
+                shown = ([("h", head)] if head else []) + (
+                    [(str(i), d) for i, d in enumerate(details)] if show_details else [])
+                n = len(unique(c for _, x in shown for c in x["claim_ids"]))
+                show_src = st.toggle(f"Show {n} sources", key=f"src-{region_slug}-{s}")
+            with body:
+                for j, (tag, x) in enumerate(shown):
+                    if j:
+                        st.divider()
+                    st.markdown(x["text"])
+                    if show_src:
+                        claim_pills(x["claim_ids"], f"{region_slug}-{s}-{tag}")
+
+
+def read_before_acting(region_slug: str) -> None:
+    with st.container(border=True, key="soft-limits"):
+        st.markdown("**Read before acting**")
+        show_all = st.session_state.get(f"limits-{region_slug}", False)
+        for lead, rest in LIMITATIONS if show_all else LIMITATIONS[:LIMITS_SHOWN]:
+            st.markdown(f"**{lead}** {rest}")
+        st.toggle(f"Show all {len(LIMITATIONS)}", key=f"limits-{region_slug}")
+    with st.expander("Glossary: pp, CI, MDT, curative", icon=":material/menu_book:"):
+        st.markdown("\n".join(f"- **{term}:** {text}" for term, text in GLOSSARY.items()))
+
 
 # Stateful tabs (key + on_change): st.session_state[NAV] holds the active label, so a button can switch tabs.
 NAV = "nav"
@@ -363,6 +545,8 @@ tab_brief, tab_chart, tab_path, tab_verify = st.tabs(TAB_LABELS, key=NAV, on_cha
 
 # ---------------------------------------------------------------- brief
 with tab_brief:
+    hero(short, full)
+    national_context(slug)
     left, right = st.columns([2.2, 1], gap="large")
     with left:
         if not brief_doc or not brief_doc.get("brief"):
@@ -373,42 +557,15 @@ with tab_brief:
             if brief_doc["status"] != "validated":
                 st.warning("This brief is a **DRAFT**: it failed validation after a retry. "
                            "Problems are listed under *How we verified this*.")
-            st.caption("Every sentence cites claims from the ledger. Click a claim to see its source.")
-            for s in SECTIONS:
-                sec = brief_doc["brief"].get(s) or {}
-                with st.container(border=True):
-                    st.subheader(TITLES[s])
-                    if sec.get("headline"):
-                        sentence(sec["headline"], f"{slug}-{s}-h", headline=True)
-                    with st.expander("Details", icon=":material/expand_content:"):
-                        for i, d in enumerate(sec.get("details") or []):
-                            sentence(d, f"{slug}-{s}-{i}")
-                            if i < len(sec["details"]) - 1:
-                                st.divider()
-            if review_doc:
+            brief_sections(brief_doc["brief"], slug, full)
+            if review_doc and review_doc["flags"]:
                 flagged_for_review(review_doc, brief_doc["brief"])
     with right:
-        with st.container(border=True):
-            st.subheader(":material/info: Limitations")
-            st.markdown(
-                "- **Crude shares.** Regional treatment shares are not adjusted for age or stage. "
-                "Stage at diagnosis is missing for about half of patients.\n"
-                "- **Categories overlap.** A patient can have several treatment types; shares never add up.\n"
-                "- **‘No treatment record’** mixes untreated patients and treatment that was not recorded.\n"
-                "- **MDT codes** measure recording practice, not whether a team reviewed the patient.\n"
-                "- **Age-adjusted values** were read off a report figure (Kuva 16, ±0.5 pp), curative only, by sex.\n"
-                "- **Preliminary:** the delay figures (155 days etc.) are from an unpublished study via Yle MOT; "
-                "national, not region-specific.\n"
-                "- **Mentor insight:** expert views without a written source.\n"
-                "- **Regional pathways:** five regions' documents, read by a teammate.\n"
-                "- **Our recommendations** (:material/lightbulb:) are the team's own drafts, not yet reviewed "
-                "by mentors; each is cited together with its evidence.\n"
-                "- Public aggregate data only; no patient-level data.")
+        read_before_acting(slug)
 
 # ---------------------------------------------------------------- chart
 with tab_chart:
-    cty = ct[ct["level"] == "county"]
-    x = cty[cty["treatment"] == "Ei hoitotietoa"].set_index("county")
+    x =cty[cty["treatment"] == "Ei hoitotietoa"].set_index("county")
     y = cty[cty["treatment"] == "Parantava"].set_index("county")
     d = pd.DataFrame({
         "county": [counties.SHORT.get(c, c) for c in x.index],
