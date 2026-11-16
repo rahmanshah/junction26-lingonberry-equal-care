@@ -26,15 +26,47 @@ LOGO = ROOT / "assets" / "logo.svg"
 # the favicon (checked in the test harness), so no PNG is needed. The logo is shown only next to the
 # sidebar title, not with st.logo.
 st.set_page_config(page_title="Lingonberry", page_icon=str(LOGO), layout="wide")
-# Claim pills (st.pills) sit in a single no-wrap row with horizontal scroll, so long claim IDs ran past the
-# edge of narrow columns. Let every pill row wrap onto the next line instead.
-st.markdown(
-    '<style>div[data-testid="stButtonGroup"] div:has(> button) '
-    "{flex-wrap: wrap !important; overflow-x: visible !important; row-gap: 0.4rem;}</style>",
-    unsafe_allow_html=True)
+
+
+def inject_css() -> None:
+    """All custom CSS, in one place. Colours come from the theme (.streamlit/config.toml); this adds what the
+    theme cannot: card borders, the header row, the tab look and the dot-plot rows. Layout follows
+    design/Lingonberry Redesign v2.dc.html. Cards are containers with a key starting "card" (Streamlit
+    turns a key into the CSS class st-key-<key>); "soft" cards use the warmer panel colour."""
+    st.markdown("""<style>
+[data-testid="stMainBlockContainer"] {max-width: 1180px; padding-top: 2.5rem; padding-bottom: 2rem;}
+/* Claim pills sit in one no-wrap row by default, so long claim IDs ran past narrow columns: wrap them. */
+div[data-testid="stButtonGroup"] div:has(> button) {flex-wrap: wrap !important; overflow-x: visible !important;
+  row-gap: .4rem;}
+/* Cards */
+[class*="st-key-card"] {border: 1px solid #E9E4E0 !important; border-radius: 12px !important; background: #FFFFFF;}
+[class*="st-key-soft"] {border: 1px solid #ECE6E1 !important; border-radius: 12px !important; background: #FBF8F5;}
+[data-testid="stExpander"] details {border-color: #E9E4E0; border-radius: 12px; background: #FFFFFF;}
+/* Header row */
+.lb-brand {display: flex; align-items: center; gap: 10px; flex-wrap: wrap;}
+.lb-brand b {font-size: 1.15rem; letter-spacing: -0.01em;}
+.lb-brand span {font-size: .82rem; color: #6F6762;}
+.st-key-region [data-testid="stSelectbox"] {display: flex; flex-direction: row; align-items: center; gap: .5rem;}
+.st-key-region [data-testid="stSelectbox"] > div {flex: 1; min-width: 0;}
+.st-key-region [data-testid="stWidgetLabel"] {margin: 0; min-height: 0; color: #6F6762;}
+[class*="st-key-meta"] button {border-radius: 999px;}
+.st-key-meta-ok button {background: #F1F8F2; border-color: #CFE3D4; color: #1F6A36;}
+.st-key-meta-draft button {background: #FDF4E7; border-color: #EBCF9F; color: #8A5A12;}
+/* Tabs: active tab in ink, not red; the red underline stays */
+[data-testid="stTab"][aria-selected="true"] p {color: #1F1B1A; font-weight: 600;}
+/* Small type */
+.lb-eyebrow {font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 12px; letter-spacing: .06em;
+  text-transform: uppercase; color: #8A817B;}
+/* Footer: right part right-aligned only when the columns sit side by side */
+@media (min-width: 640px) {.st-key-foot-right {text-align: right;}}
+</style>""", unsafe_allow_html=True)
+
+
+inject_css()
 
 import base64  # noqa: E402
 import hashlib  # noqa: E402
+from datetime import datetime  # noqa: E402
 
 import altair as alt  # noqa: E402
 import pandas as pd  # noqa: E402
@@ -233,38 +265,26 @@ def sentence(s: dict, key: str, headline: bool = False) -> None:
         claim_card(picked)
 
 
-# ---------------------------------------------------------------- sidebar
-with st.sidebar:
-    st.markdown(
-        f'<div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.2rem">'
-        f'<img src="{LOGO_URI}" width="40" height="40" alt="Lingonberry logo">'
-        f'<span style="font-size:1.75rem;font-weight:700;line-height:1">Lingonberry</span></div>',
-        unsafe_allow_html=True)
-    st.caption("Equal care across Finland · lung cancer pathway · Junction 2026")
-    names = list(counties.FULL)
-    short = st.selectbox("Region", names, index=names.index("Kymenlaakso"),
-                         help="21 wellbeing services counties and the City of Helsinki")
-    full = counties.FULL[short]
-    slug = counties.slug(short)
-    brief_doc, review_doc = load_brief(slug, mtime(BRIEFS / f"{slug}.json", BRIEFS / f"{slug}.review.json"))
+def finnish_order(name: str) -> str:
+    """Sort key for Finnish alphabetical order (å, ä, ö after z)."""
+    return name.lower().translate(str.maketrans({"å": "{", "ä": "|", "ö": "}"}))
 
-    st.divider()
-    if brief_doc:
-        st.markdown("**Saved brief**")
-        if brief_doc["status"] == "validated":
-            st.badge("Validated", color="green", icon=":material/check:")
-        else:
-            st.badge("DRAFT: failed validation", color="orange", icon=":material/warning:")
-        st.caption(f"{brief_doc['model']} · thinking {brief_doc['thinking_level']} · "
-                   f"{brief_doc['generated_at']} · attempts: {brief_doc['attempts']}")
-    else:
-        st.info("No saved brief for this region yet.")
+
+def generated_on(iso: str) -> str:
+    """'2026-11-14T13:36:57+00:00' -> '14 Nov 2026'."""
+    d = datetime.fromisoformat(iso)
+    return f"{d.day} {d:%b %Y}"
+
+
+def regenerate_button() -> None:
+    """Regenerate with Gemini: disabled, with the reason, when no API key is configured."""
     if not GEMINI_CONFIGURED:
         st.caption(":material/visibility: View-only: showing saved, validated briefs. Live regeneration needs "
                    "a Gemini API key, which this deployment does not have.")
-    elif st.button("Regenerate with Gemini", icon=":material/refresh:", width="stretch",
-                   help="Runs the live pipeline: brief (gemini-4-argon) → validate → review (gemini-4-hydrogen). "
-                        "Takes a few minutes and uses API quota."):
+    if st.button("Regenerate with Gemini", icon=":material/refresh:", width="stretch",
+                 disabled=not GEMINI_CONFIGURED,
+                 help="Runs the live pipeline: brief (gemini-4-argon) → validate → review (gemini-4-hydrogen). "
+                      "Takes a few minutes and uses API quota."):
         with st.status(f"Generating a brief for {short}…", expanded=True) as box:
             try:
                 import brief as brief_pipeline
@@ -279,13 +299,47 @@ with st.sidebar:
             except Exception as e:  # noqa: BLE001 - show any pipeline failure to the user
                 box.update(label="Pipeline failed", state="error")
                 st.exception(e)
-    st.divider()
-    st.caption("Public aggregate data only. No patient-level data is used anywhere.")
+
+
+def brief_status(brief_doc: dict | None, review_doc: dict | None) -> None:
+    """Header popover: how the saved brief was made, its review result, and the Regenerate button."""
+    if brief_doc and brief_doc["status"] == "validated":
+        label, icon, key = "Validated brief", ":material/check:", "meta-ok"
+    elif brief_doc:
+        label, icon, key = "Draft brief", ":material/warning:", "meta-draft"
+    else:
+        label, icon, key = "No saved brief", ":material/info:", "meta-none"
+    with st.popover(label, icon=icon, key=key):
+        if brief_doc:
+            n = brief_doc["attempts"]
+            st.markdown(f"Written by {brief_doc['model']} (thinking: {brief_doc['thinking_level'].lower()}) on "
+                        f"{generated_on(brief_doc['generated_at'])}, after {n} attempt{'s' if n != 1 else ''}.")
+            if brief_doc["status"] != "validated":
+                st.badge("DRAFT: failed validation", color="orange", icon=":material/warning:")
+            if review_doc:
+                flags = len(review_doc["flags"])
+                st.markdown(":green[:material/check: Nothing flagged by the second-model review]" if not flags
+                            else f":orange[:material/flag: {flags} flag{'s' if flags != 1 else ''} for human "
+                                 "review], listed on the Brief tab")
+        else:
+            st.markdown("No saved brief for this region yet.")
+        regenerate_button()
+
 
 # ---------------------------------------------------------------- header
-st.title(short)
-st.caption(f"{full} · lung cancer care pathway · new patients 2019–2023, 12-month follow-up · "
-           "source: Finnish Cancer Registry, Keuhkosyöpä Suomessa 2019–2023")
+names = sorted(counties.FULL, key=finnish_order)
+h_brand, h_region, h_meta = st.columns([4, 2.4, 1.5], vertical_alignment="center")
+with h_brand:
+    st.markdown(f'<div class="lb-brand"><img src="{LOGO_URI}" width="28" height="28" alt="Lingonberry logo">'
+                '<b>Lingonberry</b><span>Lung cancer care across Finland</span></div>', unsafe_allow_html=True)
+with h_region:
+    short = st.selectbox("Region", names, index=names.index("Kymenlaakso"), key="region",
+                         help="21 wellbeing services counties and the City of Helsinki")
+full = counties.FULL[short]
+slug = counties.slug(short)
+brief_doc, review_doc = load_brief(slug, mtime(BRIEFS / f"{slug}.json", BRIEFS / f"{slug}.review.json"))
+with h_meta:
+    brief_status(brief_doc, review_doc)
 
 # Core message: the same on every region page; each part backed by ledger claims (src/core_message.py).
 core_parts, core_problems = core_message.resolve(claims)
@@ -302,9 +356,10 @@ with st.container(border=True):
     if core_problems:
         st.error("The core message is not fully backed by the ledger: " + "; ".join(core_problems))
 
-tab_brief, tab_chart, tab_path, tab_verify = st.tabs(
-    [":material/description: Brief", ":material/scatter_plot: Curative vs no record",
-     ":material/route: Pathway", ":material/fact_check: How we verified this"])
+# Stateful tabs (key + on_change): st.session_state[NAV] holds the active label, so a button can switch tabs.
+NAV = "nav"
+TAB_LABELS = ["Brief", "Compare regions", "Pathway", "How we verified this"]
+tab_brief, tab_chart, tab_path, tab_verify = st.tabs(TAB_LABELS, key=NAV, on_change="rerun")
 
 # ---------------------------------------------------------------- brief
 with tab_brief:
@@ -312,7 +367,8 @@ with tab_brief:
     with left:
         if not brief_doc or not brief_doc.get("brief"):
             st.info(f"No saved brief for {short}."
-                    + (" Use **Regenerate with Gemini** in the sidebar." if GEMINI_CONFIGURED else ""))
+                    + (" Use **Regenerate with Gemini** in the brief menu at the top." if GEMINI_CONFIGURED
+                       else ""))
         else:
             if brief_doc["status"] != "validated":
                 st.warning("This brief is a **DRAFT**: it failed validation after a retry. "
@@ -516,3 +572,10 @@ with tab_verify:
                 st.caption(f"Code rules (overclaiming words, future tense about plans): "
                            f"{len(review_doc['rule_problems'])} problem(s). Model review: {n} flag(s) for "
                            "human review (see the Brief tab); flags never approve or change a brief.")
+
+# ---------------------------------------------------------------- footer
+st.divider()
+foot_left, foot_right = st.columns(2)
+foot_left.caption("Source: Finnish Cancer Registry, Keuhkosyöpä Suomessa 2019–2023")
+with foot_right, st.container(key="foot-right"):
+    st.caption("Public aggregate data only · no patient-level data · Junction 2026")

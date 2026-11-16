@@ -4,6 +4,9 @@
 [theme]
 base = "light"
 primaryColor = "#B3263A"      # lingonberry red, from assets/logo.svg
+backgroundColor = "#F7F5F3"   # warm off-white page (design/Lingonberry Redesign v2.dc.html)
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#1F1B1A"
 font = "sans serif"
 
 [browser]
