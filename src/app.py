@@ -162,7 +162,6 @@ STATUS_STYLE = {  # (badge colour, icon) — icon + label, never colour alone
 MEASURED = {"yes": (":green[:material/check_circle: Measured]"),
             "partly": (":orange[:material/remove_circle: Partly measured]"),
             "no": (":red[:material/cancel: Not measured]")}
-HIGHLIGHT = "#2a78d6"
 
 
 # ---------------------------------------------------------------- data (cached by file mtime)
@@ -655,6 +654,25 @@ def nordic_chart() -> alt.Chart:
             .configure_view(strokeWidth=0, fill=None))
 
 
+# ---------------------------------------------------------------- verification tab parts
+CHECK_STATE = {"ok": ":green[:material/check_circle: {result}]", "warn": ":orange[:material/flag: {result}]",
+               "fail": ":red[:material/cancel: {result}]", "na": ":gray[:material/remove: {result}]"}
+METHOD_COLOURS = {"computed": LINGON, "quoted": "#D67A85", "assessed": "#8A817B", "digitised": FINLAND_GREY,
+                  "mentor": "#C58A2A", "proposed": "#5A524D"}
+
+
+def method_bar(methods: pd.Series) -> alt.Chart:
+    """All ledger claims as one stacked bar, by method (legend drawn in HTML so it wraps on phones)."""
+    d = methods.rename_axis("method").reset_index(name="claims")
+    d["order"] = range(len(d))
+    d["colour"] = d["method"].map(lambda m: METHOD_COLOURS.get(m, FINLAND_GREY))
+    return alt.Chart(d).mark_bar(size=14, stroke="#FFFFFF", strokeWidth=2).encode(
+        x=alt.X("sum(claims):Q", stack="zero", axis=None, scale=alt.Scale(nice=False)),
+        color=alt.Color("colour:N", scale=None), order=alt.Order("order:Q"),
+        tooltip=[alt.Tooltip("method:N", title="Method"), alt.Tooltip("claims:Q", title="Claims")],
+    ).properties(height=24, background="transparent").configure_view(strokeWidth=0, fill=None)
+
+
 # Stateful tabs (key + on_change): st.session_state[NAV] holds the active label, so a button can switch tabs.
 NAV = "nav"
 TAB_LABELS = ["Brief", "Compare regions", "Pathway", "How we verified this"]
@@ -673,7 +691,7 @@ with tab_brief:
         else:
             if brief_doc["status"] != "validated":
                 st.warning("This brief is a **DRAFT**: it failed validation after a retry. "
-                           "Problems are listed under *How we verified this*.")
+                           "Problems are listed under *How we verified this → Technical details*.")
             brief_sections(brief_doc["brief"], slug, full)
             if review_doc and review_doc["flags"]:
                 flagged_for_review(review_doc, brief_doc["brief"])
@@ -752,47 +770,84 @@ with tab_path:
 
 # ---------------------------------------------------------------- verification
 with tab_verify:
-    st.subheader("How we verified this")
+    st.subheader("Every number traces to a source")
     st.markdown("Every number and quote in the brief is a row in the claim ledger (`data/ledger.sqlite`) with its "
                 "source, location, method and status. Gap figures are computed in our own code, never by a model.")
-    c1, c2 = st.columns(2, gap="large")
     df = pd.DataFrame(list(claims.values()))
-    with c1, st.container(border=True):
-        st.markdown("**Claims by status**")
-        counts = df["status"].value_counts().reindex(ledger.STATUSES, fill_value=0).reset_index()
-        counts.columns = ["status", "claims"]
-        st.altair_chart(alt.Chart(counts).mark_bar(color=HIGHLIGHT, cornerRadiusEnd=4).encode(
-            x=alt.X("claims:Q", title="Claims"), y=alt.Y("status:N", sort=list(ledger.STATUSES), title=None),
-            tooltip=["status", "claims"]).properties(height=200), width="stretch")
-        by_method = df["method"].value_counts()
-        st.caption("By method: " + " · ".join(f"{k} {v}" for k, v in by_method.items()))
-        st.caption("Briefs may cite only: " + ", ".join(ledger.CITABLE) + ".")
     snap = load_snapshot(mtime(SNAPSHOT)) if not RAW_PRESENT else None
-    with c2, st.container(border=True):
+
+    # Results first (each computed once), then three summary cards, then the details.
+    if RAW_PRESENT:
+        code, out = run_check_claims(mtime(ledger.DB, "docs/source_verification.md", "docs/recommendations.md",
+                                           "docs/blind_spots.md"))
+        ledger_ok, ledger_when = code == 0, "Run now on this server."
+    elif snap is None:
+        code, out, ledger_ok, ledger_when = None, "", None, "No source documents or snapshot on this server."
+    else:
+        code, out = snap["check_claims"]["exit_code"], snap["check_claims"]["output"]
+        ledger_ok, ledger_when = snap["check_claims"]["passed"], f"Last verified locally on {snapshot_time(snap)}."
+    has_brief = bool(brief_doc and brief_doc.get("brief"))
+    # validate_brief needs only the committed ledger, so it can always be re-run here.
+    live = (validate(brief_doc["brief"], set(brief_doc.get("provided_claim_ids") or []) or None, claims)
+            if has_brief else [])
+    n_flags = len(review_doc["flags"]) if review_doc else None
+
+    cards = [
+        ("Ledger check", "ok" if ledger_ok else ("na" if ledger_ok is None else "fail"),
+         "All checks passed" if ledger_ok else ("Not available" if ledger_ok is None else "Checks failed"),
+         ledger_when),
+        (f"Brief check · {short}", "na" if not has_brief else ("fail" if live else "ok"),
+         "No saved brief" if not has_brief else (f"{len(live)} problem(s)" if live else "Valid now"),
+         "Re-checked live against the committed ledger."),
+        ("Second-model review", "na" if n_flags is None else ("warn" if n_flags else "ok"),
+         "Not run" if n_flags is None else f"{n_flags} flag{'s' if n_flags != 1 else ''}",
+         "Flags go to a person; they never change the brief."),
+    ]
+    for i, (col, (name, state, result, detail)) in enumerate(zip(st.columns(3, gap="small"), cards)):
+        with col, st.container(border=True, key=f"card-check-{i}"):
+            st.caption(name)
+            st.markdown(f"#### {CHECK_STATE[state].format(result=result)}")
+            st.caption(detail)
+
+    with st.container(border=True, key="card-methods"):
+        with st.container(horizontal=True, horizontal_alignment="distribute", vertical_alignment="center"):
+            st.markdown(f"**{len(df)} claims in the ledger, by method**")
+            st.caption("`data/ledger.sqlite`")
+        methods = df["method"].value_counts()
+        st.altair_chart(method_bar(methods), width="stretch")
+        st.markdown('<div class="lb-legend">' + "".join(
+            f'<span><i style="background:{METHOD_COLOURS.get(m, FINLAND_GREY)};border-radius:2px"></i>'
+            f"{html.escape(m)} <b>{n}</b></span>" for m, n in methods.items()) + "</div>", unsafe_allow_html=True)
+
+    with st.expander("Technical details: scripts, snapshot, raw responses", icon=":material/terminal:"):
         st.markdown("**Ledger check** (`src/check_claims.py`)")
         st.caption("Every claim has a source and location; every quote is re-found verbatim in its source; "
                    "every quote has an explicit language; superseded claims name their replacement.")
         if RAW_PRESENT:
-            code, out = run_check_claims(mtime(ledger.DB, "docs/source_verification.md", "docs/recommendations.md",
-                                               "docs/blind_spots.md"))
             st.markdown(":green[:material/check_circle: All checks passed] (run now)" if code == 0
                         else ":red[:material/cancel: Checks failed] (run now)")
         elif snap is None:
-            code, out = None, ""
             st.warning("The source documents are not on this server and no verification snapshot was found.")
         else:
-            code, out = snap["check_claims"]["exit_code"], snap["check_claims"]["output"]
             st.markdown((":green[:material/check_circle: All checks passed]" if snap["check_claims"]["passed"]
                          else ":red[:material/cancel: Checks failed]")
                         + f" · **last verified locally on {snapshot_time(snap)}**")
             snapshot_note(snap)
-        if out:
-            with st.expander("Output"):
-                st.code(out, language=None)
+        if out and st.toggle("Show check output", key="check-output"):
+            st.code(out, language=None)
 
-    with st.container(border=True):
+        st.divider()
+        st.markdown("**Claims by status**")
+        counts = df["status"].value_counts().reindex(ledger.STATUSES, fill_value=0).reset_index()
+        counts.columns = ["status", "claims"]
+        st.altair_chart(alt.Chart(counts).mark_bar(color=LINGON, cornerRadiusEnd=4).encode(
+            x=alt.X("claims:Q", title="Claims"), y=alt.Y("status:N", sort=list(ledger.STATUSES), title=None),
+            tooltip=["status", "claims"]).properties(height=200, background="transparent"), width="stretch")
+        st.caption("Briefs may cite only: " + ", ".join(ledger.CITABLE) + ".")
+
+        st.divider()
         st.markdown(f"**Brief check for {short}** (`src/validate_brief.py`)")
-        if not brief_doc or not brief_doc.get("brief"):
+        if not has_brief:
             st.caption("No saved brief to validate.")
         else:
             if snap is not None:
@@ -802,8 +857,6 @@ with tab_verify:
                             + f" · last verified locally on {snapshot_time(snap)}")
                 for p in rec.get("problems", []):
                     st.markdown(f"- {p}")
-            # validate_brief needs only the committed ledger, so it can always be re-run here as well.
-            live = validate(brief_doc["brief"], set(brief_doc.get("provided_claim_ids") or []) or None, claims)
             if not live:
                 st.markdown(":green[:material/check_circle: Valid now]: re-checked against the committed ledger. "
                             "Every sentence cites existing, citable claims, and every number matches its cited "
@@ -816,9 +869,8 @@ with tab_verify:
                        f"{len(brief_doc['problems'])} problem(s) remaining. Raw model responses: "
                        + ", ".join(f"`{Path(p).name}`" for p in brief_doc.get("raw_responses", [])))
             if review_doc:
-                n = len(review_doc["flags"])
                 st.caption(f"Code rules (overclaiming words, future tense about plans): "
-                           f"{len(review_doc['rule_problems'])} problem(s). Model review: {n} flag(s) for "
+                           f"{len(review_doc['rule_problems'])} problem(s). Model review: {n_flags} flag(s) for "
                            "human review (see the Brief tab); flags never approve or change a brief.")
 
 # ---------------------------------------------------------------- footer
