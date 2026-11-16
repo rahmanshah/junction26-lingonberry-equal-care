@@ -16,7 +16,7 @@ Junction 2026, AstraZeneca challenge *Equal Care Across Finland*; also entered i
 > - **Gemini:** Argon writes each brief only from ledger claims, code checks IDs, numbers and wording, and Hydrogen flags possible overclaims for human review and translates the Finnish quotes. Gemini writes, the ledger decides.
 > - **Try it:** [live app](https://junction26-lingonberry-equal-care-jvssmnbotqefgpxeiyfwjt.streamlit.app/), view-only, no API key needed.
 
-![The Kymenlaakso brief in the app: the core message, claim IDs under every sentence, and a limitations panel](assets/screenshot.png)
+![The Kymenlaakso brief in the app: a header row with the Region picker and the validated-brief status, a verdict headline with a region-versus-Finland chart, the national context, the three brief questions as collapsible sections with their sources behind toggles, and a Read before acting panel](assets/screenshot.png)
 
 ## The problem
 
