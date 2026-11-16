@@ -30,9 +30,10 @@ st.set_page_config(page_title="Lingonberry", page_icon=str(LOGO), layout="wide")
 
 def inject_css() -> None:
     """All custom CSS, in one place. Colours come from the theme (.streamlit/config.toml); this adds what the
-    theme cannot: card borders, the header row, the tab look and the dot-plot rows. Layout follows
-    design/Lingonberry Redesign v2.dc.html. Cards are containers with a key starting "card" (Streamlit
-    turns a key into the CSS class st-key-<key>); "soft" cards use the warmer panel colour."""
+    theme cannot: card borders (#E9E4E0, 12px radius), the header row, the tab look, the pathway stage
+    buttons and the dot-plot rows (an HTML grid; below 640px the name and value sit above the track).
+    Cards are containers with a key starting "card" (Streamlit turns a key into the CSS class
+    st-key-<key>); "soft" cards use the warmer panel colour."""
     st.markdown("""<style>
 [data-testid="stMainBlockContainer"] {max-width: 1180px; padding-top: 2.5rem; padding-bottom: 2rem;}
 /* Claim pills sit in one no-wrap row by default, so long claim IDs ran past narrow columns: wrap them. */
