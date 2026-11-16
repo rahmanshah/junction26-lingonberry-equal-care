@@ -54,6 +54,11 @@ div[data-testid="stButtonGroup"] div:has(> button) {flex-wrap: wrap !important; 
 .st-key-meta-draft button {background: #FDF4E7; border-color: #EBCF9F; color: #8A5A12;}
 /* Tabs: active tab in ink, not red; the red underline stays */
 [data-testid="stTab"][aria-selected="true"] p {color: #1F1B1A; font-weight: 600;}
+/* Pathway: stage buttons left-aligned; the selected one gets a dark border */
+[class*="st-key-stage"] button {justify-content: flex-start; text-align: left; background: #FBF9F7;
+  border-color: #E9E4E0; border-radius: 8px;}
+[class*="st-key-stage"] button > div {justify-content: flex-start; width: 100%;}
+[class*="st-key-stagesel-"] button {background: #FFFFFF; border: 1.5px solid #1F1B1A;}
 /* Small type */
 .lb-eyebrow {font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 12px; letter-spacing: .06em;
   text-transform: uppercase; color: #8A817B;}
@@ -597,6 +602,59 @@ def dot_plot_html(rows: pd.DataFrame, selected: str, nat: float) -> str:
     return '<div class="lb-dp">' + "".join(out) + "</div>"
 
 
+# ---------------------------------------------------------------- pathway tab parts
+PATH_STAGE = "path-stage"  # session_state key: the stage whose evidence is shown
+PATH_GROUPS = [("Patient delay", "mot:patient"), ("Primary care", "mot:primary"),
+               ("Specialist care", "mot:specialist")]
+MEASURED_ICON = {"yes": ":green[:material/check_circle:]", "partly": ":orange[:material/remove_circle:]",
+                 "no": ":red[:material/cancel:]"}
+MEASURED_LABEL = {"yes": "Measured", "partly": "Partly measured", "no": "Not measured"}
+MEASURED_SHORT = {"yes": ":green[:material/check_circle: {n} measured]",
+                  "partly": ":orange[:material/remove_circle: {n} partly]",
+                  "no": ":red[:material/cancel: {n} not measured]"}
+
+
+def pick_stage(stage: str) -> None:
+    """Stage-button callback: show this stage's evidence."""
+    st.session_state[PATH_STAGE] = stage
+
+
+def stage_evidence(r) -> None:
+    """One evidence panel for the selected pathway stage: 2–4 columns, only the sources that say something."""
+    with st.container(border=True, key="card-evidence"):
+        st.markdown(f"#### {r.stage}")
+        st.markdown(f"{MEASURED[r.measured]} · by region: {r.by_county}")
+        parts = [("Public data", f"{clean(r.report_note)}  \n*Source: report {r.report_source}*")]
+        if r.regional_pathways:
+            parts.append(("Regional pathways (read by a teammate)", clean(r.regional_pathways)))
+        if r.policy:
+            parts.append(("National policy", clean(r.policy)))
+        if r.mentor_insight:
+            parts.append(("Mentor insight", r.mentor_insight))
+        for col, (label, text) in zip(st.columns(len(parts), gap="medium"), parts):
+            col.markdown(f'<div class="lb-eyebrow">{label}</div>', unsafe_allow_html=True)
+            col.markdown(text)
+
+
+def nordic_chart() -> alt.Chart:
+    """Symptoms to first treatment, Finland vs Sweden vs Denmark (MOT claims: preliminary)."""
+    d = pd.DataFrame({"country": ["Finland", "Sweden", "Denmark"],
+                      "days": [claims[f"mot:total_{c}"]["value"] for c in ("fi", "se", "dk")],
+                      "colour": [LINGON, FINLAND_GREY, FINLAND_GREY]})
+    d["label"] = d["days"].map(lambda v: f"{v:.0f} days")
+    top = float(d["days"].max()) * 1.3  # right part holds the labels
+    y = alt.Y("country:N", sort=None, title=None,
+              axis=alt.Axis(domain=False, ticks=False, labelFontSize=14, labelColor="#1F1B1A", labelPadding=10))
+    xs = alt.Scale(domain=[0, top], nice=False)
+    bars = alt.Chart(d).mark_bar(size=12, cornerRadius=3).encode(
+        y=y, x=alt.X("days:Q", scale=xs, axis=None), color=alt.Color("colour:N", scale=None),
+        tooltip=[alt.Tooltip("country:N", title="Country"), alt.Tooltip("days:Q", title="Mean days")])
+    labels = alt.Chart(d.assign(end=top)).mark_text(align="right", fontSize=14, color="#1F1B1A").encode(
+        y=y, x=alt.X("end:Q", scale=xs), text="label:N")
+    return ((bars + labels).properties(height=110, background="transparent")
+            .configure_view(strokeWidth=0, fill=None))
+
+
 # Stateful tabs (key + on_change): st.session_state[NAV] holds the active label, so a button can switch tabs.
 NAV = "nav"
 TAB_LABELS = ["Brief", "Compare regions", "Pathway", "How we verified this"]
@@ -661,35 +719,36 @@ with tab_chart:
 
 # ---------------------------------------------------------------- pathway
 with tab_path:
-    st.subheader("Which steps of the lung cancer pathway can public data see?")
-    st.caption("From symptoms to treatment. Delays are mean days from the MOT study: **preliminary, unpublished**, "
-               "national averages (not region-specific).")
-    groups =[("Patient delay", "mot:patient"), ("Primary care", "mot:primary"), ("Specialist care", "mot:specialist")]
+    counts = bs["measured"].value_counts()
+    st.subheader("Public data sees only part of the pathway")
+    st.markdown(f"Of {len(bs)} steps from symptoms to treatment: "
+                f"{MEASURED_SHORT['yes'].format(n=counts.get('yes', 0))}, "
+                f"{MEASURED_SHORT['partly'].format(n=counts.get('partly', 0))}, "
+                f"{MEASURED_SHORT['no'].format(n=counts.get('no', 0))}. Select a step for the evidence.")
+    if PATH_STAGE not in st.session_state or st.session_state[PATH_STAGE] not in set(bs["stage"]):
+        measured = bs[bs["measured"] == "yes"]["stage"]
+        st.session_state[PATH_STAGE] = measured.iloc[0] if len(measured) else bs["stage"].iloc[0]
     # Equal widths: stages stack vertically inside each group, so weighting by stage count only squeezed
     # the one-stage "Patient delay" column (words broke mid-word at 1440px).
-    cols = st.columns(len(groups), gap="small")
-    for col, (group, cid) in zip(cols, groups):
-        with col, st.container(border=True):
+    cols = st.columns(len(PATH_GROUPS), gap="small")
+    for col, (group, cid) in zip(cols, PATH_GROUPS):
+        with col:
             days = claims[cid]["value"]
-            st.markdown(f"**{group}**  \n:orange-badge[:material/hourglass_top: {days:.0f} days · preliminary]")
+            st.markdown(f"**{group}** :orange-badge[:material/hourglass_top: {days:.0f} days · preliminary]")
             for r in bs[bs["mot_interval"] == group].itertuples():
-                with st.container(border=True):
-                    st.markdown(f"**{r.stage}**  \n{MEASURED[r.measured]}")
-                    st.caption(f"By region: {r.by_county}")
-                    with st.popover("Evidence", icon=":material/search:", width="stretch"):
-                        st.markdown(f"**Public data:** {clean(r.report_note)}  \n*Source: report {r.report_source}*")
-                        if r.regional_pathways:
-                            st.markdown(f"**Regional pathways** (read by a teammate): {clean(r.regional_pathways)}")
-                        if r.policy:
-                            st.markdown(f"**National policy:** {clean(r.policy)}")
-                        if r.mentor_insight:
-                            st.markdown(f"**Mentor insight:** {r.mentor_insight}")
-    tot = claims["mot:total_fi"]["value"]
-    st.markdown(f":orange-badge[:material/hourglass_top: Preliminary] Symptoms to first treatment: **{tot:.0f} days** "
-                f"in Finland vs {claims['mot:total_se']['value']:.0f} in Sweden and "
-                f"{claims['mot:total_dk']['value']:.0f} in Denmark (Yle MOT 2025, unpublished study).")
-    st.caption("Which pathway steps fall in which MOT interval is the team's assumption. Measured status: "
-               "src/build_blind_spots.py, from the 2019–2023 report.")
+                chosen = r.stage == st.session_state[PATH_STAGE]
+                st.button(f"{MEASURED_ICON[r.measured]} {r.stage}", key=f"stage{'sel' if chosen else ''}-{r.Index}",
+                          width="stretch", on_click=pick_stage, args=(r.stage,),
+                          help=MEASURED_LABEL[r.measured])
+    stage_evidence(bs[bs["stage"] == st.session_state[PATH_STAGE]].iloc[0])
+    with st.container(border=True, key="soft-nordic"):
+        with st.container(horizontal=True, horizontal_alignment="distribute", vertical_alignment="center"):
+            st.markdown("**Symptoms to first treatment**")
+            st.markdown(":orange[:material/hourglass_top: Preliminary · Yle MOT 2025, unpublished]")
+        st.altair_chart(nordic_chart(), width="stretch")
+    st.caption("Delays are mean days from the MOT study: **preliminary, unpublished**, national averages (not "
+               "region-specific). Which pathway steps fall in which MOT interval is the team's assumption. "
+               "Measured status: src/build_blind_spots.py, from the 2019–2023 report.")
 
 # ---------------------------------------------------------------- verification
 with tab_verify:
