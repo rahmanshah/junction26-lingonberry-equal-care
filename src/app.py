@@ -65,6 +65,35 @@ div[data-testid="stButtonGroup"] div:has(> button) {flex-wrap: wrap !important; 
 /* Brief sections: expander title larger, like the design's question cards */
 [data-testid="stExpander"] summary strong {font-size: 1.1rem; font-weight: 600;}
 [data-testid="stExpander"] summary {padding-top: .8rem; padding-bottom: .8rem;}
+/* Compare regions: ranked dot plot (HTML rows from dot_plot_html) and its legend */
+.lb-dp {display: flex; flex-direction: column; gap: 2px;}
+.lb-dp-row {display: grid; grid-template-columns: clamp(80px, 28%, 150px) minmax(0, 1fr) 46px; align-items: center;
+  gap: 12px;
+  padding: 5px 8px; border-radius: 6px; font-size: 13px; color: #5A524D;}
+.lb-dp-row.sel {background: #FBF0F1; color: #1F1B1A; font-weight: 600;}
+.lb-dp-name {overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.lb-dp-val {text-align: right; font-variant-numeric: tabular-nums;}
+.lb-dp-track {position: relative; height: 18px;}
+.lb-dp-nat {position: absolute; top: -6px; bottom: -6px; border-left: 1.5px dashed #B9B0AA;}
+.lb-dp-ci {position: absolute; top: 8px; height: 2px; border-radius: 1px; background: #DDD6D1;}
+.lb-dp-dot {position: absolute; top: 4px; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%;
+  background: #C9C1BB; border: 1.5px solid #FFFFFF; box-sizing: border-box;}
+.lb-dp-row.clear .lb-dp-ci {background: #A59C96;}
+.lb-dp-row.clear .lb-dp-dot {background: #5A524D;}
+.lb-dp-row.sel .lb-dp-ci, .lb-dp-row.sel .lb-dp-dot {background: #B3263A;}
+.lb-dp-axis {padding-top: 8px;}
+.lb-dp-ticks {display: flex; justify-content: space-between; font-size: 11px; color: #8A817B;
+  border-top: 1px solid #F1EDEA; padding-top: 6px; font-family: ui-monospace, Consolas, monospace;}
+@media (max-width: 640px) {  /* phones: name and value on one line, the full-width track below */
+  .lb-dp-row {grid-template-columns: minmax(0, 1fr) 46px; grid-template-areas: "name val" "track track"; row-gap: 2px;}
+  .lb-dp-name {grid-area: name;} .lb-dp-val {grid-area: val;} .lb-dp-track, .lb-dp-ticks {grid-area: track;}
+  .lb-dp-axis > div:empty {display: none;}
+}
+.lb-legend {display: flex; gap: 6px 18px; flex-wrap: wrap; font-size: 12px; color: #6F6762; margin-bottom: .6rem;}
+.lb-legend span {display: flex; align-items: center; gap: 6px;}
+.lb-legend i {width: 10px; height: 10px; border-radius: 50%; display: inline-block;}
+.lb-legend i.sel {background: #B3263A;} .lb-legend i.clear {background: #5A524D;}
+.lb-legend i.unclear {background: #C9C1BB;}
 /* Footer: right part right-aligned only when the columns sit side by side */
 @media (min-width: 640px) {.st-key-foot-right {text-align: right;}}
 </style>""", unsafe_allow_html=True)
@@ -74,6 +103,7 @@ inject_css()
 
 import base64  # noqa: E402
 import hashlib  # noqa: E402
+import html  # noqa: E402
 from datetime import datetime  # noqa: E402
 
 import altair as alt  # noqa: E402
@@ -127,7 +157,7 @@ STATUS_STYLE = {  # (badge colour, icon) — icon + label, never colour alone
 MEASURED = {"yes": (":green[:material/check_circle: Measured]"),
             "partly": (":orange[:material/remove_circle: Partly measured]"),
             "no": (":red[:material/cancel: Not measured]")}
-HIGHLIGHT, OTHER, INK2 = "#2a78d6", "#b4b2ab", "#52514e"
+HIGHLIGHT = "#2a78d6"
 
 
 # ---------------------------------------------------------------- data (cached by file mtime)
@@ -538,6 +568,35 @@ def read_before_acting(region_slug: str) -> None:
         st.markdown("\n".join(f"- **{term}:** {text}" for term, text in GLOSSARY.items()))
 
 
+# ---------------------------------------------------------------- compare tab parts
+COMPARE = {  # segmented-control label -> (title, Taulukko 11 treatment type)
+    "Curative": ("Curative treatment share, by region", "Parantava"),
+    "No treatment record": ("Patients with no treatment record, by region", "Ei hoitotietoa"),
+}
+
+
+def dot_plot_html(rows: pd.DataFrame, selected: str, nat: float) -> str:
+    """Ranked dot plot as HTML rows (styles in inject_css): point = crude share, line = Wilson 95% CI, dashed
+    line = Finland. Dark grey = CI excludes Finland's value, light grey = it includes it."""
+    top = max(50.0, -(-float(rows["ci_high"].max()) // 10) * 10)
+    pos = lambda v: f"{float(v) / top * 100:.2f}%"  # noqa: E731
+    out = []
+    for r in rows.sort_values("share", ascending=False).itertuples():
+        cls = "sel" if r.name == selected else ("unclear" if r.ci_contains_national else "clear")
+        verdict = {"below": "below Finland", "above": "above Finland"}.get(r.vs_national, "not distinguishable")
+        name = html.escape(r.name)
+        out.append(
+            f'<div class="lb-dp-row {cls}" title="{name}: {r.share:.1f}% (95% CI {r.ci_low:.1f}–{r.ci_high:.1f}), '
+            f'{verdict}"><div class="lb-dp-name">{name}</div><div class="lb-dp-track">'
+            f'<div class="lb-dp-nat" style="left:{pos(nat)}"></div>'
+            f'<div class="lb-dp-ci" style="left:{pos(r.ci_low)};width:{pos(r.ci_high - r.ci_low)}"></div>'
+            f'<div class="lb-dp-dot" style="left:{pos(r.share)}"></div></div>'
+            f'<div class="lb-dp-val">{r.share:.1f}%</div></div>')
+    ticks = "".join(f"<span>{t}{'%' if t in (0, int(top)) else ''}</span>" for t in range(0, int(top) + 1, 10))
+    out.append(f'<div class="lb-dp-row lb-dp-axis"><div></div><div class="lb-dp-ticks">{ticks}</div><div></div></div>')
+    return '<div class="lb-dp">' + "".join(out) + "</div>"
+
+
 # Stateful tabs (key + on_change): st.session_state[NAV] holds the active label, so a button can switch tabs.
 NAV = "nav"
 TAB_LABELS = ["Brief", "Compare regions", "Pathway", "How we verified this"]
@@ -565,56 +624,29 @@ with tab_brief:
 
 # ---------------------------------------------------------------- chart
 with tab_chart:
-    x =cty[cty["treatment"] == "Ei hoitotietoa"].set_index("county")
-    y = cty[cty["treatment"] == "Parantava"].set_index("county")
-    d = pd.DataFrame({
-        "county": [counties.SHORT.get(c, c) for c in x.index],
-        "no_record": x["share"], "no_record_lo": x["ci_low"], "no_record_hi": x["ci_high"],
-        "curative": y.loc[x.index, "share"], "curative_lo": y.loc[x.index, "ci_low"],
-        "curative_hi": y.loc[x.index, "ci_high"], "patients": x["total"].astype(int),
-    }).reset_index(drop=True)
-    d["selected"] = d["county"] == short
-    nat_x, nat_y = float(x["national_share"].iloc[0]), float(y["national_share"].iloc[0])
-
-    colour = alt.condition("datum.selected", alt.value(HIGHLIGHT), alt.value(OTHER))
-    base = alt.Chart(d)
-    xs = alt.Scale(domain=[10, 50])
-    ys = alt.Scale(domain=[14, 42])
-    tooltip = [alt.Tooltip("county:N", title="Region"),
-               alt.Tooltip("curative:Q", title="Curative %", format=".1f"),
-               alt.Tooltip("curative_lo:Q", title="  95% CI low", format=".1f"),
-               alt.Tooltip("curative_hi:Q", title="  95% CI high", format=".1f"),
-               alt.Tooltip("no_record:Q", title="No treatment record %", format=".1f"),
-               alt.Tooltip("no_record_lo:Q", title="  95% CI low", format=".1f"),
-               alt.Tooltip("no_record_hi:Q", title="  95% CI high", format=".1f"),
-               alt.Tooltip("patients:Q", title="New patients 2019–2023")]
-    ebx = base.mark_rule(strokeWidth=1.2).encode(x=alt.X("no_record_lo:Q", scale=xs), x2="no_record_hi:Q",
-                                                 y="curative:Q", color=colour, opacity=alt.value(0.7))
-    eby = base.mark_rule(strokeWidth=1.2).encode(x="no_record:Q", y=alt.Y("curative_lo:Q", scale=ys),
-                                                 y2="curative_hi:Q", color=colour, opacity=alt.value(0.7))
-    pts = base.mark_circle(stroke="white", strokeWidth=1.5, opacity=1).encode(
-        x=alt.X("no_record:Q", scale=xs, title="No treatment record within 12 months (%)"),
-        y=alt.Y("curative:Q", scale=ys, title="Received curative treatment (%)"),
-        color=colour, size=alt.condition("datum.selected", alt.value(220), alt.value(70)), tooltip=tooltip)
-    labels = (
-        base.transform_filter("!datum.selected").mark_text(align="left", dx=8, dy=-6, fontSize=11, color=INK2)
-        .encode(x="no_record:Q", y="curative:Q", text="county:N")
-        + base.transform_filter("datum.selected").mark_text(align="left", dx=10, dy=-8, fontSize=13,
-                                                            fontWeight="bold", color="#0b0b0b")
-        .encode(x="no_record:Q", y="curative:Q", text="county:N")
-    )
-    hline = alt.Chart(pd.DataFrame({"y": [nat_y]})).mark_rule(strokeDash=[6, 4], color=INK2).encode(y="y:Q")
-    vline = alt.Chart(pd.DataFrame({"x": [nat_x]})).mark_rule(strokeDash=[2, 4], color=OTHER).encode(x="x:Q")
-    chart = (ebx + eby + hline + vline + pts + labels).properties(height=560).configure_axis(
-        grid=True, gridColor="#e1e0d9", domainColor="#c3c2b7", labelColor=INK2, titleColor=INK2
-    ).configure_view(strokeWidth=0)
-    st.subheader("Curative treatment vs no treatment record, all 22 regions")
-    st.caption(f"Bars: Wilson 95% confidence intervals. Dashed lines: Finland, {nat_y:.1f}% curative and "
-               f"{nat_x:.1f}% with no treatment record. {short} is highlighted.")
-    st.altair_chart(chart, width="stretch")
-    st.caption("Crude shares, not adjusted for age or stage. Treatment categories overlap, so the two axes are "
-               "not parts of one whole. ‘No treatment record’ mixes untreated patients and treatment that was not "
-               "recorded. Source: report Taulukko 11 (regions), Taulukko 5–6 (national); CIs computed in src/add_ci.py.")
+    head, controls = st.columns([3, 2], gap="large", vertical_alignment="bottom")
+    with controls:
+        measure = st.segmented_control("Measure", list(COMPARE), default="Curative", required=True,
+                                       key="cmp-measure", label_visibility="collapsed")
+        only_differ = st.toggle("Only regions that clearly differ from Finland", key="cmp-differ",
+                                help="Regions whose 95% confidence interval does not include Finland's value.")
+    title, treatment = COMPARE[measure]
+    rows = cty[cty["treatment"] == treatment].assign(name=lambda t: t["county"].map(counties.SHORT))
+    nat = float(rows["national_share"].iloc[0])
+    if only_differ:
+        rows = rows[~rows["ci_contains_national"] | (rows["county"] == full)]
+    with head:
+        st.subheader(title)
+        st.caption(f"Ranked, with 95% confidence intervals. The dashed line is Finland ({nat:.1f}%). "
+                   f"Showing {len(rows)} of {len(cty['county'].unique())} regions.")
+    with st.container(border=True, key="card-dotplot"):
+        st.markdown(dot_plot_html(rows, short, nat), unsafe_allow_html=True)
+    st.markdown('<div class="lb-legend"><span><i class="sel"></i>Selected region</span>'
+                '<span><i class="clear"></i>Clearly differs from Finland</span>'
+                '<span><i class="unclear"></i>Not distinguishable</span></div>', unsafe_allow_html=True)
+    st.caption("Crude shares, not adjusted for age or stage. Treatment categories overlap. ‘No treatment record’ "
+               "mixes untreated patients and treatment that was not recorded. Source: report Taulukko 11 "
+               "(regions), Taulukko 5–6 (national); CIs computed in src/add_ci.py.")
     with st.expander(f"{short}: all treatment measures vs Finland"):
         sel = cty[cty["county"] == full][["treatment", "share", "ci_low", "ci_high", "national_share",
                                           "vs_national", "n", "total"]].copy()
